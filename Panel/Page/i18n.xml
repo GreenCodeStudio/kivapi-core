@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <node name="Page">
+        <value lang="en">Page</value>
+        <value lang="en">Strona</value>
+    </node>
+    <node name="List">
+        <node name="Header">
+            <value lang="en">Pages</value>
+            <value lang="pl">Strony</value>
+        </node>
+    </node>
+    <node name="Fields">
+        <node name="id">
+            <value lang="en">ID</value>
+            <value lang="pl">ID</value>
+        </node>
+        <node name="path">
+            <value lang="en">Path</value>
+            <value lang="pl">Ścierzka</value>
+        </node>
+        <node name="parent">
+            <value lang="en">Parent</value>
+            <value lang="pl">Rodzic</value>
+        </node>
+        <node name="module">
+            <value lang="en">Module</value>
+            <value lang="pl">Moduł</value>
+        </node>
+        <node name="component">
+            <value lang="en">Component</value>
+            <value lang="pl">Komponent</value>
+        </node>
+    </node>
+</root>

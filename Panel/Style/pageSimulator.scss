@@ -1,0 +1,10 @@
+.pageSimulator-iframeWrapper {
+    overflow: hidden;
+    height: 200px;
+    border: 1px solid red;
+
+    iframe {
+        border: none;
+        transform-origin: 0% 0%;
+    }
+}

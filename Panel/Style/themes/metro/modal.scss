@@ -1,0 +1,43 @@
+.modalContainer {
+    background: rgba(#000000, .5);
+    backdrop-filter: grayscale(80%) blur(5px);
+    transition: opacity 200ms ease-out;
+
+    .modal {
+        animation: page-in 200ms ease-out;
+        background: var(--background);
+        padding: 10px 10px;
+
+        .modal-text {
+            margin: 10px;
+            text-align: left;
+        }
+
+        .modal-button {
+            margin: 10px;
+        }
+
+        &[data-type="warning"] {
+            background: lighten(#ff8800, 25);
+            --mainLight: #ff8800;
+        }
+
+        &[data-type="error"] {
+            background: lighten(#ff0000, 25);
+            --mainLight: #ff0000;
+        }
+
+        &[data-type="success"] {
+            background: lighten(#00dd00, 25);
+            --mainLight: #00dd00;
+        }
+    }
+
+    &.closing {
+        opacity: 0;
+
+        .modal {
+            animation: page-out 200ms ease-out;
+        }
+    }
+}

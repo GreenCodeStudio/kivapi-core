@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <element>
+        <permission>
+            <group>user</group>
+            <name>show</name>
+        </permission>
+        <title>Użytkownicy</title>
+        <menu>
+            <element>
+                <link>User</link>
+                <title>Lista</title>
+            </element>
+            <element>
+                <link>Token</link>
+                <title>Tokeny</title>
+            </element>
+        </menu>
+    </element>
+</menu>

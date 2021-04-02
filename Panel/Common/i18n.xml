@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <node name="Add">
+        <value lang="en">Add</value>
+        <value lang="pl">Dodaj</value>
+    </node>
+    <node name="Edit">
+        <value lang="en">Edit</value>
+        <value lang="pl">Edytuj</value>
+    </node>
+    <node name="Save">
+        <value lang="en">Save</value>
+        <value lang="pl">Zapisz</value>
+    </node>
+    <node name="Cancel">
+        <value lang="en">Cancel</value>
+        <value lang="pl">Anuluj</value>
+    </node>
+</root>

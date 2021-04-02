@@ -1,0 +1,135 @@
+data-view {
+    border: 1px solid var(--second);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px);
+    user-select: none;
+
+
+    table-view {
+        display: block;
+        flex-grow: 1;
+        overflow: auto;
+
+        .bodyContainer {
+
+        }
+
+        .head {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            height: 18px;
+            background: var(--second);
+
+            .column {
+                background: var(--second);
+                color: var(--textSecondColor);
+                cursor: default;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: 700;
+                position: absolute;
+                padding: 0 10px;
+                box-sizing: border-box;
+
+                &.ableToSort {
+                    @extend .icon;
+                    @extend .icon-down;
+
+                    &::before {
+                        transform: scaleY(0);
+                        transition: all 300ms ease-out;
+                        position: absolute;
+                        right: 0;
+                    }
+
+                    &[data-order="asc"] {
+                        &::before {
+                            transform: scaleY(1);
+                        }
+                    }
+
+                    &[data-order="desc"] {
+                        &::before {
+                            transform: scaleY(-1);
+                        }
+                    }
+
+                    .tableCopy {
+                        display: none;
+                    }
+
+                    cursor: pointer;
+                }
+
+
+            }
+        }
+
+        .body {
+            position: relative;
+
+            .tr {
+                display: flex;
+                position: absolute;
+                transition: top 300ms ease-out;
+                table-layout: fixed;
+                flex-direction: row;
+                animation: data-view-appear 200ms;
+
+                @keyframes data-view-appear {
+                    0% {
+                        opacity: 0;
+                    }
+                    100% {
+                        opacity: 1
+                    }
+                }
+
+
+                &.selectedMain, &:focus {
+                    outline: 2px black dashed;
+                    outline-offset: -2px;
+                }
+
+                .td {
+                    padding: 5px 10px;
+                    margin: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: block;
+                    flex: 0 0 auto;
+                    box-sizing: border-box;
+
+                }
+            }
+        }
+
+
+    }
+
+    .foot {
+        border-top: 1px solid var(--second);
+        display: flex;
+        justify-content: space-between;
+    }
+    &.infiniteScrollEnabled {
+        table-view {
+            .body {
+                height: var(--height);
+            }
+        }
+        pagination-buttons{
+            display: none;
+        }
+    }
+}
+
+pagination-buttons {
+    button.active {
+        background: var(--main);
+    }
+}

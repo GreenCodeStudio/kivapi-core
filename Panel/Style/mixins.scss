@@ -1,0 +1,73 @@
+@mixin table-semiMobile($width) {
+    @media(max-width: $width) {
+        overflow: auto;
+        table {
+            width: calc(#{$width} + 100% - 100vw);
+
+            thead {
+                th {
+                    top: 0;
+                }
+            }
+        }
+    }
+}
+
+@mixin table-mobile($width) {
+    @media(max-width: $width) {
+        table {
+            width: 100%;
+            table-layout: auto !important;
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                display: table;
+                width: 100%;
+                position: relative;
+
+                td {
+                    display: table-row;
+                    white-space: normal;
+                    padding-right: 40px;
+
+                    &:first-child {
+                        padding-top: 15px;
+
+                        &::before {
+                            padding-top: 15px;
+                        }
+                    }
+
+                    &:nth-last-child(2) {
+                        padding-bottom: 15px;
+
+                        &::before {
+                            padding-bottom: 15px;
+                        }
+                    }
+
+                    &::before {
+                        content: attr(data-header);
+                        width: 25%;
+                        display: table-cell;
+                        padding-left: 15px
+                    }
+                }
+
+                td.tableActions-cell {
+                    padding:0;
+                    &::before {
+                        content: none;
+                    }
+
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+            }
+        }
+    }
+}

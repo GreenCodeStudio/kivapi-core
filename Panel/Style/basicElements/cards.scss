@@ -1,0 +1,34 @@
+section.card {
+    @for $i from 1 to 7 {
+        &[data-width="#{$i}"] {
+            flex-basis: 280px * $i - 40px;
+            @media(min-width: 1920px) {
+                flex-basis: calc(16.6% * #{$i} - 40px);
+            }
+        }
+    }
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 10px;
+    padding: 10px;
+    background:  var(--background);
+
+    > header {
+        margin: 0 -10px 10px -10px;
+        padding: 10px;
+        border-bottom: #bbb 1px solid;
+        user-select: none;
+
+        h1 {
+            margin: 0;
+        }
+    }
+
+    > footer {
+        margin: 10px -10px 0 -10px;
+        padding: 10px;
+        text-align: right;
+        border-top: #bbb 1px solid;
+    }
+}

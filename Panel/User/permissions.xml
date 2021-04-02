@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+    <group>
+        <name>user</name>
+        <title>Użytkownicy</title>
+        <permission>
+            <name>show</name>
+            <title>Odczyt</title>
+        </permission>
+        <permission>
+            <name>edit</name>
+            <title>Edycja</title>
+        </permission>
+        <permission>
+            <name>add</name>
+            <title>Dodawanie</title>
+        </permission>
+        <permission>
+            <name>remove</name>
+            <title>Usuwanie</title>
+        </permission>
+        <permission>
+            <name>showToken</name>
+            <title>Odczyt tokenów</title>
+        </permission>
+        <permission>
+            <name>addToken</name>
+            <title>Dodawanie tokenów</title>
+        </permission>
+        <permission>
+            <name>removeToken</name>
+            <title>Usuwanie tokenów</title>
+        </permission>
+    </group>
+</permissions>

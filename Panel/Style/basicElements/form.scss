@@ -1,0 +1,48 @@
+form {
+    label {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        margin-bottom: 10px;
+
+        span {
+            display: table-cell;
+            width: 250px;
+        }
+
+        input, select, textarea {
+            display: table-cell;
+            width: 100%;
+        }
+        .subgroup{
+            grid-row: 2;
+            grid-column: 1/3;
+            margin-left: 30px;
+        }
+        sample-value-edit{
+            display: flex;
+        }
+        &:hover{
+            >span{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.input {
+    display: inline-block;
+}
+
+input:not(.browsersDefault), textarea:not(.browsersDefault), select:not(.browsersDefault) {
+    @extend .input
+}
+
+textarea:not(.browsersDefault) {
+    resize: vertical;
+}
+.checkbox{
+    display: inline-block;
+}
+input[type="checkbox"] {
+    @extend .checkbox
+}
