@@ -1,5 +1,5 @@
 import {AjaxPanel} from "./ajaxPanel";
-import ActiveElementList from "../../../Js/ActiveElementList";
+import ActiveElementList from "../../Js/ActiveElementList";
 
 export default class FileUploader extends HTMLElement {
     constructor() {
