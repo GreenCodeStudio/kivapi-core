@@ -1,8 +1,8 @@
-import {t as TCommon} from "../../../Common/i18n.xml";
 import ComponentValueEdit from "./ComponentValueEdit";
 import SampleValueEdit from "./SampleValueEdit";
 import StructValueEdit from "./StructValueEdit";
 import ArrayValueEdit from "./ArrayValueEdit";
+import FileValueEdit from "./FileValueEdit";
 
 export const editParams = {availableComponents: []};
 
@@ -21,6 +21,10 @@ export function generateParam(param, paramConfig) {
         return {node, collectParameters};
     } else if (param.type == 'component') {
         let node = new ComponentValueEdit(paramConfig, param, editParams.availableComponents);
+        node.draw();
+        return {node, collectParameters: node.collectParameters.bind(node)};
+    } else if (param.type == 'file') {
+        let node = new FileValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
     } else {
