@@ -8,7 +8,7 @@ module.exports = {
         panelJs: './panelJs.js',
     }, output: {
         path: path.resolve(__dirname, '../../BuildResults/Dist'),
-        publicPath: "/dist/",
+        publicPath: "/Dist/",
         filename: '[name].js',
         chunkFilename: '[name].[id].js'
     },

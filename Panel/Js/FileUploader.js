@@ -7,7 +7,25 @@ export default class FileUploader extends HTMLElement {
         this.maxFiles = null;
         this.files = [];
         this.activeElementList = new ActiveElementList(this.addChild('div'), this.files);
-        this.activeElementList.item = (x, old) => old ?? document.create('div', {children: [{text: x.status == 'pending' ? 'pending' : x.name}]});
+        this.activeElementList.item = (x, old) => {
+            if (old) return old;
+            else if (x.status === 'pending')
+                return document.create('div', {text: 'pending'})
+            else
+                return document.create('div', {
+                    children: [{text: x.name}, {
+                        tagName: 'button',
+                        type: 'button',
+                        text: 'usuń',
+                        onclick: () => {
+                            let index = this.files.indexOf(x);
+                            if (index >= 0)
+                                this.files.splice(index, 1);
+                            this.activeElementList.draw();
+                        }
+                    }]
+                })
+        };
         this.addButton = this.addChild('button', {text: 'Dodaj', type: 'button'});
         this.addButton.onclick = () => this.openFileDialog();
     }

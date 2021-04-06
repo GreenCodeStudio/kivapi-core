@@ -23,8 +23,8 @@ export default class ArrayValueEdit extends AbstractValueEdit {
             let label = document.create('label');
             label.addChild('span', {text: this.paramData.length + 1 + '.'});
             let result = generateParam(this.param.item, null);
-            label.append(this.result.node);
-            this.insertBefore(label, addButton);
+            label.append(result.node);
+            this.insertBefore(label, this.addButton);
             this.paramData.push(result)
         }
     }
