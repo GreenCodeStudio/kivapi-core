@@ -3,6 +3,7 @@ form {
         display: grid;
         grid-template-columns: 250px 1fr;
         margin-bottom: 10px;
+        align-items: center;
 
         span {
             display: table-cell;
@@ -13,16 +14,19 @@ form {
             display: table-cell;
             width: 100%;
         }
-        .subgroup{
+
+        .subgroup {
             grid-row: 2;
             grid-column: 1/3;
             margin-left: 30px;
         }
-        sample-value-edit{
+
+        sample-value-edit {
             display: flex;
         }
-        &:hover{
-            >span{
+
+        &:hover {
+            > span {
                 text-decoration: underline;
             }
         }
@@ -40,9 +44,11 @@ input:not(.browsersDefault), textarea:not(.browsersDefault), select:not(.browser
 textarea:not(.browsersDefault) {
     resize: vertical;
 }
-.checkbox{
+
+.checkbox {
     display: inline-block;
 }
+
 input[type="checkbox"] {
     @extend .checkbox
 }

@@ -4,11 +4,12 @@ import ActiveElementList from "../../Js/ActiveElementList";
 export default class FileUploader extends HTMLElement {
     constructor() {
         super();
-        this.append('File uploader');
-        this.addEventListener('click', () => this.openFileDialog())
+        this.maxFiles = null;
         this.files = [];
-        this.activeElementList = new ActiveElementList(this, this.files);
-        this.activeElementList.item = (x, old) => old ?? document.create('div', {text: JSON.stringify(x)});
+        this.activeElementList = new ActiveElementList(this.addChild('div'), this.files);
+        this.activeElementList.item = (x, old) => old ?? document.create('div', {children: [{text: x.status == 'pending' ? 'pending' : x.name}]});
+        this.addButton = this.addChild('button', {text: 'Dodaj', type: 'button'});
+        this.addButton.onclick = () => this.openFileDialog();
     }
 
     openFileDialog() {
@@ -22,6 +23,7 @@ export default class FileUploader extends HTMLElement {
     async uploadFile(file) {
         let placeholder = {'status': 'pending'}
         this.files.push(placeholder);
+        this.refreshAddButtonVisibility();
         this.activeElementList.draw();
         let data = await AjaxPanel.File.upload(file, {});
         this.files.splice(this.files.indexOf(placeholder), 1, data);
@@ -36,6 +38,10 @@ export default class FileUploader extends HTMLElement {
         this.files = value;
         this.activeElementList.list = value;
         this.activeElementList.draw();
+    }
+
+    refreshAddButtonVisibility() {
+        this.addButton.style.display = (this.maxFiles === null | this.files.length < this.maxFiles) ? 'block' : 'none;'
     }
 }
 customElements.define('file-uploader', FileUploader);

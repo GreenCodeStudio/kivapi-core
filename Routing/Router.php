@@ -5,11 +5,12 @@ namespace Core\Routing;
 
 
 use Core\AssetManager\AssetManager;
+use Core\Exceptions\NotFoundException;
+use Core\File\UploadedFileManager;
+use Core\Log;
 use Core\Panel\Authorization\Authorization;
 use Core\Panel\Authorization\Exceptions\NoPermissionException;
 use Core\Panel\Authorization\Exceptions\UnauthorizedException;
-use Core\Exceptions\NotFoundException;
-use Core\Log;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\Annotations;
 use ReflectionMethod;
@@ -18,8 +19,11 @@ class Router
 {
     public static function routeHttp($url)
     {
-        if(strtolower(substr($url, 0, 8))=='/assets/'){
-            AssetManager::getAsset(substr($url, 8));
+        if (strtolower(substr($url, 0, 8)) == '/assets/') {
+            (new AssetManager())->get(substr($url, 8));
+            exit;
+        } else if (strtolower(substr($url, 0, 6)) == '/file/') {
+            (new UploadedFileManager())->get(substr($url, 6));
             exit;
         }
         $router = self::getHttpRouter($url);

@@ -4,6 +4,7 @@ namespace Core\Routing;
 
 use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\PageRepository;
+use Core\Exceptions\NotFoundException;
 use MKrawczyk\FunQuery\FunQuery;
 
 class ComponentRouter extends Router
@@ -57,7 +58,7 @@ class ComponentRouter extends Router
             if ($node->path == $this->urlWithoutQuery)
                 return $node;
         }
-        throw new \Exception("not found path");
+        throw new NotFoundException("not found path");
     }
 
     public function invoke()

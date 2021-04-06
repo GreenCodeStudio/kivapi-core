@@ -3,6 +3,7 @@ import SampleValueEdit from "./SampleValueEdit";
 import StructValueEdit from "./StructValueEdit";
 import ArrayValueEdit from "./ArrayValueEdit";
 import FileValueEdit from "./FileValueEdit";
+import ImageValueEdit from "./ImageValueEdit";
 
 export const editParams = {availableComponents: []};
 
@@ -25,6 +26,10 @@ export function generateParam(param, paramConfig) {
         return {node, collectParameters: node.collectParameters.bind(node)};
     } else if (param.type == 'file') {
         let node = new FileValueEdit(paramConfig, param);
+        node.draw();
+        return {node, collectParameters: node.collectParameters.bind(node)};
+    }else if (param.type == 'image') {
+        let node = new ImageValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
     } else {

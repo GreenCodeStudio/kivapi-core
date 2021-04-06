@@ -2,11 +2,13 @@
 
 namespace Core\AssetManager;
 
-class AssetManager
+use Core\File\FileManager;
+
+class AssetManager extends FileManager
 {
-    public static function getAsset(string $path)
+    public function get(string $path)
     {
-        $filepath = static::findFile($path);
+        $filepath = $this->findFile($path);
         if ($filepath == null) {
             http_response_code(404);
             exit;
@@ -20,7 +22,7 @@ class AssetManager
         exit;
     }
 
-    public static function findFile(string $path)
+    public function findFile(string $path)
     {
         $path = str_replace('\\', '/', $path);
         if (preg_match('/\/\.\.?\//', $path)) throw new \Exception();

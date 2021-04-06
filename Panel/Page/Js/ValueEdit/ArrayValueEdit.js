@@ -36,7 +36,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
         label.append(result.node);
         label.ondragstart = result.node.dragstartHandler?.bind(result);
 
-        let removeButton = label.addChild('button')
+        let removeButton = label.addChild('div').addChild('button', {text:'Usuń'})
         removeButton.onclick = result.removeFromParent = () => {
             this.removeItem(result);
         }

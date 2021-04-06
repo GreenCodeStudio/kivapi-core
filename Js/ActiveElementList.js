@@ -36,7 +36,7 @@ export default class ActiveElementList {
             if (node)
                 newChildren.push(node);
         }
-        for (let i = 0, n = 0; i < this.wrapper.childNodes.length;) {
+        for (let i = 0, n = 0; i < this.wrapper.childNodes.length || n < newChildren.length;) {
             if (this.wrapper.childNodes[i] === newChildren[n]) {
                 i++;
                 n++;
