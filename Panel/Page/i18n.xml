@@ -31,5 +31,21 @@
             <value lang="en">Component</value>
             <value lang="pl">Komponent</value>
         </node>
+        <node name="title">
+            <value lang="en">Title</value>
+            <value lang="pl">Tytuł</value>
+        </node>
+        <node name="type">
+            <value lang="en">Type</value>
+            <value lang="pl">Typ</value>
+        </node>
+        <node name="description">
+            <value lang="en">Description</value>
+            <value lang="pl">Opis</value>
+        </node>
+    </node>
+    <node name="preview">
+        <value lang="en">Preview</value>
+        <value lang="pl">Podgląd</value>
     </node>
 </root>

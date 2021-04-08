@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <table>
+    <name>file</name>
+        <column>
+            <name>id</name>
+            <type>char(40)</type>
+            <null>NO</null>
+        </column>
+        <column>
+            <name>name</name>
+            <type>text</type>
+            <null>YES</null>
+        </column>
+        <column>
+            <name>extension</name>
+            <type>text</type>
+            <null>YES</null>
+        </column>
+        <column>
+            <name>mime</name>
+            <type>text</type>
+            <null>YES</null>
+        </column>
+        <column>
+            <name>size</name>
+            <type>bigint</type>
+            <null>YES</null>
+        </column>
+        <index>
+            <type>PRIMARY</type>
+            <element>id</element>
+        </index>
+    </table>
+</root>

@@ -5,11 +5,12 @@ namespace Core\Routing;
 
 
 use Core\ComponentManager\ComponentManager;
+use Core\File\UploadedFile;
 use MKrawczyk\FunQuery\FunQuery;
 
 class ParameterParser
 {
-    public function __construct($query)
+    public function __construct($query = [])
     {
         $this->query = $query;
     }
@@ -18,7 +19,7 @@ class ParameterParser
     {
         if (empty($node->parameters))
             return new \stdClass();
-        $paramsInfo = json_decode($node->parameters, false);
+        $paramsInfo = is_string($node->parameters) ? json_decode($node->parameters, false) : $node->parameters;
 
         return $this->parseParamStruct($paramsInfo);
     }
@@ -63,7 +64,11 @@ class ParameterParser
             case "string":
                 return (string)$value;
             case "component":
-                return ComponentManager::findController($value->module, $value->component,  $this->parseParamStruct($value->params), []);
+                return ComponentManager::findController($value->module, $value->component, $this->parseParamStruct($value->params), []);
+            case "file":
+                return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
+            case "image":
+                return empty($value) ? null : new UploadedFile($value);
             default:
                 throw new \Exception("not implemented type");
         }

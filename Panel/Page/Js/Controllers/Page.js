@@ -111,6 +111,9 @@ export class edit {
         }
         this.pageSimulator = new PageSimulator(page.querySelector('.pageSimulator'));
         this.refreshPreview();
+        this.valueEdit.addEventListener('change',()=>{
+            this.refreshPreview();
+        })
     }
 
     refreshPreview() {

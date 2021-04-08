@@ -1,26 +1,21 @@
 <?php
 
-namespace Core\AssetManager;
+namespace Core\File;
 
-class AssetManager
+class AssetManager extends FileManager
 {
-    public static function getAsset(string $path)
+    public function get(string $path)
     {
-        $filepath = static::findFile($path);
+        $filepath = $this->findFile($path);
         if ($filepath == null) {
             http_response_code(404);
             exit;
         }
         ob_end_clean();
-        header('content-type: '.mime_content_type($filepath));
-        $file = fopen($filepath, 'r');
-        while ($data = fread($file, 1024)) {
-            echo $data;
-        }
-        exit;
+        $this->output($filepath, mime_content_type($filepath));
     }
 
-    public static function findFile(string $path)
+    public function findFile(string $path)
     {
         $path = str_replace('\\', '/', $path);
         if (preg_match('/\/\.\.?\//', $path)) throw new \Exception();

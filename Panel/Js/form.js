@@ -7,6 +7,7 @@ export class FormManager {
     load(data) {
         const formElements = this.form.elements;
         for (const elem of formElements) {
+            if (elem.name == '') continue;
             let value = this.parseFormItemNameRead(elem, data);
             if (elem.type == 'checkbox') {
                 elem.checked = value
