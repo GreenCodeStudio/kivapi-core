@@ -10,7 +10,7 @@ use MKrawczyk\FunQuery\FunQuery;
 
 class ParameterParser
 {
-    public function __construct($query)
+    public function __construct($query = [])
     {
         $this->query = $query;
     }
@@ -19,7 +19,7 @@ class ParameterParser
     {
         if (empty($node->parameters))
             return new \stdClass();
-        $paramsInfo = json_decode($node->parameters, false);
+        $paramsInfo = is_string($node->parameters) ? json_decode($node->parameters, false) : $node->parameters;
 
         return $this->parseParamStruct($paramsInfo);
     }
