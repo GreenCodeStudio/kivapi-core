@@ -10,13 +10,16 @@ export default class StructValueEdit extends AbstractValueEdit {
         super.draw();
         //const node = document.create('div.subgroup')
         this.paramData = []
+        if (this.param.items instanceof Array) {
+            return;
+        }
         for (let childName in this.param.items) {
             let child = this.param.items[childName];
             let label = document.create('.label');
-            label.addChild('span', {text: childName, draggable:true});
-            let childConfig = this.paramConfig?.value[childName];
+            label.addChild('span', {text: childName, draggable: true});
+            let childConfig = (this.paramConfig?.value ?? {})[childName];
             let result = generateParam(child, childConfig);
-            label.ondragstart=result.node.dragstartHandler?.bind(result);
+            label.ondragstart = result.node.dragstartHandler?.bind(result);
             label.append(result.node);
             this.append(label);
             this.paramData.push({name: childName, param: child, ...result});
@@ -25,7 +28,7 @@ export default class StructValueEdit extends AbstractValueEdit {
 
     collectParameters() {
         return ({
-            value: Object.fromEntries( this.paramData.map(x => {
+            value: Object.fromEntries(this.paramData.map(x => {
                 return [x.name, {type: x.param.type, ...x.collectParameters()}];
             }))
         });
