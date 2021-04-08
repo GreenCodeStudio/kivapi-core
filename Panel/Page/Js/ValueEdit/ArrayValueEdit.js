@@ -18,9 +18,9 @@ export default class ArrayValueEdit extends AbstractValueEdit {
             let result = this.drawItem(i, childConfig);
             this.paramData.push(result)
         }
-        this.addButton = this.addChild('button', {type: 'button', text: TCommon('Add')});
+        this.addButton = this.addChild('div').addChild('button', {type: 'button', text: TCommon('Add')});
         this.addButton.onclick = () => {
-            let label = document.create('label');
+            let label = document.create('.label');
             label.addChild('span', {text: this.paramData.length + 1 + '.'});
             let result = generateParam(this.param.item, null);
             label.append(result.node);
@@ -31,7 +31,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
 
     drawItem(i, childConfig) {
         let result = generateParam(this.param.item, childConfig);
-        let label = document.create('label', {draggable: true});
+        let label = document.create('.label', {draggable: true});
         label.addChild('span', {text: i + 1 + '.'});
         label.append(result.node);
         label.ondragstart = result.node.dragstartHandler?.bind(result);
@@ -42,7 +42,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
         }
         this.insertBefore(label, this.children[i]);
         if (this.param.type == 'tree') {
-            let subLabel = document.create('label', {draggable: true});
+            let subLabel = document.create('.label', {draggable: true});
             subLabel.addChild('span', {text: 'child'});
             let subResult = generateParam(this.param, childConfig?.children ?? null);
             subLabel.append(subResult.node);

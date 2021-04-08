@@ -1,13 +1,14 @@
 form {
-    label {
+    label, .label {
         display: grid;
         grid-template-columns: 250px 1fr;
         margin-bottom: 10px;
-        align-items: center;
+        align-items: baseline;
 
         span {
             display: table-cell;
             width: 250px;
+            line-height: 35px;
         }
 
         input, select, textarea {
@@ -25,10 +26,53 @@ form {
             display: flex;
         }
 
+    }
+
+    .label {
         &:hover {
             > span {
                 text-decoration: underline;
             }
+        }
+    }
+
+    .subgroup>* {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: block;
+            border-bottom: 1px solid;
+            position: absolute;
+            left: -35px;
+            top: 17px;
+            width: 30px;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            border-left: 1px solid;
+            position: absolute;
+            left: -35px;
+            top: -18px;
+            bottom: 0;
+        }
+
+        &:first-child {
+            &::after {
+                //  top: 0.6em;
+                // bottom: 0;
+            }
+
+        }
+
+        &:last-child {
+            &::after {
+                // top: 0;
+                height: 35px;
+            }
+
         }
     }
 }
@@ -49,6 +93,6 @@ textarea:not(.browsersDefault) {
     display: inline-block;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"]:not(.dummy) {
     @extend .checkbox
 }

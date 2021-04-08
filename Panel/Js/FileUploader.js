@@ -14,8 +14,8 @@ export default class FileUploader extends HTMLElement {
             else
                 return document.create('div', {
                     children: [{text: x.name}, {
-                        tagName: 'button',
-                        type: 'button',
+                        tagName: 'div',
+                        className: 'button',
                         text: 'usuń',
                         onclick: () => {
                             let index = this.files.indexOf(x);
@@ -27,7 +27,7 @@ export default class FileUploader extends HTMLElement {
                     }]
                 })
         };
-        this.addButton = this.addChild('button', {text: 'Dodaj', type: 'button'});
+        this.addButton = this.addChild('.button', {text: 'Dodaj'});
         this.addButton.onclick = () => this.openFileDialog();
     }
 
@@ -61,7 +61,7 @@ export default class FileUploader extends HTMLElement {
     }
 
     refreshAddButtonVisibility() {
-        this.addButton.style.display = (this.maxFiles === null | this.files.length < this.maxFiles) ? 'block' : 'none;'
+        this.addButton.style.display = (this.maxFiles === null || this.files.length < this.maxFiles) ? 'block' : 'none;'
     }
 }
 customElements.define('file-uploader', FileUploader);

@@ -12,7 +12,7 @@ export default class StructValueEdit extends AbstractValueEdit {
         this.paramData = []
         for (let childName in this.param.items) {
             let child = this.param.items[childName];
-            let label = document.create('label');
+            let label = document.create('.label');
             label.addChild('span', {text: childName, draggable:true});
             let childConfig = this.paramConfig?.value[childName];
             let result = generateParam(child, childConfig);
