@@ -22,6 +22,7 @@ export default class FileUploader extends HTMLElement {
                             if (index >= 0)
                                 this.files.splice(index, 1);
                             this.activeElementList.draw();
+                            this.dispatchEvent(new Event('change', {"bubbles": true, "cancelable": false}));
                         }
                     }]
                 })
@@ -46,6 +47,7 @@ export default class FileUploader extends HTMLElement {
         let data = await AjaxPanel.File.upload(file, {});
         this.files.splice(this.files.indexOf(placeholder), 1, data);
         this.activeElementList.draw();
+        this.dispatchEvent(new Event('change', {"bubbles": true, "cancelable": false}));
     }
 
     get value() {
