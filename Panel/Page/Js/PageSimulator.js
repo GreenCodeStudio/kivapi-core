@@ -51,7 +51,7 @@ export default class PageSimulator {
         this.data.showParents = this.wrapper.querySelector('.pageSimulator-showParents').checked;
         const form = document.create('form', {
             target: newWindow ? '_blank' : 'pageSimulator',
-            action: 'pageSimulator',
+            action: 'PageSimulator',
             method: 'post'
         });
         form.style.display = 'none';

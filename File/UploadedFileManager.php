@@ -21,13 +21,7 @@ class UploadedFileManager extends FileManager
             exit;
         }
         ob_end_clean();
-        header('content-type: '.$info->mime);
-        $filename = $info->name.(empty($info->extension) ? '' : ('.'.$info->extension));
-        header('Content-Disposition: attachment; filename="'.$filename.'"');
-        $file = fopen($filepath, 'r');
-        while ($data = fread($file, 1024)) {
-            echo $data;
-        }
-        exit;
+
+        $this->output($filepath, $info->mime);
     }
 }

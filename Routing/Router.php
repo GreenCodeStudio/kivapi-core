@@ -4,7 +4,7 @@
 namespace Core\Routing;
 
 
-use Core\AssetManager\AssetManager;
+use Core\File\AssetManager;
 use Core\Exceptions\NotFoundException;
 use Core\File\UploadedFileManager;
 use Core\Log;

@@ -1,8 +1,6 @@
 <?php
 
-namespace Core\AssetManager;
-
-use Core\File\FileManager;
+namespace Core\File;
 
 class AssetManager extends FileManager
 {
@@ -14,12 +12,7 @@ class AssetManager extends FileManager
             exit;
         }
         ob_end_clean();
-        header('content-type: '.mime_content_type($filepath));
-        $file = fopen($filepath, 'r');
-        while ($data = fread($file, 1024)) {
-            echo $data;
-        }
-        exit;
+        $this->output($filepath, mime_content_type($filepath));
     }
 
     public function findFile(string $path)
