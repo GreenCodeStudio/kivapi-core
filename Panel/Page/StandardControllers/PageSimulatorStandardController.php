@@ -22,7 +22,7 @@ class PageSimulatorStandardController extends PanelStandardController
         $data = json_decode($_POST['data']);
         $node = $data;
 
-        if ($data->showParents)
+        if ($data->showParents && !empty($data->parent_id))
             $node->parent = (new PageRepository())->getAll()[$data->parent_id];
         else
             $node->parent = null;

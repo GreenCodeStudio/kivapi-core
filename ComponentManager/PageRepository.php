@@ -79,4 +79,9 @@ class PageRepository extends Repository
     {
         return DB::get("SELECT p.id, pv.title FROM page p JOIN page_version pv on pv.id = p.current_version_id WHERE pv.type='layout'");
     }
+
+    public function reverseRoute($module, $component)
+    {
+        return DB::get("SELECT p.id, path, title FROM page p JOIN page_version pv on pv.id = p.current_version_id WHERE component = ? AND module = ? LIMIT 1", [$component, $module])[0] ?? null;
+    }
 }

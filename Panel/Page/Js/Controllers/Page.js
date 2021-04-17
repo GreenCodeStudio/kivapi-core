@@ -22,11 +22,11 @@ export class index {
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [];
         objectsList.columns.push({
-            name: t('Fields.id'),
-            content: row => row.id,
-            sortName: 'id',
-            width: 100,
-            widthGrow: 0
+            name: t('Fields.title'),
+            content: row => row.title ?? '',
+            sortName: 'title',
+            width: 180,
+            widthGrow: 1
         });
         objectsList.columns.push({
             name: t('Fields.path'),
@@ -39,13 +39,6 @@ export class index {
             name: t('Fields.component'),
             content: row => (row.module ?? '') + '\\' + row.component,
             sortName: 'component',
-            width: 180,
-            widthGrow: 1
-        });
-        objectsList.columns.push({
-            name: t('Fields.title'),
-            content: row => row.title ?? '',
-            sortName: 'title',
             width: 180,
             widthGrow: 1
         });

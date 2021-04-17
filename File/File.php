@@ -20,7 +20,8 @@ class File
             $name = $file['name'];
             $extension = null;
         }
-        $data=['id' => $id, 'name' => $name, 'extension' => $extension, 'mime' => $file['type'], 'size' => $fileSize];
+        $data = ['id' => $id, 'name' => $name, 'extension' => $extension, 'mime' => $this->getMimeByExtension($extension) ?? $file['type'], 'size' => $fileSize];
+
         (new FileRepository())->insert($data);
         return $data;
     }
@@ -32,5 +33,11 @@ class File
             mkdir($dir, 0777, true);
         }
         return $dir;
+    }
+
+    private function getMimeByExtension($extension)
+    {
+        $mimes = ['png' => 'image/png', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg'];
+        return $mimes[$extension] ?? null;
     }
 }

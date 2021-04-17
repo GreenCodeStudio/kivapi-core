@@ -15,7 +15,7 @@
                 <input name="path">
             </label>
             <label>
-                <span><?= t("Core.Panel.Page.Fields.parent") ?></span><?= dump($data['layouts']) ?>
+                <span><?= t("Core.Panel.Page.Fields.parent") ?></span>
                 <select name="parent_id">
                     <option value="">Brak</option>
                     <?php foreach ($data['layouts'] as $layout) {
