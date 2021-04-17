@@ -17,7 +17,7 @@
         </node>
         <node name="path">
             <value lang="en">Path</value>
-            <value lang="pl">Ścierzka</value>
+            <value lang="pl">Ścieżka</value>
         </node>
         <node name="parent">
             <value lang="en">Parent</value>

@@ -37,11 +37,6 @@ class PageRepository extends Repository
         }
     }
 
-    public function defaultTable(): string
-    {
-        return 'page';
-    }
-
     public function getDataTable($options)
     {
         $start = (int)$options->start;
@@ -63,6 +58,7 @@ class PageRepository extends Repository
             return ' ORDER BY '.DB::safeKey($mapping[$options->sort->col]).' '.($options->sort->desc ? 'DESC' : 'ASC').' ';
         }
     }
+
     public function insertVersion($data)
     {
         return DB::insert('page_version', $data);
@@ -72,5 +68,15 @@ class PageRepository extends Repository
     {
         $defaultTable = $this->defaultTable();
         return DB::get("SELECT pv.*, p.id FROM page p JOIN page_version pv on pv.id = p.current_version_id WHERE p.id = ?", [$id])[0] ?? null;
+    }
+
+    public function defaultTable(): string
+    {
+        return 'page';
+    }
+
+    public function getLayouts()
+    {
+        return DB::get("SELECT p.id, pv.title FROM page p JOIN page_version pv on pv.id = p.current_version_id WHERE pv.type='layout'");
     }
 }
