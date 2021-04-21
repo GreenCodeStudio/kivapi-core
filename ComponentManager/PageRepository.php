@@ -51,10 +51,12 @@ class PageRepository extends Repository
     {
         if (empty($options->sort))
             return "";
+        else if ($options->sort->col == 'component')
+            return ' ORDER BY module '.($options->sort->desc ? 'DESC' : 'ASC').', component '.($options->sort->desc ? 'DESC' : 'ASC');
         else {
-            $mapping = [];
+            $mapping = ['path' => 'path', 'title' => 'title', 'type' => 'type'];
             if (empty($mapping[$options->sort->col]))
-                throw new Exception();
+                throw new \Exception();
             return ' ORDER BY '.DB::safeKey($mapping[$options->sort->col]).' '.($options->sort->desc ? 'DESC' : 'ASC').' ';
         }
     }

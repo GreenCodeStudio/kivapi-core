@@ -42,10 +42,11 @@ class ParameterParser
         } else if ($param->type == 'struct') {
             return $this->parseParamStruct($param->value);
         } else {
+            $const=$this->parseParamValue($param->value, $param->type);
             if ($param->source == 'query')
-                return $this->parseParamValue($this->query[$name] ?? null, $param->type);
+                return $this->parseParamValue($this->query[$name] ?? $const, $param->type);
             else if ($param->source == 'const')
-                return $this->parseParamValue($param->value, $param->type);
+                return $const;
         }
     }
 
