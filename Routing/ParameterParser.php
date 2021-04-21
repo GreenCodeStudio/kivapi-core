@@ -69,7 +69,7 @@ class ParameterParser
             case "file":
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
             case "image":
-                return empty($value) ? null : new UploadedFile($value);
+                return empty($value) ? null : UploadedFile::Create($value);
             default:
                 throw new \Exception("not implemented type");
         }
