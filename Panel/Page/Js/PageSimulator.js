@@ -45,7 +45,7 @@ export default class PageSimulator {
         iframe.style.width = this.width + 'px'
         iframe.style.height = (this.height - this.topMargin) + 'px';
         div.style.width = this.width * scale + 'px'
-        div.style.marginRight = -this.width* scale + 'px'
+        div.style.marginRight = -this.width * scale + 'px'
         div.style.marginLeft = (wrapperWidth - this.width * scale) / 2 + 'px';
         div.style.height = ((this.height - this.topMargin) * scale) + 'px'
     }
@@ -65,7 +65,9 @@ export default class PageSimulator {
         form.style.display = 'none';
         form.addChild('input', {name: 'data', value: JSON.stringify(this.data)});
         document.body.appendChild(form);
-        form.submit();
+        if (newWindow || document.querySelector('[name="pageSimulator"]') !== null) {
+            form.submit();
+        }
         form.remove();
     }
 }

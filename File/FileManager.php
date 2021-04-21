@@ -31,7 +31,7 @@ class FileManager
         if ($mime == 'image/jpeg') {
             $image = imagecreatefromjpeg($filepath);
         } else if ($mime == 'image/png') {
-            $image = imagecreatefromjpeg($filepath);
+            $image = imagecreatefrompng($filepath);
         }
         if (!empty($_GET['width']) && !empty($_GET['height'])) {
             $image = imagescale($image, $_GET['width'], $_GET['height']);
@@ -41,8 +41,12 @@ class FileManager
             $image = imagescale($image, $_GET['height'] * imagesx($image) / imagesy($image), $_GET['height']);
         }
 
-        if ($_GET['type'] == 'png') {
-            $mime = 'image/png';
+        if (!empty($_GET['type'])) {
+            if ($_GET['type'] == 'png') {
+                $mime = 'image/png';
+            } else if ($_GET['type'] == 'jpg' || $_GET['type'] == 'jpeg') {
+                $mime = 'image/jpeg';
+            }
         }
 
         if ($mime == 'image/jpeg') {

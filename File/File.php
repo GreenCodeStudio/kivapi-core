@@ -21,7 +21,7 @@ class File
             $extension = null;
         }
         $data = ['id' => $id, 'name' => $name, 'extension' => $extension, 'mime' => $this->getMimeByExtension($extension) ?? $file['type'], 'size' => $fileSize];
-
+        $this->fillBySpecificInfo($data);
         (new FileRepository())->insert($data);
         return $data;
     }
@@ -39,5 +39,16 @@ class File
     {
         $mimes = ['png' => 'image/png', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg'];
         return $mimes[$extension] ?? null;
+    }
+
+    private function fillBySpecificInfo(&$data)
+    {
+        $path = $this->getDir().'/'.$data['id'].'.bin';
+        if ($data['mime'] == 'image/png' || $data['mime'] == 'image/jpeg') {
+            $size = getimagesize($path);
+            $data['image_width'] = $size[0];
+            $data['image_height'] = $size[1];
+            $data['mime'] = $size['mime'];
+        }
     }
 }

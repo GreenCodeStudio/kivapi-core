@@ -24,7 +24,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
             label.addChild('span', {text: this.paramData.length + 1 + '.'});
             let result = generateParam(this.param.item, null);
             label.append(result.node);
-            this.insertBefore(label, this.addButton);
+            this.insertBefore(label, this.addButton.parentNode);
             this.paramData.push(result)
         }
     }
