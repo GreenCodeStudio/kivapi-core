@@ -3,10 +3,8 @@ import {create} from "fast-creator";
 import {PaginationButtons} from "./paginationButtons";
 import {ContextMenu} from "../contextMenu";
 
-//import {t} from "../../i18n.xml";
-function t(a) {
-    return a;//tmp
-}
+import {t} from "../../Common/i18n.xml";
+
 
 export class ObjectsList extends HTMLElement {
     constructor(datasource) {
@@ -100,7 +98,7 @@ export class ObjectsList extends HTMLElement {
         const searchInput = this.searchForm.addChild('input', {
             name: 'search',
             type: 'search',
-            placeholder: t('objectList.search')
+            placeholder: t('ObjectList.Search')
         });
         searchInput.oninput = e => {
             this.start = 0;
@@ -118,14 +116,14 @@ export class ObjectsList extends HTMLElement {
 
     showGlobalContextMenu(e) {
         let elements = [{
-            text: t('objectList.paginationMode'),
+            text: t('ObjectList.PaginationMode'),
             icon: 'icon-pagination',
             onclick: () => {
                 this.infiniteScrollEnabled = false;
                 this.refresh();
             }
         }, {
-            text: t('objectList.scrollMode'),
+            text: t('ObjectList.ScrollMode'),
             icon: 'icon-scroll',
             onclick: () => {
                 this.infiniteScrollEnabled = true;

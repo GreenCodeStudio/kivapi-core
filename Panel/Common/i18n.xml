@@ -16,4 +16,18 @@
         <value lang="en">Cancel</value>
         <value lang="pl">Anuluj</value>
     </node>
+    <node name="ObjectList">
+        <node name="Search">
+            <value lang="en">Search</value>
+            <value lang="pl">Szukaj</value>
+        </node>
+        <node name="ScrollMode">
+            <value lang="en">Scroll mode</value>
+            <value lang="pl">Try przewijania</value>
+        </node>
+        <node name="PaginationMode">
+            <value lang="en">Pagination mode</value>
+            <value lang="pl">Tryb stronicowania</value>
+        </node>
+    </node>
 </root>

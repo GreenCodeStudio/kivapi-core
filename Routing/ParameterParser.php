@@ -42,10 +42,11 @@ class ParameterParser
         } else if ($param->type == 'struct') {
             return $this->parseParamStruct($param->value);
         } else {
+            $const=$this->parseParamValue($param->value, $param->type);
             if ($param->source == 'query')
-                return $this->parseParamValue($this->query[$name] ?? null, $param->type);
+                return $this->parseParamValue($this->query[$name] ?? $const, $param->type);
             else if ($param->source == 'const')
-                return $this->parseParamValue($param->value, $param->type);
+                return $const;
         }
     }
 
@@ -68,7 +69,7 @@ class ParameterParser
             case "file":
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
             case "image":
-                return empty($value) ? null : new UploadedFile($value);
+                return empty($value) ? null : UploadedFile::Create($value);
             default:
                 throw new \Exception("not implemented type");
         }

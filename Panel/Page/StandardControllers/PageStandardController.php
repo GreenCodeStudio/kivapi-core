@@ -3,8 +3,8 @@
 namespace Core\Panel\Page\StandardControllers;
 
 use Authorization\Permissions;
-use Core\ComponentManager\Page;
 use Core\ComponentManager\ComponentManager;
+use Core\ComponentManager\Page;
 use Core\Exceptions\NotFoundException;
 use Core\Panel\Infrastructure\PanelStandardController;
 
@@ -22,7 +22,9 @@ class PageStandardController extends PanelStandardController
     function edit(int $id)
     {
         $this->will('Page', 'edit');
-        $this->addView('Page', 'PageEdit', ['type' => 'edit']);
+        $page = new Page();
+        $layouts = $page->getLayouts();
+        $this->addView('Page', 'PageEdit', ['type' => 'edit', 'layouts' => $layouts]);
         $this->pushBreadcrumb(['title' => 'Page', 'url' => 'Page']);
         $this->pushBreadcrumb(['title' => 'Edycja', 'url' => 'Page/edit/'.$id]);
     }

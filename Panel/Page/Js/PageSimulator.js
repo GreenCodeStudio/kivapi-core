@@ -34,12 +34,20 @@ export default class PageSimulator {
 
     setSize() {
         const iframe = this.wrapper.querySelector('.pageSimulator-iframe')
-        iframe.style.marginRight = -this.width + 'px'
+        const div = iframe.parentNode;
+        const wrapper = div.parentNode;
+        let wrapperWidth = (wrapper.clientWidth - 20);
+        let scaleW = wrapperWidth / this.width;
+        let scaleH = innerHeight / this.height * 0.9;
+        let scale = Math.min(scaleW, scaleH);
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.setProperty('--scale', scale);
         iframe.style.width = this.width + 'px'
         iframe.style.height = (this.height - this.topMargin) + 'px';
-        let scale = iframe.parentNode.clientWidth / this.width;
-        iframe.style.transform = `scale(${scale})`;
-        iframe.parentNode.style.height = ((this.height - this.topMargin) * scale) + 'px'
+        div.style.width = this.width * scale + 'px'
+        div.style.marginRight = -this.width * scale + 'px'
+        div.style.marginLeft = (wrapperWidth - this.width * scale) / 2 + 'px';
+        div.style.height = ((this.height - this.topMargin) * scale) + 'px'
     }
 
     setData(data) {
@@ -57,7 +65,9 @@ export default class PageSimulator {
         form.style.display = 'none';
         form.addChild('input', {name: 'data', value: JSON.stringify(this.data)});
         document.body.appendChild(form);
-        form.submit();
+        if (newWindow || document.querySelector('[name="pageSimulator"]') !== null) {
+            form.submit();
+        }
         form.remove();
     }
 }

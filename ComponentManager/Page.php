@@ -37,6 +37,7 @@ class Page
         $filtered['page_id'] = $id;
         $filtered['module'] = $old->module;
         $filtered['component'] = $old->component;
+        $filtered['type'] = $old->type;
         $versionId = $this->defaultDB->insertVersion($filtered);
         $this->defaultDB->update($id, ['current_version_id' => $versionId]);
         //\Core\WebSocket\Sender::sendToUsers(["ComponentComposition", "ComponentComposition", "Update", $id]);
@@ -44,7 +45,7 @@ class Page
 
     protected function filterData($data)
     {
-        $ret = ['parameters' => $data->parameters, 'parent_id' => empty($data->parent_id) ? null:$data->parent_id, 'path' => $data->path, 'title' => $data->title, 'description' => $data->description];
+        $ret = ['parameters' => $data->parameters, 'parent_id' => empty($data->parent_id) ? null : $data->parent_id, 'path' => $data->path, 'title' => $data->title, 'description' => $data->description];
 
         return $ret;
     }
@@ -66,4 +67,8 @@ class Page
         return $id;
     }
 
+    public function getLayouts()
+    {
+        return $this->defaultDB->getLayouts();
+    }
 }

@@ -115,6 +115,9 @@ data-view {
         border-top: 1px solid var(--second);
         display: flex;
         justify-content: space-between;
+        .search{
+            display: none;//tmp
+        }
     }
     &.infiniteScrollEnabled {
         table-view {

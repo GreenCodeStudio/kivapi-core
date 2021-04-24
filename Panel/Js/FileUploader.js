@@ -8,12 +8,13 @@ export default class FileUploader extends HTMLElement {
         this.files = [];
         this.activeElementList = new ActiveElementList(this.addChild('div'), this.files);
         this.activeElementList.item = (x, old) => {
+            console.log(x);
             if (old) return old;
             else if (x.status === 'pending')
-                return document.create('div', {text: 'pending'})
+                return document.create('div.pendingFile', {text: 'pending'})
             else
-                return document.create('div', {
-                    children: [{text: x.name}, {
+                return document.create('div.uploadedFile', {
+                    children: [{text: x.name || 'Bez nazwy'}, {text: 'Typ: ' + x.mime}, {text: 'Rozmiar: ' + this.bytesToHumanReadable(x.size)}, {
                         tagName: 'div',
                         className: 'button',
                         text: 'usuń',
@@ -62,6 +63,23 @@ export default class FileUploader extends HTMLElement {
 
     refreshAddButtonVisibility() {
         this.addButton.style.display = (this.maxFiles === null || this.files.length < this.maxFiles) ? 'block' : 'none;'
+    }
+
+    bytesToHumanReadable(bytes) {
+        if (bytes > 1024 ** 3)
+            return this.numberHumanRund(bytes / 1024 ** 3) + 'GB';
+        else if (bytes > 1024 ** 2)
+            return this.numberHumanRund(bytes / 1024 ** 2) + 'MB';
+        else if (bytes > 1024)
+            return this.numberHumanRund(bytes / 1024) + 'kB';
+        else
+            return bytes + 'B';
+    }
+
+    numberHumanRund(num) {
+        if (num > 100) return num.toString();
+        else if (num > 10) return num.toFixed(1);
+        else return num.toFixed(2);
     }
 }
 customElements.define('file-uploader', FileUploader);

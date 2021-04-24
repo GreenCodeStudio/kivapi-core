@@ -4,7 +4,8 @@
         "fast-creator": "^1.2.3",
         "prototype-extensions": "^1.8.0",
         "pmeditor-editor": "^0.1.2",
-        "pmeditor-core": "^0.1.5"
+        "pmeditor-core": "^0.1.5",
+        "zoom-gallery": "^1.1.0"
     },
     "devDependencies": {
         "css-loader": "^3.4.2",

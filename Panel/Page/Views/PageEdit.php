@@ -16,7 +16,14 @@
             </label>
             <label>
                 <span><?= t("Core.Panel.Page.Fields.parent") ?></span>
-                <input name="parent_id">
+                <select name="parent_id">
+                    <option value="">Brak</option>
+                    <?php foreach ($data['layouts'] as $layout) {
+                        ?>
+                        <option value="<?= $layout->id ?>"><?= htmlspecialchars($layout->title) ?></option>
+                        <?php
+                    } ?>
+                </select>
             </label>
 
             <label>
@@ -36,7 +43,8 @@
                 <?php foreach ($data['availableComponents'] as $component) {
                     ?>
                     <label>
-                        <input type="radio" name="component" value="<?=htmlspecialchars(json_encode($component))?>"><?= (empty($component[0]) ? '' : ($component[0].'/')).$component[1] ?>
+                        <input type="radio" name="component"
+                               value="<?= htmlspecialchars(json_encode($component)) ?>"><?= (empty($component[0]) ? '' : ($component[0].'/')).$component[1] ?>
                     </label>
                     <?php
                 } ?>
@@ -44,16 +52,29 @@
         <?php } ?>
         <section class="card pageSimulator" data-width="2">
             <h1><?= t("Core.Panel.Page.preview") ?></h1>
-            <button type="button" class="pageSimulator-changeResolution" data-width="480" data-height="320" data-top-margin="0">Mobile</button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="1024" data-height="786" data-top-margin="100">Tablet</button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="1366" data-height="786" data-top-margin="100">Laptop</button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="1920" data-height="1080" data-top-margin="100">PC</button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="3860" data-height="2160" data-top-margin="100">PC 4k</button>
+            <button type="button" class="pageSimulator-changeResolution" data-width="480" data-height="320"
+                    data-top-margin="0">Mobile
+            </button>
+            <button type="button" class="pageSimulator-changeResolution" data-width="1024" data-height="786"
+                    data-top-margin="100">Tablet
+            </button>
+            <button type="button" class="pageSimulator-changeResolution" data-width="1366" data-height="786"
+                    data-top-margin="100">Laptop
+            </button>
+            <button type="button" class="pageSimulator-changeResolution" data-width="1920" data-height="1080"
+                    data-top-margin="100">PC
+            </button>
+            <button type="button" class="pageSimulator-changeResolution" data-width="3860" data-height="2160"
+                    data-top-margin="100">PC 4k
+            </button>
             <button type="button" class="pageSimulator-rotateResolution">Rotate</button>
             <button type="button" class="pageSimulator-openFullSize">Open full size</button>
-            <label><input type="checkbox" class="pageSimulator-showParents" checked="checked"><span>showParents</span></label>
+            <label><input type="checkbox" class="pageSimulator-showParents"
+                          checked="checked"><span>showParents</span></label>
             <div class="pageSimulator-iframeWrapper">
-                <iframe src="/PageSimulator" class="pageSimulator-iframe" name="pageSimulator"></iframe>
+                <div>
+                    <iframe src="/PageSimulator" class="pageSimulator-iframe" name="pageSimulator"></iframe>
+                </div>
             </div>
         </section>
     </div>

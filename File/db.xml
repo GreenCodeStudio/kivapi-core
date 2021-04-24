@@ -27,6 +27,16 @@
             <type>bigint</type>
             <null>YES</null>
         </column>
+        <column>
+            <name>image_width</name>
+            <type>bigint</type>
+            <null>YES</null>
+        </column>
+        <column>
+            <name>image_height</name>
+            <type>bigint</type>
+            <null>YES</null>
+        </column>
         <index>
             <type>PRIMARY</type>
             <element>id</element>
