@@ -8,6 +8,7 @@ class FileManager
 {
     public function output($filepath, $mime)
     {
+        header('cache-control: max-age=31536000, public');
         if ($this->isImageReformat() && ($mime == 'image/jpeg' || $mime == 'image/png')) {
             $this->reformatImage($filepath, $mime);
         } else {
@@ -27,6 +28,30 @@ class FileManager
     }
 
     protected function reformatImage($filepath, $mime)
+    {
+        $tmpPath = __DIR__.'/../../Tmp/img_'.md5(($_GET['width'] ?? '').'_'.($_GET['width'] ?? '').'_'.($_GET['width'] ?? '').'_'.$filepath).'.'.$this->mimeToExtension($mime);
+        if (!is_file($tmpPath)) {
+            $this->reformatImageDirect($filepath, $mime, $tmpPath);
+        }
+        header('content-type: '.$mime);
+        $file = fopen($tmpPath, 'r');
+        while ($data = fread($file, 1024)) {
+            echo $data;
+        }
+    }
+
+    protected function mimeToExtension($mime)
+    {
+        if ($mime == 'image/jpeg') {
+            return 'jpeg';
+        } else if ($mime == 'image/png') {
+            return 'png';
+        } else {
+            return 'bin';
+        }
+    }
+
+    protected function reformatImageDirect($filepath, $mime, $tmpPath)
     {
         if ($mime == 'image/jpeg') {
             $image = imagecreatefromjpeg($filepath);
@@ -51,10 +76,10 @@ class FileManager
 
         if ($mime == 'image/jpeg') {
             header('content-type: image/jpeg');
-            imagejpeg($image);
+            imagejpeg($image, $tmpPath);
         } else if ($mime == 'image/png') {
             header('content-type: image/png');
-            imagepng($image);
+            imagepng($image, $tmpPath);
         }
         exit;
     }
