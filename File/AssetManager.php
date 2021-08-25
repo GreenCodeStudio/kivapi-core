@@ -6,6 +6,7 @@ class AssetManager extends FileManager
 {
     public function get(string $path)
     {
+        $path = explode("?", $path)[0];
         $filepath = $this->findFile($path);
         if ($filepath == null) {
             http_response_code(404);
@@ -19,7 +20,7 @@ class AssetManager extends FileManager
     {
         $path = str_replace('\\', '/', $path);
         if (preg_match('/\/\.\.?\//', $path)) throw new \Exception();
-        $filepath = __DIR__.'/../../Assets/'.$path;
+        $filepath = __DIR__ . '/../../Assets/' . $path;
         if (is_file($filepath))
             return $filepath;
         return null;

@@ -19,6 +19,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/Dist/') === 0) {
 } else {
     include_once __DIR__.'/autoloader.php';
     include_once __DIR__.'/loadDotEnv.php';
+    include_once __DIR__.'/globalFunctions.php';
     \Core\Database\DB::init();
     \Core\Routing\Router::routeHttp($_SERVER['REQUEST_URI']);
 }
