@@ -6,6 +6,7 @@ namespace Core\Panel\Page\StandardControllers;
 
 use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\PageRepository;
+use Core\ComponentManager\SpecialComponents\PlaceholderComponent;
 use Core\Panel\Infrastructure\PanelStandardController;
 use Core\Routing\ParameterParser;
 use Core\Routing\RouteNode;
@@ -38,7 +39,7 @@ class PageSimulatorStandardController extends PanelStandardController
         $controllers = FunQuery::create($routeNodes)->map(fn($routeNode) => ComponentManager::findController($routeNode->node->module, $routeNode->node->component, $routeNode->parameters))->toArray();
         $component = $controllers[0];
         foreach ($controllers as $i => $controller) {
-            $controller->subRouteComponent = $controllers[$i + 1] ?? null;
+            $controller->subRouteComponent = $controllers[$i + 1] ?? new PlaceholderComponent();
         }
 
         include __DIR__.'/../../../../Core/BaseHTML.php';

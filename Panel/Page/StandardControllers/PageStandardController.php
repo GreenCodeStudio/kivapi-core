@@ -26,7 +26,7 @@ class PageStandardController extends PanelStandardController
         $layouts = $page->getLayouts();
         $this->addView('Page', 'PageEdit', ['type' => 'edit', 'layouts' => $layouts]);
         $this->pushBreadcrumb(['title' => 'Page', 'url' => 'Page']);
-        $this->pushBreadcrumb(['title' => 'Edycja', 'url' => 'Page/edit/'.$id]);
+        $this->pushBreadcrumb(['title' => 'Edycja', 'url' => 'Page/edit/' . $id]);
     }
 
     function edit_data(int $id)
@@ -50,14 +50,16 @@ class PageStandardController extends PanelStandardController
             throw new NotFoundException();
         $this->addView('Page', 'PageShow', ['Page' => $data]);
         $this->pushBreadcrumb(['title' => 'Page', 'url' => 'Page']);
-        $this->pushBreadcrumb(['title' => 'Podgląd', 'url' => 'Page/show/'.$id]);
+        $this->pushBreadcrumb(['title' => 'Podgląd', 'url' => 'Page/show/' . $id]);
     }
 
     function add()
     {
         $this->will('Page', 'add');
+        $page = new Page();
+        $layouts = $page->getLayouts();
         $availableComponents = ComponentManager::listComponents();
-        $this->addView('Page', 'PageEdit', ['type' => 'add', 'availableComponents' => $availableComponents]);
+        $this->addView('Page', 'PageEdit', ['type' => 'add', 'layouts' => $layouts, 'availableComponents' => $availableComponents]);
         $this->pushBreadcrumb(['title' => 'Page', 'url' => 'Page']);
         $this->pushBreadcrumb(['title' => 'Dodaj', 'url' => 'Page/add']);
     }

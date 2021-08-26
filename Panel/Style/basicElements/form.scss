@@ -96,3 +96,6 @@ textarea:not(.browsersDefault) {
 input[type="checkbox"]:not(.dummy) {
     @extend .checkbox
 }
+input[type="radio"] {
+    @extend .radiobutton
+}

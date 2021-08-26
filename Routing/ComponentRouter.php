@@ -4,6 +4,7 @@ namespace Core\Routing;
 
 use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\PageRepository;
+use Core\ComponentManager\SpecialComponents\EmptyComponent;
 use Core\Exceptions\NotFoundException;
 use MKrawczyk\FunQuery\FunQuery;
 
@@ -20,7 +21,7 @@ class ComponentRouter extends Router
         $controllers = FunQuery::create($this->routeNodes)->map(fn($routeNode) => ComponentManager::findController($routeNode->node->module, $routeNode->node->component, $routeNode->parameters))->toArray();
         $this->controller = $controllers[0];
         foreach ($controllers as $i => $controller) {
-            $controller->subRouteComponent = $controllers[$i + 1] ?? null;
+            $controller->subRouteComponent = $controllers[$i + 1] ?? new EmptyComponent();
         }
     }
 

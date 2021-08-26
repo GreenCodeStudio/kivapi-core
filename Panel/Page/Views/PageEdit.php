@@ -43,39 +43,42 @@
                 <?php foreach ($data['availableComponents'] as $component) {
                     ?>
                     <label>
+                        <span><?= (empty($component[0]) ? '' : ($component[0] . '\\')) . $component[1] ?></span>
                         <input type="radio" name="component"
-                               value="<?= htmlspecialchars(json_encode($component)) ?>"><?= (empty($component[0]) ? '' : ($component[0].'/')).$component[1] ?>
+                               value="<?= htmlspecialchars(json_encode($component)) ?>">
                     </label>
                     <?php
                 } ?>
             </section>
         <?php } ?>
-        <section class="card pageSimulator" data-width="2">
-            <h1><?= t("Core.Panel.Page.preview") ?></h1>
-            <button type="button" class="pageSimulator-changeResolution" data-width="480" data-height="320"
-                    data-top-margin="0">Mobile
-            </button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="1024" data-height="786"
-                    data-top-margin="100">Tablet
-            </button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="1366" data-height="786"
-                    data-top-margin="100">Laptop
-            </button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="1920" data-height="1080"
-                    data-top-margin="100">PC
-            </button>
-            <button type="button" class="pageSimulator-changeResolution" data-width="3860" data-height="2160"
-                    data-top-margin="100">PC 4k
-            </button>
-            <button type="button" class="pageSimulator-rotateResolution">Rotate</button>
-            <button type="button" class="pageSimulator-openFullSize">Open full size</button>
-            <label><input type="checkbox" class="pageSimulator-showParents"
-                          checked="checked"><span>showParents</span></label>
-            <div class="pageSimulator-iframeWrapper">
-                <div>
-                    <iframe src="/PageSimulator" class="pageSimulator-iframe" name="pageSimulator"></iframe>
+        <?php if ($data['type'] == 'edit') { ?>
+            <section class="card pageSimulator" data-width="2">
+                <h1><?= t("Core.Panel.Page.preview") ?></h1>
+                <button type="button" class="pageSimulator-changeResolution" data-width="480" data-height="320"
+                        data-top-margin="0">Mobile
+                </button>
+                <button type="button" class="pageSimulator-changeResolution" data-width="1024" data-height="786"
+                        data-top-margin="100">Tablet
+                </button>
+                <button type="button" class="pageSimulator-changeResolution" data-width="1366" data-height="786"
+                        data-top-margin="100">Laptop
+                </button>
+                <button type="button" class="pageSimulator-changeResolution" data-width="1920" data-height="1080"
+                        data-top-margin="100">PC
+                </button>
+                <button type="button" class="pageSimulator-changeResolution" data-width="3860" data-height="2160"
+                        data-top-margin="100">PC 4k
+                </button>
+                <button type="button" class="pageSimulator-rotateResolution">Rotate</button>
+                <button type="button" class="pageSimulator-openFullSize">Open full size</button>
+                <label><input type="checkbox" class="pageSimulator-showParents"
+                              checked="checked"><span>showParents</span></label>
+                <div class="pageSimulator-iframeWrapper">
+                    <div>
+                        <iframe src="/PageSimulator" class="pageSimulator-iframe" name="pageSimulator"></iframe>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        <?php } ?>
     </div>
 </form>
