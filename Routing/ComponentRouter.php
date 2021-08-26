@@ -37,7 +37,7 @@ class ComponentRouter extends Router
                 $this->query[urldecode($key)] = urldecode($value);
             }
         }
-        $this->urlWithoutQuery = explode("?", $this->url)[0];
+        $this->urlWithoutQuery = rtrim($this->urlWithoutQuery, '/');
     }
 
     private function findRoute()
@@ -65,7 +65,12 @@ class ComponentRouter extends Router
     {
         $component = $this->controller;
         $meta = (object)['title' => $this->lastValue('title'), 'description' => $this->lastValue('description')];
-        include __DIR__.'/../BaseHTML.php';
+        $path = $this->lastValue('path');
+        $urlPrefix = $_ENV['urlPrefix'];
+        if (!empty($path) && !empty($urlPrefix)) {
+            $meta->canonical = $urlPrefix . $path;
+        }
+        include __DIR__ . '/../BaseHTML.php';
     }
 
     private function lastValue($field)

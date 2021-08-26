@@ -11,6 +11,9 @@ use Core\Log;
 use Core\Panel\Authorization\Authorization;
 use Core\Panel\Authorization\Exceptions\NoPermissionException;
 use Core\Panel\Authorization\Exceptions\UnauthorizedException;
+use Core\SpecialPages\ISpecialPage;
+use Core\SpecialPages\Robots;
+use Core\SpecialPages\Sitemap;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\Annotations;
 use ReflectionMethod;
@@ -24,6 +27,9 @@ class Router
             exit;
         } else if (strtolower(substr($url, 0, 6)) == '/file/') {
             (new UploadedFileManager())->get(substr($url, 6));
+            exit;
+        } else if ($specialPage = self::getSpecialPage($url)) {
+            $specialPage->generate();
             exit;
         }
         $router = self::getHttpRouter($url);
@@ -75,8 +81,8 @@ class Router
         $reflectionMethod = new ReflectionMethod($this->controllerClassName, $this->controller->initInfo->methodName);
         $this->returned = $reflectionMethod->invokeArgs($this->controller, $this->controller->initInfo->methodArguments);
 
-        if (method_exists($this->controller, $this->controller->initInfo->methodName.'_data')) {
-            $reflectionMethodData = new ReflectionMethod($this->controllerClassName, $this->controller->initInfo->methodName.'_data');
+        if (method_exists($this->controller, $this->controller->initInfo->methodName . '_data')) {
+            $reflectionMethodData = new ReflectionMethod($this->controllerClassName, $this->controller->initInfo->methodName . '_data');
             $this->controller->initInfo->data = $reflectionMethodData->invokeArgs($this->controller, $this->controller->initInfo->methodArguments);
         }
     }
@@ -127,13 +133,13 @@ class Router
     public static function listControllers(string $type)
     {
         $ret = [];
-        $modules = scandir(__DIR__.'/../../');
+        $modules = scandir(__DIR__ . '/../../');
         foreach ($modules as $module) {
             if ($module == '.' || $module == '..') {
                 continue;
             }
-            if (is_dir(__DIR__.'/../../'.$module.'/'.$type)) {
-                $controllers = scandir(__DIR__.'/../../'.$module.'/'.$type);
+            if (is_dir(__DIR__ . '/../../' . $module . '/' . $type)) {
+                $controllers = scandir(__DIR__ . '/../../' . $module . '/' . $type);
                 foreach ($controllers as $controllerFile) {
                     $info = self::getControllerInfo($type, $module, $controllerFile);
                     if ($info != null) {
@@ -162,7 +168,7 @@ class Router
                 $methods = $classReflect->getMethods();
                 foreach ($methods as $methodReflect) {
                     if (!$methodReflect->isPublic()) continue;
-                    if ('\\'.$methodReflect->class != $classPath) continue;
+                    if ('\\' . $methodReflect->class != $classPath) continue;
                     $methodInfo = new \StdClass();
                     $annotations = Annotations::ofMethod($classPath, $methodReflect->getName());
                     $methodInfo->name = $methodReflect->getName();
@@ -181,7 +187,7 @@ class Router
     protected static function initAnnotationsCache(): void
     {
         if (empty(Annotations::$config['cache']))
-            Annotations::$config['cache'] = new AnnotationCache(__DIR__.'/../../../cache');
+            Annotations::$config['cache'] = new AnnotationCache(__DIR__ . '/../../../cache');
     }
 
     protected function parseUrl()
@@ -232,5 +238,16 @@ class Router
         $this->controller->initInfo->controllerName = $this->controllerName;
         $this->controller->initInfo->methodName = $this->methodName;
         $this->controller->initInfo->methodArguments = $this->args;
+    }
+
+    private static function getSpecialPage($url): ?ISpecialPage
+    {
+        if ($url == '/robots.txt') {
+            return new Robots();
+        } else if ($url == '/sitemap.xml') {
+            return new Sitemap();
+        } else {
+            return null;
+        }
     }
 }

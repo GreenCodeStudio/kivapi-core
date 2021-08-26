@@ -16,6 +16,12 @@
         <meta name="description" content="<?= htmlspecialchars($meta->description) ?>">
         <?php
     }
+    ?>   <?php
+    if (!empty($meta->canonical)) {
+        ?>
+        <link rel="canonical" href="<?= htmlspecialchars($meta->canonical) ?>" />
+        <?php
+    }
     ?>
 </head>
 
