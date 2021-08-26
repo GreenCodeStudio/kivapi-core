@@ -3,6 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/Dist/style.css" rel="stylesheet">
+    <meta name="generator" content="Kivapi" />
+    <link rel="author" href="https://greencodestudio.github.io/kivapi/" />
     <?php
     if (!empty($meta->title)) {
         ?>
