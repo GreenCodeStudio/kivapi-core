@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <element>
+        <permission>
+            <group>trackingCode</group>
+            <name>show</name>
+        </permission>
+        <title>Kody śledzenia</title>
+        <link>TrackingCode</link>
+    </element>
+</menu>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <table>
+        <name>tracking_code</name>
+        <column>
+            <name>id</name>
+            <type>int</type>
+            <null>NO</null>
+            <autoincrement>YES</autoincrement>
+        </column>
+        <column>
+            <name>name</name>
+            <type>varchar(200)</type>
+            <null>NO</null>
+        </column>
+        <column>
+            <name>is_active</name>
+            <type>tinyint</type>
+            <null>NO</null>
+        </column>
+        <column>
+            <name>header</name>
+            <type>text</type>
+            <null>NO</null>
+        </column>
+        <column>
+            <name>body_start</name>
+            <type>text</type>
+            <null>NO</null>
+        </column>
+        <column>
+            <name>body_end</name>
+            <type>text</type>
+            <null>NO</null>
+        </column>
+        <index>
+            <type>PRIMARY</type>
+            <element>id</element>
+        </index>
+    </table>
+</root>
