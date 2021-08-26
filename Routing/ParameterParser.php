@@ -70,6 +70,8 @@ class ParameterParser
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
             case "image":
                 return empty($value) ? null : UploadedFile::Create($value);
+            case "url":
+                return empty($value) ? null : $this->parseParamUrl($value);
             default:
                 throw new \Exception("not implemented type");
         }
@@ -82,5 +84,13 @@ class ParameterParser
             $obj->children = $this->parseParamTree($x->children);
             return $obj;
         })->toArray();
+    }
+
+    private function parseParamUrl($value)
+    {
+        if(!empty($value->value))
+            return $value->value;
+        else
+            throw new \Exception('Not implemented type of url');
     }
 }

@@ -10,3 +10,6 @@ function encodeUrl(string $input)
     }
     return $output;
 }
+function pt($param){
+    return htmlspecialchars($param);
+}
