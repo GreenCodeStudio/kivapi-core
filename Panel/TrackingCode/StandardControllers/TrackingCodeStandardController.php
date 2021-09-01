@@ -6,7 +6,7 @@ namespace Core\Panel\TrackingCode\StandardControllers;
 use Core\Exceptions\NotFoundException;
 use Core\Panel\Authorization\Permissions;
 use Core\Panel\Infrastructure\PanelStandardController;
-use Core\Panel\TrackingCode\TrackingCode;
+use Core\TrackingCode\TrackingCode;
 
 class TrackingCodeStandardController extends PanelStandardController
 {

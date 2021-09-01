@@ -3,7 +3,7 @@
 namespace Core\Panel\TrackingCode\Ajax;
 
 use Core\Panel\Infrastructure\PanelAjaxController;
-use Core\Panel\TrackingCode\TrackingCode;
+use Core\TrackingCode\TrackingCode;
 
 class TrackingCodeAjaxController extends PanelAjaxController
 {

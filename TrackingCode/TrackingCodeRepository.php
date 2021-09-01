@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Panel\TrackingCode\Repository;
+namespace Core\TrackingCode;
 
 use Core\Database\DB;
 use Core\Database\Repository;
@@ -40,5 +40,10 @@ class TrackingCodeRepository extends Repository
                 throw new \Exception();
             return ' ORDER BY ' . DB::safeKey($mapping[$options->sort->col]) . ' ' . ($options->sort->desc ? 'DESC' : 'ASC') . ' ';
         }
+    }
+
+    public function getActiveCodes()
+    {
+        return DB::get("SELECT * FROM tracking_code WHERE is_active");
     }
 }

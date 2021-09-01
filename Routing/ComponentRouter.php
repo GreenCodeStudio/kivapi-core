@@ -6,6 +6,7 @@ use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\PageRepository;
 use Core\ComponentManager\SpecialComponents\EmptyComponent;
 use Core\Exceptions\NotFoundException;
+use Core\TrackingCode\TrackingCode;
 use MKrawczyk\FunQuery\FunQuery;
 
 class ComponentRouter extends Router
@@ -71,6 +72,7 @@ class ComponentRouter extends Router
         if (!empty($path) && !empty($urlPrefix)) {
             $meta->canonical = $urlPrefix . $path;
         }
+        $trackingCodes = (new TrackingCode())->getActiveCodes();
         include __DIR__ . '/../BaseHTML.php';
     }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Core\Panel\TrackingCode;
+namespace Core\TrackingCode;
 
 
-use Core\Panel\TrackingCode\Repository\TrackingCodeRepository;
+use Core\TrackingCode\TrackingCodeRepository;
 
 
 class TrackingCode
@@ -45,5 +45,10 @@ class TrackingCode
     public function getById(int $id)
     {
         return $this->defaultDB->getById($id);
+    }
+
+    public function getActiveCodes()
+    {
+        return $this->defaultDB->getActiveCodes();
     }
 }
