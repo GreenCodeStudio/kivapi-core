@@ -67,7 +67,11 @@ class ComponentRouter extends Router
     {
         $component = $this->controller;
         if ($component instanceof RedirectionController) {
-            header("Location: " . $component->execute());
+            $url = $component->execute();
+            if ($this->routeNodes[0]->node->type == 'alias') {
+                Router::routeHttp($url);
+            } else
+                header("Location: $url");
         } else {
             $meta = (object)['title' => $this->lastValue('title'), 'description' => $this->lastValue('description')];
             $path = $this->lastValue('path');
