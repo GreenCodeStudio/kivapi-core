@@ -22,7 +22,7 @@ class TrackingCode
     {
         $filtered = $this->filterData($data);
         $this->defaultDB->update($id, $filtered);
-        Sender::sendToUsers(["TrackingCode", "TrackingCode", "Update", $id]);
+        //Sender::sendToUsers(["TrackingCode", "TrackingCode", "Update", $id]);
     }
 
     protected function filterData($data)
