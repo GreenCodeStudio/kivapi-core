@@ -12,7 +12,7 @@ class Sitemap implements ISpecialPage
         header('content-type: application/xml');
         $dom = new DOMDocument("1.0", "UTF-8");
         $root = $dom->createElementNS('http://www.sitemaps.org/schemas/sitemap/0.9', 'urlset');
-        $dom->append($root);
+        $dom->appendChild($root);
         $this->generateUrls($dom, $root);
         echo $dom->saveXML();
     }
@@ -22,10 +22,10 @@ class Sitemap implements ISpecialPage
         $all = (new PageRepository())->getAll();
         $urlPrefix = $_ENV['urlPrefix'];
         foreach ($all as $page) {
-            if (!empty($page->path)) {
+            if (!empty($page->path) && $page->type == 'component') {
                 $url = $dom->createElement('url');
-                $url->append($dom->createElement('loc', $urlPrefix . $page->path));
-                $root->append($url);
+                $url->appendChild($dom->createElement('loc', $urlPrefix . $page->path));
+                $root->appendChild($url);
             }
         }
     }

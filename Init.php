@@ -4,7 +4,7 @@ use Core\Routing\ComponentRouter;
 
 error_reporting(E_ALL);
 ini_set("log_errors", 1);
-ini_set("error_log", __dir__."/tmp/php-error.log");
+ini_set("error_log", __DIR__."/../tmp/php-error.log");
 function t($q){
     try {
         return \Core\Internationalization\Translator::$default->translate($q)->__toString();
