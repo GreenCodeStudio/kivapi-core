@@ -39,7 +39,6 @@ class ComponentRouter extends Router
                 $this->query[urldecode($key)] = urldecode($value);
             }
         }
-        $this->urlWithoutQuery = rtrim($this->urlWithoutQuery, '/');
     }
 
     private function findRoute()
@@ -57,7 +56,7 @@ class ComponentRouter extends Router
     {
         $all = (new PageRepository())->getAll();
         foreach ($all as $node) {
-            if ($node->path == $this->urlWithoutQuery)
+            if (!empty($node->path) && ($node->path == $this->urlWithoutQuery || rtrim($node->path, '/') == rtrim($this->urlWithoutQuery, '/')))
                 return $node;
         }
         throw new NotFoundException("not found path");
