@@ -88,8 +88,8 @@ class ParameterParser
 
     private function parseParamUrl($value)
     {
-        if(!empty($value->value))
-            return $value->value;
+        if(!empty($value))
+            return $value;
         else
             throw new \Exception('Not implemented type of url');
     }

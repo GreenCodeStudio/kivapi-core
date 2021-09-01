@@ -4,6 +4,7 @@ namespace Core\Routing;
 
 use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\PageRepository;
+use Core\ComponentManager\RedirectionController;
 use Core\ComponentManager\SpecialComponents\EmptyComponent;
 use Core\Exceptions\NotFoundException;
 use Core\TrackingCode\TrackingCode;
@@ -65,14 +66,18 @@ class ComponentRouter extends Router
     public function invoke()
     {
         $component = $this->controller;
-        $meta = (object)['title' => $this->lastValue('title'), 'description' => $this->lastValue('description')];
-        $path = $this->lastValue('path');
-        $urlPrefix = $_ENV['urlPrefix'];
-        if (!empty($path) && !empty($urlPrefix)) {
-            $meta->canonical = $urlPrefix . $path;
+        if ($component instanceof RedirectionController) {
+            header("Location: " . $component->execute());
+        } else {
+            $meta = (object)['title' => $this->lastValue('title'), 'description' => $this->lastValue('description')];
+            $path = $this->lastValue('path');
+            $urlPrefix = $_ENV['urlPrefix'];
+            if (!empty($path) && !empty($urlPrefix)) {
+                $meta->canonical = $urlPrefix . $path;
+            }
+            $trackingCodes = (new TrackingCode())->getActiveCodes();
+            include __DIR__ . '/../BaseHTML.php';
         }
-        $trackingCodes = (new TrackingCode())->getActiveCodes();
-        include __DIR__ . '/../BaseHTML.php';
     }
 
     private function lastValue($field)
