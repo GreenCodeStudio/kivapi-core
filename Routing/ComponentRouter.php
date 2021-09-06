@@ -80,6 +80,7 @@ class ComponentRouter extends Router
                 $meta->canonical = $urlPrefix . $path;
             }
             $trackingCodes = (new TrackingCode())->getActiveCodes();
+            $initInfo = iterator_to_array($component->getInitInfo());
             include __DIR__ . '/../BaseHTML.php';
         }
     }

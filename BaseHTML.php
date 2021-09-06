@@ -37,6 +37,11 @@ foreach ($trackingCodes as $trackingCode) {
 }
 $component->loadView();
 ?>
+<script>
+    //<![CDATA[
+    window.controllerInitInfo = <?=json_encode($initInfo)?>;
+    //]]>
+</script>
 <script src="/Dist/js.js"></script>
 <?php
 foreach ($trackingCodes as $trackingCode) {
