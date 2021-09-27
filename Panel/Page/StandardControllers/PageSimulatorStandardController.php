@@ -41,7 +41,7 @@ class PageSimulatorStandardController extends PanelStandardController
         foreach ($controllers as $i => $controller) {
             $controller->subRouteComponent = $controllers[$i + 1] ?? new PlaceholderComponent();
         }
-
-        include __DIR__.'/../../../../Core/BaseHTML.php';
+        $trackingCodes = [];
+        include __DIR__ . '/../../../../Core/BaseHTML.php';
     }
 }
