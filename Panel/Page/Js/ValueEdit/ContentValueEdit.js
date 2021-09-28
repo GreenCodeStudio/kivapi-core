@@ -4,7 +4,6 @@ export default class ContentValueEdit extends AbstractValueEdit {
     constructor(paramConfig, param) {
         super(paramConfig, param);
         this.mime = this.paramConfig?.value?.mime || 'text/plain';
-        debugger;
     }
 
     draw() {

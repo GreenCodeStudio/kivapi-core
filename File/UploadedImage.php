@@ -13,13 +13,13 @@ class UploadedImage extends UploadedFile
         $this->imageHeight = $data->image_height;
     }
 
-    public function getSrcSet(float $width, float $height)
+    public function getSrcSet(float $width, float $height, ?string $type = null)
     {
         $maxScale = max($this->imageWidth / $width, $this->imageHeight / $height);
         $ret = [];
         for ($scale = 0.5; ; $scale *= 2) {
             if ($scale > $maxScale) $scale = $maxScale;
-            $ret[] = $this->getSizedUrl($width * $scale, $height * $scale) . ' ' . $scale . 'x';
+            $ret[] = $this->getSizedUrl($width * $scale, $height * $scale, $type) . ' ' . $scale . 'x';
             if ($scale == $maxScale) break;
         }
         return implode(', ', $ret);

@@ -40,8 +40,10 @@ class FileManager
             }
         }
         $extension = $this->mimeToExtension($mimeOutput);
-        $tmpPath = __DIR__ . '/../../Tmp/img_' . md5(($_GET['width'] ?? '') . '_' . ($_GET['height'] ?? '') . '_' . ($mimeOutput) . '_' . $filepath) . '.' . $extension;
+        $tmpPath = __DIR__ . '/../../tmp/img_' . md5(($_GET['width'] ?? '') . '_' . ($_GET['height'] ?? '') . '_' . ($mimeOutput) . '_' . $filepath) . '.' . $extension;
         if (!is_file($tmpPath)) {
+            if(!is_dir(__DIR__ . '/../../tmp/'))
+                mkdir(__DIR__ . '/../../tmp/', 0777);
             $this->reformatImageDirect($filepath, $mime,$mimeOutput, $tmpPath);
         }
         header('content-type: ' . $mimeOutput);
@@ -57,6 +59,8 @@ class FileManager
             return 'jpeg';
         } else if ($mime == 'image/png') {
             return 'png';
+        }else if ($mime == 'image/webp') {
+            return 'webp';
         } else {
             return 'bin';
         }
