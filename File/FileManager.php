@@ -13,7 +13,7 @@ class FileManager
             $this->reformatImage($filepath, $mime);
         } else {
             //header('Content-Disposition: attachment; filename="'.$filename.'"');
-            header('content-type: '.$mime);
+            header('content-type: ' . $mime);
             $file = fopen($filepath, 'r');
             while ($data = fread($file, 1024)) {
                 echo $data;
@@ -29,11 +29,22 @@ class FileManager
 
     protected function reformatImage($filepath, $mime)
     {
-        $tmpPath = __DIR__.'/../../Tmp/img_'.md5(($_GET['width'] ?? '').'_'.($_GET['width'] ?? '').'_'.($_GET['width'] ?? '').'_'.$filepath).'.'.$this->mimeToExtension($mime);
-        if (!is_file($tmpPath)) {
-            $this->reformatImageDirect($filepath, $mime, $tmpPath);
+        $mimeOutput=$mime;
+        if (!empty($_GET['type'])) {
+            if ($_GET['type'] == 'png') {
+                $mimeOutput = 'image/png';
+            } else if ($_GET['type'] == 'jpg' || $_GET['type'] == 'jpeg') {
+                $mimeOutput = 'image/jpeg';
+            } else if ($_GET['type'] == 'webp') {
+                $mimeOutput = 'image/webp';
+            }
         }
-        header('content-type: '.$mime);
+        $extension = $this->mimeToExtension($mimeOutput);
+        $tmpPath = __DIR__ . '/../../Tmp/img_' . md5(($_GET['width'] ?? '') . '_' . ($_GET['height'] ?? '') . '_' . ($mimeOutput) . '_' . $filepath) . '.' . $extension;
+        if (!is_file($tmpPath)) {
+            $this->reformatImageDirect($filepath, $mime,$mimeOutput, $tmpPath);
+        }
+        header('content-type: ' . $mimeOutput);
         $file = fopen($tmpPath, 'r');
         while ($data = fread($file, 1024)) {
             echo $data;
@@ -51,11 +62,11 @@ class FileManager
         }
     }
 
-    protected function reformatImageDirect($filepath, $mime, $tmpPath)
+    protected function reformatImageDirect($filepath, $mimeInput, $mimeOutput, $tmpPath)
     {
-        if ($mime == 'image/jpeg') {
+        if ($mimeInput == 'image/jpeg') {
             $image = imagecreatefromjpeg($filepath);
-        } else if ($mime == 'image/png') {
+        } else if ($mimeInput == 'image/png') {
             $image = imagecreatefrompng($filepath);
         }
         if (!empty($_GET['width']) && !empty($_GET['height'])) {
@@ -66,21 +77,12 @@ class FileManager
             $image = imagescale($image, $_GET['height'] * imagesx($image) / imagesy($image), $_GET['height']);
         }
 
-        if (!empty($_GET['type'])) {
-            if ($_GET['type'] == 'png') {
-                $mime = 'image/png';
-            } else if ($_GET['type'] == 'jpg' || $_GET['type'] == 'jpeg') {
-                $mime = 'image/jpeg';
-            }
-        }
-
-        if ($mime == 'image/jpeg') {
-            header('content-type: image/jpeg');
+        if ($mimeOutput == 'image/jpeg') {
             imagejpeg($image, $tmpPath);
-        } else if ($mime == 'image/png') {
-            header('content-type: image/png');
+        } else if ($mimeOutput == 'image/png') {
             imagepng($image, $tmpPath);
+        } else if ($mimeOutput == 'image/webp') {
+            imagewebp($image, $tmpPath);
         }
-        exit;
     }
 }

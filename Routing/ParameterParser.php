@@ -5,6 +5,7 @@ namespace Core\Routing;
 
 
 use Core\ComponentManager\ComponentManager;
+use Core\ComponentManager\ParamTypes\Content;
 use Core\File\UploadedFile;
 use MKrawczyk\FunQuery\FunQuery;
 
@@ -70,6 +71,8 @@ class ParameterParser
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
             case "image":
                 return empty($value) ? null : UploadedFile::Create($value);
+            case "content":
+                return empty($value) ? null : Content::Create($value);
             case "url":
                 return empty($value) ? null : $this->parseParamUrl($value);
             default:
