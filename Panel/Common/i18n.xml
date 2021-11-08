@@ -30,4 +30,23 @@
             <value lang="pl">Tryb stronicowania</value>
         </node>
     </node>
+
+    <node name="Template">
+        <node name="Title">
+            <value lang="en">Kivapi admin panel</value>
+            <value lang="pl">Panel administracyjny Kivapi</value>
+        </node>
+        <node name="MyAccount">
+            <value lang="en">My account</value>
+            <value lang="pl">Moje konto</value>
+        </node>
+        <node name="Logout">
+            <value lang="en">Logout</value>
+            <value lang="pl">Wyloguj</value>
+        </node>
+        <node name="MainPage">
+            <value lang="en">Main Page</value>
+            <value lang="pl">Strona główna</value>
+        </node>
+    </node>
 </root>

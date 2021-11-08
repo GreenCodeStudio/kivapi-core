@@ -13,7 +13,16 @@
 </head>
 <body>
 <header>
-
+    <button type="button" class="hamburgerMenu"><span class="icon-menu"></span></button>
+    <h1><?=t('Core.Panel.Common.Template.Title')?></h1>
+    <div class="loginInfo">
+        <a class="headerButton" href="/User/myAccount"><span class="icon-user"></span></a>
+        <div class="loginInfo-expandable">
+            <span class="icon-user"><?= htmlspecialchars($userData->name.' '.$userData->surname) ?></span>
+            <a href="/User/myAccount" class="button"><?=t('Core.Panel.Common.Template.MyAccount')?></a>
+            <div class="button logoutMyselfBtn" title="Wyloguj"><span class="icon-logout"></span><?=t('Core.Panel.Common.Template.Logout')?></div>
+            </div>
+    </div>
 </header>
 <aside data-views="aside"><?php $this->showViews('aside'); ?></aside>
 <div class="mainContent">
