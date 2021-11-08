@@ -75,7 +75,7 @@ class ComponentRouter extends Router
         } else {
             $meta = (object)['title' => $this->lastValue('title'), 'description' => $this->lastValue('description')];
             $path = $this->lastValue('path');
-            $urlPrefix = $_ENV['urlPrefix'];
+            $urlPrefix = $_ENV['urlPrefix'] ?? null;
             if (!empty($path) && !empty($urlPrefix)) {
                 $meta->canonical = $urlPrefix . $path;
             }

@@ -17,5 +17,5 @@ $repository = RepositoryBuilder::create()
     ])
     ->immutable()
     ->make();
-$dotenv = Dotenv::create($repository, __DIR__.'/../');
+$dotenv = Dotenv::create($repository, __DIR__.'/..');
 $dotenv->load();

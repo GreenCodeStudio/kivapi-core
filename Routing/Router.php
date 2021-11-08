@@ -47,7 +47,7 @@ class Router
 
     protected static function getHttpRouter(string $url): Router
     {
-        if (substr($url, 0, 7) === '/panel/') {
+        if ($url == "/panel" || substr($url, 0, 7) === '/panel/') {
             if (substr($url, 0, 12) === '/panel/ajax/') {
                 return new PanelAjaxRouter();
             } else {

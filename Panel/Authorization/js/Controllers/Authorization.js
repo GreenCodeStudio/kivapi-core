@@ -14,7 +14,7 @@ export default class {
             try {
                 let form = page.querySelector('.loginForm');
                 await AjaxPanel.Authorization.login(form.username.value, form.password.value);
-                document.location = '/';
+                document.location = '/panel/';
             } catch (ex) {
                 if (ex.type === "Authorization\\Exceptions\\BadAuthorizationException")
                     modal(t('badLoginOrPassword'), 'error');
