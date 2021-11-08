@@ -3,7 +3,9 @@ import "prototype-extensions"
 
 setTimeout(() => PanelPageManager.initPage(window.controllerInitInfo, document.querySelector('.page'), true));
 
-// setEvent('click', 'a', function (e) {
-//     e.preventDefault();
-//     pageManager.goto(this.href);
-// });
+addEventListener('click', function (e) {
+    if(e.target?.matches('a')) {
+        e.preventDefault();
+        PanelPageManager.goto(e.target.href)
+    };
+});

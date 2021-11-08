@@ -101,7 +101,7 @@ function dump_render_text()
 function dump_render_html()
 {
     global $debugArray;
-    foreach ($debugArray as $item) {
+    foreach ($debugArray??[] as $item) {
         echo '<div style="background:#ffb; color:#113;border:solid 2px #113;">';
         $pathExploded = explode('/', str_replace('\\', '/', $item['backtrace'][0]['file']));
         echo '<span title="'.htmlspecialchars($item['backtrace'][0]['file']).'">';
