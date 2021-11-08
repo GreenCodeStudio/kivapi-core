@@ -62,7 +62,7 @@ export class index {
             //     });
             //if (Permissions.can('Balance', 'edit')) {
             ret.push({
-                name: TCommon("edit"),
+                name: TCommon("Edit"),
                 icon: 'icon-edit',
                 href: "/panel/Page/edit/" + rows[0].id,
             });

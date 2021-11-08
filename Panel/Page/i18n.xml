@@ -2,7 +2,7 @@
 <root>
     <node name="Page">
         <value lang="en">Page</value>
-        <value lang="en">Strona</value>
+        <value lang="pl">Strona</value>
     </node>
     <node name="List">
         <node name="Header">
@@ -44,8 +44,12 @@
             <value lang="pl">Opis</value>
         </node>
     </node>
-    <node name="preview">
+    <node name="Preview">
         <value lang="en">Preview</value>
         <value lang="pl">Podgląd</value>
+    </node>
+    <node name="Edit">
+        <value lang="en">Edit</value>
+        <value lang="pl">Edycja</value>
     </node>
 </root>

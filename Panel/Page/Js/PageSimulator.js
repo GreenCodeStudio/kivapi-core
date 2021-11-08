@@ -1,8 +1,8 @@
 export default class PageSimulator {
     constructor(wrapper) {
         this.wrapper = wrapper;
-        this.width = 480;
-        this.height = 320;
+        this.width = 1366;
+        this.height = 786;
         this.topMargin = 0;
         wrapper.querySelectorAll('.pageSimulator-changeResolution').forEach(b => {
             b.onclick = () => {

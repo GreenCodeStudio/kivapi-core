@@ -17,7 +17,7 @@
             <label>
                 <span><?= t("Core.Panel.Page.Fields.parent") ?></span>
                 <select name="parent_id">
-                    <option value="">Brak</option>
+                    <option value=""><?=t('Core.Panel.Common.None')?></option>
                     <?php foreach ($data['layouts'] as $layout) {
                         ?>
                         <option value="<?= $layout->id ?>"><?= htmlspecialchars($layout->title) ?></option>
@@ -53,7 +53,7 @@
         <?php } ?>
         <?php if ($data['type'] == 'edit') { ?>
             <section class="card pageSimulator" data-width="2">
-                <h1><?= t("Core.Panel.Page.preview") ?></h1>
+                <h1><?= t("Core.Panel.Page.Preview") ?></h1>
                 <button type="button" class="pageSimulator-changeResolution" data-width="480" data-height="320"
                         data-top-margin="0">Mobile
                 </button>

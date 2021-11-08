@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<?=t('Core.Panel.Common.Lang')?>">
 <head>
     <title><?= htmlspecialchars($this->getTitle()) ?></title>
     <meta charset="UTF-8">

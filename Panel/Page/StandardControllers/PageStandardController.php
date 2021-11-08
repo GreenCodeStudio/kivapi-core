@@ -15,7 +15,7 @@ class PageStandardController extends PanelStandardController
     {
         $this->will('Page', 'show');
         $this->addView('Page', 'PageList');
-        $this->pushBreadcrumb(['title' => 'Page', 'url' => 'Page']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Page.Page"), 'url' => 'Page']);
 
     }
 
@@ -25,8 +25,8 @@ class PageStandardController extends PanelStandardController
         $page = new Page();
         $layouts = $page->getLayouts();
         $this->addView('Page', 'PageEdit', ['type' => 'edit', 'layouts' => $layouts]);
-        $this->pushBreadcrumb(['title' => 'Page', 'url' => 'Page']);
-        $this->pushBreadcrumb(['title' => 'Edycja', 'url' => 'Page/edit/' . $id]);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Page.Page"), 'url' => 'Page']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Page.Edit"), 'url' => 'Page/edit/' . $id]);
     }
 
     function edit_data(int $id)
@@ -49,8 +49,8 @@ class PageStandardController extends PanelStandardController
         if ($data == null)
             throw new NotFoundException();
         $this->addView('Page', 'PageShow', ['Page' => $data]);
-        $this->pushBreadcrumb(['title' => 'Page', 'url' => 'Page']);
-        $this->pushBreadcrumb(['title' => 'Podgląd', 'url' => 'Page/show/' . $id]);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Page.Page"), 'url' => 'Page']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Page.Show"), 'url' => 'Page/show/' . $id]);
     }
 
     function add()

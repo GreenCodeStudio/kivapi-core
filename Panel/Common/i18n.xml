@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
+    <node name="Lang">
+        <value lang="en">en</value>
+        <value lang="pl">pl</value>
+    </node>
     <node name="Add">
         <value lang="en">Add</value>
         <value lang="pl">Dodaj</value>
@@ -15,6 +19,10 @@
     <node name="Cancel">
         <value lang="en">Cancel</value>
         <value lang="pl">Anuluj</value>
+    </node>
+    <node name="None">
+        <value lang="en">None</value>
+        <value lang="pl">Brak</value>
     </node>
     <node name="ObjectList">
         <node name="Search">
