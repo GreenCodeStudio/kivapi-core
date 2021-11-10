@@ -4,25 +4,23 @@ import {FormManager} from "../../../Js/form";
 import {PanelPageManager} from "../../../Js/PanelPageManager";
 import {AjaxPanel} from "../../../Js/ajaxPanel";
 import {modal} from "../../../Js/modal";
-
-function t(a) {
-    return a;//tmp
-}
-function TCommonBase(a) {
-    return a;//tmp
-}
+import {t} from "../../i18n.xml";
+import {t as TCommon} from "../../../Common/i18n.xml";
 
 export class index {
     constructor(page, data) {
         const container = page.querySelector('.UsersList');
         let datasource = new DatasourceAjax('User', 'getTable', ['User', 'User']);
         let objectsList = new ObjectsList(datasource);
-        objectsList.columns = [{name: "Imie", content: row => row.name, sortName: 'name'},{name: "Nazwisko", content: row => row.surname, sortName: 'surname'},{name: "Email", content: row => row.mail, sortName: 'mail'}];
+        objectsList.columns = [
+            {name: t('fields.name'), content: row => row.name, sortName: 'name'},
+            {name: t('fields.surname'), content: row => row.surname, sortName: 'surname'},
+            {name: t('fields.mail'), content: row => row.mail, sortName: 'mail'}];
         objectsList.generateActions = (rows, mode) => {
             let ret = [];
             if (rows.length == 1) {
                 ret.push({
-                    name: TCommonBase("edit"),
+                    name: TCommon("edit"),
                     icon: 'icon-edit',
                     href: "User/edit/" + rows[0].id,
                     main: true
@@ -30,7 +28,7 @@ export class index {
             }
             if (mode != 'row') {
                 ret.push({
-                    name: TCommonBase("editInNewTab"), icon: 'icon-edit', showInTable: false, command() {
+                    name: TCommon("editInNewTab"), icon: 'icon-edit', showInTable: false, command() {
                         rows.forEach(x => window.open("User/edit/" + x.id))
                     }
                 });
@@ -80,9 +78,9 @@ export class myAccount {
         form.submit = async ({password, password2}) => {
             if (password == password2) {
                 await AjaxPanel.User.changeCurrentUserPassword(password, password2);
-                modal("hasło zmienione");
+                modal(t("PasswordChange.Changed"));
             } else
-                modal("hasła nie są identyczne", 'error');
+                modal(t("PasswordChange.NotEqual"), 'error');
 
             form.reset();
 

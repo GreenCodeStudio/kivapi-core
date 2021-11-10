@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <node name="Users">
+        <value lang="en">Users</value>
+        <value lang="pl">Użytkownicy</value>
+    </node>
+    <node name="List">
+        <node name="Header">
+            <value lang="en">All users</value>
+            <value lang="pl">Wszyscy użytkownicy</value>
+        </node>
+    </node>
+    <node name="Fields">
+        <node name="name">
+            <value lang="en">First name</value>
+            <value lang="pl">Imie</value>
+        </node>
+        <node name="surname">
+            <value lang="en">Last name</value>
+            <value lang="pl">Nazwisko</value>
+        </node>
+        <node name="mail">
+            <value lang="en">Email</value>
+            <value lang="pl">Email</value>
+        </node>
+        <node name="password">
+            <value lang="en">Password</value>
+            <value lang="pl">Hasło</value>
+        </node>
+        <node name="repeatPassword">
+            <value lang="en">Repeat password</value>
+            <value lang="pl">Powtórz hasło</value>
+        </node>
+    </node>
+    <node name="BasicData">
+        <value lang="en">Basic data</value>
+        <value lang="pl">Podstawowe dane</value>
+    </node>
+    <node name="PasswordChange">
+        <value lang="en">Password change</value>
+        <value lang="pl">Zmiana hasła</value>
+        <node name="Change">
+            <value lang="en">Change</value>
+            <value lang="pl">Zmień</value>
+        </node>
+        <node name="Changed">
+            <value lang="en">Password changed</value>
+            <value lang="pl">Hasło zmienione</value>
+        </node>
+        <node name="NotEqual">
+            <value lang="en">Passwords not equal</value>
+            <value lang="pl">Hasła nie są identyczne</value>
+        </node>
+    </node>
+    <node name="Permissions">
+        <value lang="en">Permissions</value>
+        <value lang="pl">Uprawnienia</value>
+    </node>
+    <node name="MyAccount">
+        <value lang="en">My account</value>
+        <value lang="pl">Moje konto</value>
+    </node>
+    <node name="Edit">
+        <value lang="en">Edit</value>
+        <value lang="pl">Edycja</value>
+    </node>
+    <node name="Add">
+        <value lang="en">Add</value>
+        <value lang="pl">Dodawanie</value>
+    </node>
+</root>

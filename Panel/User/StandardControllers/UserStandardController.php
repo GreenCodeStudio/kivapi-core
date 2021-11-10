@@ -16,7 +16,7 @@ class UserStandardController extends PanelStandardController
     {
         $this->will('user', 'show');
         $this->addView('User', 'list');
-        $this->pushBreadcrumb(['title' => 'Użytkownicy', 'url' => '/User']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.User.Users"), 'url' => '/User']);
 
     }
 
@@ -25,8 +25,8 @@ class UserStandardController extends PanelStandardController
         $this->will('user', 'edit');
         $permissionsStructure = Permissions::readStructure();
         $this->addView('User', 'edit', ['type' => 'edit', 'permissionsStructure' => $permissionsStructure]);
-        $this->pushBreadcrumb(['title' => 'Użytkownicy', 'url' => 'User']);
-        $this->pushBreadcrumb(['title' => 'Edycja', 'url' => 'User/edit/'.$id]);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.User.Users"), 'url' => 'User']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.User.Edit"), 'url' => 'User/edit/'.$id]);
     }
 
     function edit_data(int $id)
@@ -45,13 +45,13 @@ class UserStandardController extends PanelStandardController
         $this->will('user', 'add');
         $permissionsStructure = Permissions::readStructure();
         $this->addView('User', 'edit', ['type' => 'add', 'permissionsStructure' => $permissionsStructure]);
-        $this->pushBreadcrumb(['title' => 'Użytkownicy', 'url' => 'User']);
-        $this->pushBreadcrumb(['title' => 'Dodaj', 'url' => 'User/add']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.User.Users"), 'url' => 'User']);
+        $this->pushBreadcrumb(['title' =>  t("Core.Panel.User.Add"), 'url' => 'User/add']);
     }
 
     function myAccount()
     {
-        $this->pushBreadcrumb(['title' => 'Moje konto', 'url' => 'User/myAccount']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.User.MyAccount"), 'url' => 'User/myAccount']);
         $user = ( new User())->getById(Authorization::getUserId());
         $this->addView('User', 'myAccount', ['user' => $user]);
     }

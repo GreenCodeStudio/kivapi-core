@@ -6,38 +6,38 @@
     <input name="id" type="hidden">
     <section class="card" data-width="6">
         <header>
-            <h1>Podstawowe dane</h1>
+            <h1><?= t("Core.Panel.User.BasicData") ?></h1>
         </header>
         <label>
-            <span>Imie</span>
+            <span><?= t("Core.Panel.User.Fields.name") ?></span>
             <input name="name">
         </label>
         <label>
-            <span>Nazwisko</span>
+            <span><?= t("Core.Panel.User.Fields.surname") ?></span>
             <input name="surname">
         </label>
         <label>
-            <span>Email</span>
+            <span><?= t("Core.Panel.User.Fields.mail") ?></span>
             <input name="mail">
         </label>
     </section>
     <section class="card" data-width="6">
         <header>
-            <h1>Zmiana hasła</h1>
+            <h1><?= t("Core.Panel.User.PasswordChange") ?></h1>
         </header>
         <label>
-            <span>Hasło</span>
+            <span><?= t("Core.Panel.User.Fields.password") ?></span>
             <input name="password" type="password" autocomplete="new-password">
         </label>
         <label>
-            <span>Powtórz</span>
+            <span><?= t("Core.Panel.User.Fields.repeatPassword") ?></span>
             <input name="password2" type="password" autocomplete="new-password">
         </label>
     </section>
 
     <section class="card" data-width="6">
         <header>
-            <h1>Uprawnienia</h1>
+            <h1><?= t("Core.Panel.User.Permissions") ?></h1>
         </header>
         <?php
         foreach ($data['permissionsStructure'] as $permGroup) {
