@@ -13,9 +13,9 @@ export class index {
         let datasource = new DatasourceAjax('User', 'getTable', ['User', 'User']);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
-            {name: t('fields.name'), content: row => row.name, sortName: 'name'},
-            {name: t('fields.surname'), content: row => row.surname, sortName: 'surname'},
-            {name: t('fields.mail'), content: row => row.mail, sortName: 'mail'}];
+            {name: t('Fields.name'), content: row => row.name, sortName: 'name'},
+            {name: t('Fields.surname'), content: row => row.surname, sortName: 'surname'},
+            {name: t('Fields.mail'), content: row => row.mail, sortName: 'mail'}];
         objectsList.generateActions = (rows, mode) => {
             let ret = [];
             if (rows.length == 1) {

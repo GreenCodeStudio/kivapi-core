@@ -16,4 +16,16 @@
         <value lang="pl">Użytkownik już istnieje</value>
         <value lang="en">User already exists</value>
     </node>
+    <node name="Login">
+        <value lang="pl">Logowanie</value>
+        <value lang="en">Log in</value>
+    </node>
+    <node name="Email">
+        <value lang="pl">Email</value>
+        <value lang="en">Email</value>
+    </node>
+    <node name="Password">
+        <value lang="pl">Hasło</value>
+        <value lang="en">Password</value>
+    </node>
 </root>

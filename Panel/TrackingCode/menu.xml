@@ -5,7 +5,7 @@
             <group>trackingCode</group>
             <name>show</name>
         </permission>
-        <title>Kody śledzenia</title>
+        <title>Tracking codes</title>
         <link>TrackingCode</link>
     </element>
 </menu>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <node name="TrackingCodes">
+        <value lang="en">Tracking codes</value>
+        <value lang="pl">Kody śledzenia</value>
+    </node>
+    <node name="TrackingCode">
+        <value lang="en">Tracking code</value>
+        <value lang="pl">Kod śledzenia</value>
+    </node>
+    <node name="Fields">
+        <node name="name">
+            <value lang="en">Name</value>
+            <value lang="pl">Nazwa</value>
+        </node>
+        <node name="is_active">
+            <value lang="en">Is active?</value>
+            <value lang="pl">Czy aktywny?</value>
+        </node>
+        <node name="header">
+            <value lang="en">Head HTML code</value>
+            <value lang="pl">Kod HTML w sekcji head</value>
+        </node>
+        <node name="body_start">
+            <value lang="en">Top body HTML code</value>
+            <value lang="pl">Kod HTML na początku sekcji body</value>
+        </node>
+        <node name="body_end">
+            <value lang="en">Bottom body HTML code</value>
+            <value lang="pl">Kod HTML na końcu sekcji body</value>
+        </node>
+    </node>
+    <node name="Description">
+        <value lang="en">You can add here HTML code for such tools like Google Analitycs</value>
+        <value lang="pl">Możesz tu dodać kod HTML takich narzędzi, jak np. Google Analitycs</value>
+    </node>
+</root>

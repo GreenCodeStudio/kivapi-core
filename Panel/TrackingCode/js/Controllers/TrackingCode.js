@@ -4,25 +4,25 @@ import {FormManager} from "../../../Js/form";
 import {PanelPageManager} from "../../../Js/PanelPageManager";
 import {AjaxPanel} from "../../../Js/ajaxPanel";
 import {modal} from "../../../Js/modal";
+import {t as TCommon} from "../../../Common/i18n.xml";
+import {t} from "../../i18n.xml";
 
-function t(a) {
-    return a;//tmp
-}
-function TCommonBase(a) {
-    return a;//tmp
-}
+
 
 export class index {
     constructor(page, data) {
         const container = page.querySelector('.TrackingCodeList');
         let datasource = new DatasourceAjax('TrackingCode', 'getTable', ['TrackingCode', 'TrackingCode']);
         let objectsList = new ObjectsList(datasource);
-        objectsList.columns = [{name: "Nazwa", content: row => row.name, sortName: 'name'},{name: "Czy aktywny?", content: row => row.is_active=='1'?'Tak':'nie', sortName: 'is_active'}];
+        objectsList.columns = [
+            {name:t('Fields.name'), content: row => row.name, sortName: 'name'},
+            {name: t('Fields.is_active'), content: row => row.is_active=='1'?'Tak':'nie', sortName: 'is_active'}
+        ];
         objectsList.generateActions = (rows, mode) => {
             let ret = [];
             if (rows.length == 1) {
                 ret.push({
-                    name: TCommonBase("edit"),
+                    name: TCommon("edit"),
                     icon: 'icon-edit',
                     href: "TrackingCode/edit/" + rows[0].id,
                     main: true
@@ -30,7 +30,7 @@ export class index {
             }
             if (mode != 'row') {
                 ret.push({
-                    name: TCommonBase("editInNewTab"), icon: 'icon-edit', showInTable: false, command() {
+                    name: TCommon("editInNewTab"), icon: 'icon-edit', showInTable: false, command() {
                         rows.forEach(x => window.open("TrackingCode/edit/" + x.id))
                     }
                 });

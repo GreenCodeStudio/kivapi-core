@@ -5,15 +5,11 @@
             <group>user</group>
             <name>show</name>
         </permission>
-        <title>Użytkownicy</title>
+        <title>Users</title>
         <menu>
             <element>
                 <link>User</link>
-                <title>Lista</title>
-            </element>
-            <element>
-                <link>Token</link>
-                <title>Tokeny</title>
+                <title>List</title>
             </element>
         </menu>
     </element>

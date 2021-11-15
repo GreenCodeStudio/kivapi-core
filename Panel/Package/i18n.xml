@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <node name="Packages">
+        <value lang="en">Packages</value>
+        <value lang="pl">Pakiety</value>
+    </node>
+    <node name="List">
+        <node name="Header">
+            <value lang="en">All installed packages</value>
+            <value lang="pl">Wsyzstkie zainstalwoane pakiety</value>
+        </node>
+    </node>
+</root>
