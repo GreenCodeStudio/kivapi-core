@@ -20,7 +20,7 @@ class Sitemap implements ISpecialPage
     public function generateUrls($dom, $root)
     {
         $all = (new PageRepository())->getAll();
-        $urlPrefix = $_ENV['urlPrefix'];
+        $urlPrefix = $_ENV['urlPrefix']??'';
         foreach ($all as $page) {
             if (!empty($page->path) && $page->type == 'component') {
                 $url = $dom->createElement('url');
