@@ -58,7 +58,9 @@ class Router
                 }
             }
         } else {
-            if (isset($_SERVER['HTTP_X_JSON'])) {
+            if (substr($url, 0, 6) === '/ajax/') {
+                return new AjaxRouter();
+            } else if (isset($_SERVER['HTTP_X_JSON'])) {
                 return new ComponentJsonRouter();
             } else {
                 return new ComponentRouter();
