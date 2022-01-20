@@ -1,7 +1,7 @@
 {
     "dependencies": {
         "console-cheating": "^1.0.0",
-        "fast-creator": "^1.2.3",
+        "fast-creator": "^1.4.0",
         "prototype-extensions": "^1.8.0",
         "pmeditor-editor": "^0.1.2",
         "pmeditor-core": "^0.1.5",
