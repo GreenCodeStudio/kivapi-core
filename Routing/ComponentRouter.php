@@ -81,7 +81,16 @@ class ComponentRouter extends Router
             }
             $trackingCodes = (new TrackingCode())->getActiveCodes();
             $initInfo = iterator_to_array($component->getInitInfo());
+            $this->invokeRecurse($component, fn($c) => $c->fillMetadata($meta));
             include __DIR__ . '/../BaseHTML.php';
+        }
+    }
+
+    public function invokeRecurse($component, $fn)
+    {
+        $fn($component);
+        if (!empty($component->subRouteComponent)) {
+            $this->invokeRecurse($component->subRouteComponent, $fn);
         }
     }
 
