@@ -8,6 +8,7 @@
 
 namespace Core\Panel\Package\Ajax;
 
+use Core\Panel\Authorization\Exceptions\UnauthorizedException;
 use Core\Panel\Infrastructure\PanelAjaxController;
 use Core\Panel\Package\Package;
 
@@ -16,7 +17,24 @@ class PackageAjaxController extends PanelAjaxController
     public function getTable($options)
     {
         $this->will('package', 'show');
-        $user = new Package();
-        return $user->getDataTable($options);
+        $package = new Package();
+        return $package->getDataTable($options);
     }
+
+    public function prepareInstallation(string $url)
+    {
+        if (getenv('allowPackageInstall') ?? '' != 'true')
+            throw new UnauthorizedException();
+
+        return (new Package())->prepareInstallation($url);
+    }
+
+    public function install(string $tmpID, string $url)
+    {
+        if (getenv('allowPackageInstall') ?? '' != 'true')
+            throw new UnauthorizedException();
+
+        return (new Package())->install($tmpID, $url);
+    }
+
 }

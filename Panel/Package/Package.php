@@ -30,23 +30,57 @@ class Package
 
     public function getPackageDetails(string $vendor, string $name)
     {
-        $ret = new StdClass();
+        $dir = __DIR__ . '/../../../Packages/' . $vendor . '/' . $name;
+        if (file_exists($dir . '/package.xml')) {
+            $ret = $this->readXML($dir . '/package.xml');
+        } else {
+            $ret = new StdClass();
+        }
         $ret->name = $name;
         $ret->vendor = $vendor;
         $ret->fullName = $vendor . '/' . $name;
-        $dir = __DIR__ . '/../../../Packages/' . $vendor . '/' . $name;
-        if (file_exists($dir . '/package.xml')) {
-            $xml = simplexml_load_file($dir . '/package.xml');
-            if (isset($xml->git)) {
-                $ret->git = $xml->git->__toString();
-            }
-            if (isset($xml->description)) {
-                $ret->description = $xml->description->__toString();
-            }
-            if (isset($xml->version)) {
-                $ret->version = $xml->version->__toString();
-            }
+        return $ret;
+    }
+
+    private function readXML($path)
+    {
+        $ret = new StdClass();
+        $xml = simplexml_load_file($path);
+        if (isset($xml->git)) {
+            $ret->git = $xml->git->__toString();
+        }
+        if (isset($xml->description)) {
+            $ret->description = $xml->description->__toString();
+        }
+        if (isset($xml->version)) {
+            $ret->version = $xml->version->__toString();
+        }
+        if (isset($xml->vendor)) {
+            $ret->vendor = $xml->vendor->__toString();
+        }
+        if (isset($xml->name)) {
+            $ret->name = $xml->name->__toString();
         }
         return $ret;
+    }
+
+    public function prepareInstallation(string $url)
+    {
+        $tmpID = uniqid();
+        $tmpDir = sys_get_temp_dir() . '/' . $tmpID;
+        mkdir($tmpDir);
+        system("git clone $url $tmpDir");
+        if (!file_exists($tmpDir . '/package.xml'))
+            throw new \Exception("No package.xml");
+        $xml = $this->readXML($tmpDir . '/package.xml');
+        return ['details' => $xml, 'url' => $url, 'tmpId' => $tmpID];
+    }
+
+    public function install(string $tmpID, string $url)
+    {
+        $tmpDir = sys_get_temp_dir() . '/' . $tmpID;
+        $xml = $this->readXML($tmpDir . '/package.xml');
+
+        system("git submodule add $url Packages/$xml->vendor/$xml->name");
     }
 }
