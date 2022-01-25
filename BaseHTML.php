@@ -77,7 +77,7 @@ if (!empty($panelData)) {
         }
     </style>
     <div class="adminMenu">
-        <div class="adminMenu-icon">Admin menu</div>
+        <div class="adminMenu-icon">Kivapi admin menu</div>
         <div class="adminMenu-content">
             <a href="<?= $panelData->panelURL ?>">Panel</a>
             <a href="<?= $panelData->editURL ?>">Edit</a>

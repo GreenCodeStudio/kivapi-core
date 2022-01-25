@@ -9,7 +9,7 @@ export default class FileValueEdit extends AbstractValueEdit {
     draw() {
         super.draw();
         this.valueInput = new FileUploader();
-        this.valueInput.value = this.paramConfig.value || [];
+        this.valueInput.value = (this.paramConfig.value instanceof Array) ? this.paramConfig.value : [];
         this.append(this.valueInput)
     }
 

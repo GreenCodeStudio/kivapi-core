@@ -7,7 +7,13 @@ export default class SampleValueEdit extends AbstractValueEdit {
 
     draw() {
         super.draw();
-        this.valueInput = this.addChild('input', {value: this.paramConfig?.value ?? this.param.default ?? ''});
+        let value
+        if (typeof (this.paramConfig?.value) == 'string') {
+            value = this.paramConfig?.value
+        } else {
+            value = this.param.default ?? '';
+        }
+        this.valueInput = this.addChild('input', {value});
         if (this.param.canFromQuery) {
             this.queryCheckbox = this.addChild('input', {
                 type: 'checkbox',
