@@ -10,7 +10,7 @@ namespace Core\Panel\Package\Ajax;
 
 use Core\Panel\Authorization\Exceptions\UnauthorizedException;
 use Core\Panel\Infrastructure\PanelAjaxController;
-use Core\Panel\Package\Package;
+use Core\Package\Package;
 
 class PackageAjaxController extends PanelAjaxController
 {

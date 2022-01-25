@@ -8,7 +8,7 @@ use Core\Panel\Authorization\Authorization;
 use Core\Panel\Authorization\Exceptions\UnauthorizedException;
 use Core\Panel\Authorization\Permissions;
 use Core\Panel\Infrastructure\PanelStandardController;
-use Core\Panel\Package\Package;
+use Core\Package\Package;
 use Core\Panel\User\User;
 
 class PackageStandardController extends PanelStandardController

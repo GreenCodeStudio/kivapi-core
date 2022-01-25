@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Panel\Package;
+namespace Core\Package;
 
 use MKrawczyk\FunQuery\FunQuery;
 use stdClass;
@@ -17,7 +17,7 @@ class Package
 
     public function listAllPackages()
     {
-        $dir = __DIR__ . '/../../../Packages';
+        $dir = __DIR__ . '/../../Packages';
         foreach (scandir($dir) as $vendor) {
             if ($vendor == '.' || $vendor == '..') continue;
             $vendorDir = $dir . '/' . $vendor;
@@ -30,7 +30,7 @@ class Package
 
     public function getPackageDetails(string $vendor, string $name)
     {
-        $dir = __DIR__ . '/../../../Packages/' . $vendor . '/' . $name;
+        $dir = __DIR__ . '/../../Packages/' . $name;
         if (file_exists($dir . '/package.xml')) {
             $ret = $this->readXML($dir . '/package.xml');
         } else {
@@ -80,12 +80,12 @@ class Package
     {
         $tmpDir = sys_get_temp_dir() . '/' . $tmpID;
         $xml = $this->readXML($tmpDir . '/package.xml');
-        chdir(__DIR__ . '/../../..');
+        chdir(__DIR__ . '/../../');
         $dir = "Packages/$xml->vendor/$xml->name";
         if (!is_dir("Packages/$xml->vendor")) {
             mkdir("Packages/$xml->vendor");
         }
-        if (is_dir(__DIR__ . '/../../../.git'))
+        if (is_dir(__DIR__ . '/../../.git'))
             system("git submodule add $url $dir");
         else
             copy($tmpDir, $dir);
