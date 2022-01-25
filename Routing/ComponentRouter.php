@@ -7,6 +7,7 @@ use Core\ComponentManager\PageRepository;
 use Core\ComponentManager\RedirectionController;
 use Core\ComponentManager\SpecialComponents\EmptyComponent;
 use Core\Exceptions\NotFoundException;
+use Core\Panel\Authorization\Authorization;
 use Core\TrackingCode\TrackingCode;
 use MKrawczyk\FunQuery\FunQuery;
 
@@ -82,6 +83,13 @@ class ComponentRouter extends Router
             $trackingCodes = (new TrackingCode())->getActiveCodes();
             $initInfo = iterator_to_array($component->getInitInfo());
             $this->invokeRecurse($component, fn($c) => $c->fillMetadata($meta));
+
+            if (Authorization::isLogged()){
+                $panelData=(object)[
+                    'panelURL'=>'/panel/',
+                    'editURL'=>'/panel/Page/edit/'.end($this->routeNodes)->node->id
+                ];
+            }
             include __DIR__ . '/../BaseHTML.php';
         }
     }

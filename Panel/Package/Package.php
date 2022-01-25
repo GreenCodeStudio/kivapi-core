@@ -80,7 +80,14 @@ class Package
     {
         $tmpDir = sys_get_temp_dir() . '/' . $tmpID;
         $xml = $this->readXML($tmpDir . '/package.xml');
-
-        system("git submodule add $url Packages/$xml->vendor/$xml->name");
+        chdir(__DIR__ . '/../../..');
+        $dir = "Packages/$xml->vendor/$xml->name";
+        if (!is_dir("Packages/$xml->vendor")) {
+            mkdir("Packages/$xml->vendor");
+        }
+        if (is_dir(__DIR__ . '/../../../.git'))
+            system("git submodule add $url $dir");
+        else
+            copy($tmpDir, $dir);
     }
 }
