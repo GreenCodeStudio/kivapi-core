@@ -1,0 +1,5 @@
+content-value-edit{
+    [contenteditable]{
+        @extend input;
+    }
+}

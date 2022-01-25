@@ -32,15 +32,19 @@ class Package
     {
         $ret = new StdClass();
         $ret->name = $name;
+        $ret->vendor = $vendor;
         $ret->fullName = $vendor . '/' . $name;
         $dir = __DIR__ . '/../../../Packages/' . $vendor . '/' . $name;
         if (file_exists($dir . '/package.xml')) {
             $xml = simplexml_load_file($dir . '/package.xml');
-            if (isset($xml->package->git)) {
-                $ret->git = $xml->package->git;
+            if (isset($xml->git)) {
+                $ret->git = $xml->git->__toString();
             }
-            if (isset($xml->package->description)) {
-                $ret->git = $xml->package->description;
+            if (isset($xml->description)) {
+                $ret->description = $xml->description->__toString();
+            }
+            if (isset($xml->version)) {
+                $ret->version = $xml->version->__toString();
             }
         }
         return $ret;

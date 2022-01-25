@@ -21,14 +21,14 @@ export class index {
                 ret.push({
                     name: TCommon("details"),
                     icon: 'icon-show',
-                    href: "Package/details/" + rows[0].id,
+                    href: "Package/details/" + rows[0].fullName,
                     main: true
                 });
             }
             if (mode != 'row') {
                 ret.push({
                     name: TCommon("detailsInNewTab"), icon: 'icon-show', showInTable: false, command() {
-                        rows.forEach(x => window.open("Package/details/" + x.id))
+                        rows.forEach(x => window.open("Package/details/" + rows[0].fullName))
                     }
                 });
             }
