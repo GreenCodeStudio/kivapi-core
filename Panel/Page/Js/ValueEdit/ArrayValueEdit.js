@@ -13,6 +13,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
         super.draw();
         this.paramData = []
         let array = this.paramConfig?.value || []
+        if (!(array instanceof Array)) array = [];
         for (let i = 0; i < array.length; i++) {
             let childConfig = array[i];
             let result = this.drawItem(i, childConfig);
@@ -36,7 +37,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
         label.append(result.node);
         label.ondragstart = result.node.dragstartHandler?.bind(result);
 
-        let removeButton = label.addChild('div').addChild('button', {text:'Usuń'})
+        let removeButton = label.addChild('div').addChild('button', {text: 'Usuń'})
         removeButton.onclick = result.removeFromParent = () => {
             this.removeItem(result);
         }
@@ -73,8 +74,8 @@ export default class ArrayValueEdit extends AbstractValueEdit {
 
     removeItem(item) {
         item.node.parentNode.remove();
-        let index=this.paramData.indexOf(item);
-        this.paramData.splice(index,1);
+        let index = this.paramData.indexOf(item);
+        this.paramData.splice(index, 1);
     }
 }
 customElements.define('array-value-edit', ArrayValueEdit);

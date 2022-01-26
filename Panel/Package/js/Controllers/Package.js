@@ -21,14 +21,14 @@ export class index {
                 ret.push({
                     name: TCommon("details"),
                     icon: 'icon-show',
-                    href: "Package/details/" + rows[0].id,
+                    href: "Package/details/" + rows[0].fullName,
                     main: true
                 });
             }
             if (mode != 'row') {
                 ret.push({
                     name: TCommon("detailsInNewTab"), icon: 'icon-show', showInTable: false, command() {
-                        rows.forEach(x => window.open("Package/details/" + x.id))
+                        rows.forEach(x => window.open("Package/details/" + rows[0].fullName))
                     }
                 });
             }
@@ -36,5 +36,24 @@ export class index {
         }
         container.append(objectsList);
         objectsList.refresh();
+    }
+}
+
+export class install {
+    constructor(page, data) {
+
+        this.form = new FormManager(page.querySelector('form'));
+        this.form.submit = async newData => {
+            let result = await AjaxPanel.Package.prepareInstallation(newData.url);
+            console.log(result)
+            if (result?.details?.name) {
+                if (await modal(`Are you sure want to install package ${result?.details?.vendor}/${result?.details?.name}? Do you trust author of this package, that it doesn't contains malicious code?`, 'warning', [{
+                    value: false,
+                    text: 'no'
+                }, {value: true, text: 'yes, install'}])) {
+                    await AjaxPanel.Package.install(result.tmpId, result.url);
+                }
+            }
+        }
     }
 }
