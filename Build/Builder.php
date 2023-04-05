@@ -125,17 +125,18 @@ class Builder
             if (is_file(__DIR__ . "/../../Core/Panel/$group/$subpath"))
                 $ret[] = "Core/Panel/$group/$subpath";
         }
-        foreach (scandir(__DIR__ . "/../../Packages/") as $group) {
-            if ($group == '.' || $group == '..') continue;
+        if (is_dir (__DIR__ . "/../../Packages/") ) {
+            foreach (scandir(__DIR__ . "/../../Packages/") as $group) {
+                if ($group == '.' || $group == '..') continue;
 
-            foreach (scandir(__DIR__ . "/../../Packages/" . $group) as $package) {
-                if ($package == '.' || $package == '..') continue;
+                foreach (scandir(__DIR__ . "/../../Packages/" . $group) as $package) {
+                    if ($package == '.' || $package == '..') continue;
 
-                if (is_file(__DIR__ . "/../../Packages/$group/$package/Panel/$subpath"))
-                    $ret[] = "Packages/$group/$package/Panel/$subpath";
+                    if (is_file(__DIR__ . "/../../Packages/$group/$package/Panel/$subpath"))
+                        $ret[] = "Packages/$group/$package/Panel/$subpath";
+                }
             }
         }
-
         return $ret;
     }
 }

@@ -1,6 +1,7 @@
 const merge = require('util.merge-packages').default;
 const fs = require('fs');
 
+
 function findPackageJsonFiles() {
     let files = []
     if (fs.existsSync('../../Core/package.json'))
@@ -8,12 +9,14 @@ function findPackageJsonFiles() {
 
     if (fs.existsSync('../../package.json'))
         files.push(fs.readFileSync('../../package.json'));
-    const packageGroups = fs.readdirSync('../../Packages');
-    for (let group of packageGroups) {
-        const packages = fs.readdirSync('../../Packages/' + group);
-        for (let pack of packages) {
-            if (fs.existsSync(`../../Packages/${group}/${pack}/package.json`))
-                files.push(fs.readFileSync(`../../Packages/${group}/${pack}/package.json`));
+    if (fs.existsSync('../../Packages')) {
+        const packageGroups = fs.readdirSync('../../Packages');
+        for (let group of packageGroups) {
+            const packages = fs.readdirSync('../../Packages/' + group);
+            for (let pack of packages) {
+                if (fs.existsSync(`../../Packages/${group}/${pack}/package.json`))
+                    files.push(fs.readFileSync(`../../Packages/${group}/${pack}/package.json`));
+            }
         }
     }
     return files;
