@@ -9,6 +9,7 @@ class Builder
 {
     public function buildOnce()
     {
+        $this->preparePublic();
         $this->prepareWebpack();
         $this->prepareStyle();
         $this->prepareJs();
@@ -19,6 +20,7 @@ class Builder
 
     public function buildWatch()
     {
+        $this->preparePublic();
         $this->prepareWebpack();
         $this->prepareStyle();
         $this->prepareJs();
@@ -138,5 +140,13 @@ class Builder
             }
         }
         return $ret;
+    }
+
+    private function preparePublic()
+    {
+        if (!is_dir (__DIR__ . "/../../Public/") ) {
+            mkdir (__DIR__ . "/../../Public/");
+        }
+        copy(__DIR__.'/devRouter.php', __DIR__ . "/../../Public/devRouter.php");
     }
 }
