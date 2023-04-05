@@ -10,6 +10,7 @@ class Builder
     public function buildOnce()
     {
         $this->preparePublic();
+        $this->prepareComposer();
         $this->prepareWebpack();
         $this->prepareStyle();
         $this->prepareJs();
@@ -21,6 +22,7 @@ class Builder
     public function buildWatch()
     {
         $this->preparePublic();
+        $this->prepareComposer();
         $this->prepareWebpack();
         $this->prepareStyle();
         $this->prepareJs();
@@ -148,5 +150,11 @@ class Builder
             mkdir (__DIR__ . "/../../Public/");
         }
         copy(__DIR__.'/devRouter.php', __DIR__ . "/../../Public/devRouter.php");
+    }
+    public function prepareComposer()
+    {
+        $path = __dir__ . '/../../';
+        chdir($path);
+        exec("composer upgrade");
     }
 }
