@@ -150,6 +150,7 @@ class Builder
             mkdir (__DIR__ . "/../../Public/");
         }
         copy(__DIR__.'/devRouter.php', __DIR__ . "/../../Public/devRouter.php");
+        copy(__DIR__.'/index.php', __DIR__ . "/../../Public/index.php");
     }
     public function prepareComposer()
     {
