@@ -19,6 +19,7 @@ class Builder
 
     public function buildWatch()
     {
+        $this->prepareComposer();
         $this->prepareWebpack();
         $this->prepareStyle();
         $this->prepareJs();
@@ -138,5 +139,11 @@ class Builder
             }
         }
         return $ret;
+    }
+    public function prepareComposer()
+    {
+        $path = __dir__ . '/../../';
+        chdir($path);
+        exec("composer upgrade");
     }
 }
