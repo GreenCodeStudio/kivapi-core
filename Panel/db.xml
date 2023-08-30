@@ -37,6 +37,7 @@
             <name>archived</name>
             <type>boolean</type>
             <null>NO</null>
+            <default>0</default>
         </column>
         <index>
             <type>PRIMARY</type>

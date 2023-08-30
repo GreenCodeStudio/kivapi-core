@@ -2,7 +2,7 @@
 
 function dump()
 {
-    if($_ENV['debug']=='false') return;
+    if($_ENV['debug']??'false'=='false') return;
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
     $args = func_get_args();
     global $debugType;

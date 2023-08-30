@@ -48,6 +48,7 @@ class Builder
         chdir($path);
         exec("yarn");
         copy(__DIR__ . '/webpack.config.js', $path . '/webpack.config.js');
+        symlink('./node_modules', '../../node_modules');
     }
 
     public function prepareJs()

@@ -38,7 +38,7 @@ module.exports = {
             },
             {
                 test: /i18n\.xml$/,
-                use: ["../../Core/Js/Internationalization/i18nWebpackLoader"]//path from tmp/build
+                use: ["@green-code-studio/internationalization/i18nWebpackLoader"]//path from tmp/build
             }
         ]
     },

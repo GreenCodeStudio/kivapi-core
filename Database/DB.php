@@ -84,7 +84,7 @@ class DB
             return null;
         if (is_int($val))
             return (int)$val;
-        return "'".static::$pdo->quote($val)."'";
+        return static::$pdo->quote($val);
     }
 
     static function update(string $table, $data, $id)
