@@ -76,10 +76,22 @@ class AjaxRouter extends Router
         dump($ex);
 
         global $debugArray;
-        $debugEnabled = $_ENV['debug'] == 'true';
-        echo json_encode(['error' => $this->exceptionToArray($ex), 'debug' => $debugEnabled ? $debugArray : [], 'output' => $debugEnabled ? ($controller->debugOutput ?? '') : ''], JSON_PARTIAL_OUTPUT_ON_ERROR);
+        $debugEnabled = isset($_ENV['debug']) && $_ENV['debug'] === 'true';
+
+        $controllerDebugOutput = '';
+        if ($debugEnabled) {
+            $controllerDebugOutput = isset($controller->debugOutput) ? $controller->debugOutput : '';
+        }
+
+        echo json_encode([
+            'error' => $this->exceptionToArray($ex),
+            'debug' => $debugEnabled ? $debugArray : [],
+            'output' => $debugEnabled ? $controllerDebugOutput : ''
+        ], JSON_PARTIAL_OUTPUT_ON_ERROR);
+
         $debugArray = [];
     }
+
 
     public function findControllerClass()
     {

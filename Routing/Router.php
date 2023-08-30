@@ -205,22 +205,31 @@ class Router
     protected function exceptionToArray(\Throwable $exception)
     {
         $ret = ['type' => get_class($exception), 'message' => $exception->getMessage(), 'code' => $exception->getCode()];
-        if ($_ENV['debug'] == 'true') {
+
+        $debugEnabled = isset($_ENV['debug']) && $_ENV['debug'] === 'true';
+
+        if ($debugEnabled) {
             $stack = [['file' => $exception->getFile(), 'line' => $exception->getLine()]];
             $stack = array_merge($stack, $exception->getTrace());
             $ret['stack'] = $stack;
         }
+
         return $ret;
     }
 
+
     protected function prepareController()
     {
-        if ($_ENV['cached_code']) {
+        $cachedCode = isset($_ENV['cached_code']) ? $_ENV['cached_code'] : false;
+
+        if ($cachedCode) {
             // $controllerClassName = static::findControllerCached($controllerName, $type);
         } else {
             $this->controllerClassName = $this->findControllerClass();
         }
+
         $this->controller = new $this->controllerClassName();
+
         if (!$this->controller->hasPermission($this->methodName)) {
             if (Authorization::isLogged()) {
                 throw new NoPermissionException();
@@ -228,8 +237,10 @@ class Router
                 throw new UnauthorizedException();
             }
         }
+
         $this->controller->preAction();
     }
+
 
     protected function prepareMethod()
     {
