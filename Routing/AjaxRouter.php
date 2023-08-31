@@ -62,7 +62,7 @@ class AjaxRouter extends Router
     {
         header('Content-Type: application/json');
         global $debugArray;
-        $debugEnabled = $_ENV['debug'] == 'true';
+        $debugEnabled = isset($_ENV['debug']) && $_ENV['debug'] == 'true';
         echo json_encode(['data' => $this->returned, 'error' => null, 'debug' => $debugEnabled ? $debugArray : [], 'output' => $debugEnabled ? ($controller->debugOutput ?? '') : ''], JSON_PARTIAL_OUTPUT_ON_ERROR);
         $debugArray = [];
     }
