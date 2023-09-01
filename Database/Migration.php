@@ -229,7 +229,7 @@ class Migration
     {
         $safename = DB::safeKey($column->name);
         $col = $safename.' '.$column->type.' '.(strtolower($column->null) == 'yes' ? 'NULL' : 'NOT NULL');
-        if (!empty($column->default))
+        if (isset($column->default))
             $col .= ' DEFAULT '.DB::safe($column->default->__toString());
         if (!empty($column->autoincrement) && strtolower($column->autoincrement) == 'yes')
             $col .= " AUTO_INCREMENT";

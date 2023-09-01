@@ -5,7 +5,8 @@
         "prototype-extensions": "^1.8.0",
         "pmeditor-editor": "^0.1.2",
         "pmeditor-core": "^0.1.5",
-        "zoom-gallery": "^1.1.0"
+        "zoom-gallery": "^1.1.0",
+        "@green-code-studio/internationalization" : "^1.0.4"
     },
     "devDependencies": {
         "css-loader": "^6.7.3",
