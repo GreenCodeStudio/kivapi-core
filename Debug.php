@@ -103,7 +103,7 @@ function dump_render_text()
 
 function dump_render_html()
 {
-    if($_ENV['debug']=='false') return;
+    if (isset($_ENV['debug']) && $_ENV['debug'] == 'false') return;
     global $debugArray;
     foreach ($debugArray??[] as $item) {
         echo '<div style="background:#ffb; color:#113;border:solid 2px #113;">';

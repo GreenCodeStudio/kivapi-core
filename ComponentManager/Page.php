@@ -42,10 +42,17 @@ class Page
         $this->defaultDB->update($id, ['current_version_id' => $versionId]);
         //\Core\WebSocket\Sender::sendToUsers(["ComponentComposition", "ComponentComposition", "Update", $id]);
     }
-
     protected function filterData($data)
     {
-        $ret = ['parameters' => $data->parameters, 'parent_id' => empty($data->parent_id) ? null : $data->parent_id, 'path' => $data->path, 'title' => $data->title, 'description' => $data->description];
+        $ret = [
+            'parameters' => $data->parameters ?? null,
+            'parent_id' => empty($data->parent_id) ? null : $data->parent_id,
+            'path' => $data->path ?? null,
+            'title' => $data->title ?? null,
+            'description' => $data->description ?? null,
+            'module' => 'default_module',
+            'component' => 'default_component',
+        ];
 
         return $ret;
     }
@@ -53,16 +60,22 @@ class Page
     public function insert($data)
     {
         $filtered = $this->filterData($data);
-        $component = json_decode($data->component);
-        $filtered['module'] = $component[0];
-        $filtered['component'] = $component[1];
 
-        $className = ComponentManager::findControllerClass($component[0], $component[1]);
-        $filtered['type'] = $className::type();
-        $id = $this->defaultDB->insert([]);
+        if (!empty($data->component)) {
+            $component = json_decode($data->component);
+
+            if (is_array($component) && count($component) >= 2) {
+                $filtered['module'] = $component[0];
+                $filtered['component'] = $component[1];
+                $className = ComponentManager::findControllerClass($component[0], $component[1]);
+                $filtered['type'] = $className::type();
+            }
+        }
+
+        $id = $this->defaultDB->insertVersion($filtered);
         $filtered['page_id'] = $id;
-        $versionId = $this->defaultDB->insertVersion($filtered);
-        $this->defaultDB->update($id, ['current_version_id' => $versionId]);
+        $this->defaultDB->update($id, ['current_version_id' => $id]);
+
         //\Core\WebSocket\Sender::sendToUsers(["ComponentComposition", "ComponentComposition", "Insert", $id]);
         return $id;
     }

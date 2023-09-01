@@ -21,12 +21,13 @@ class AuthorizationRepository
     public function Get(string $token)
     {
         $connection = MiniDB::GetConnection();
-        $dataSerialized = $connection->get('token_'.$_ENV['prefix'].$token);
+        $prefix = $_ENV['prefix'] ?? '';
+        $dataSerialized = $connection->get('token_'.$prefix.$token);
 
         if ($dataSerialized === false)
             return null;
         else {
-            $connection->expire('token_'.$_ENV['prefix'].$token, $this->GetExpirationSeconds());
+            $connection->expire('token_'.$prefix.$token, $this->GetExpirationSeconds());
             return unserialize($dataSerialized);
         }
     }
