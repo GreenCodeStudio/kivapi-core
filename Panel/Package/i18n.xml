@@ -7,7 +7,7 @@
     <node name="List">
         <node name="Header">
             <value lang="en">All installed packages</value>
-            <value lang="pl">Wsyzstkie zainstalwoane pakiety</value>
+            <value lang="pl">Wszystkie zainstalowane pakiety</value>
         </node>
     </node>
 </root>

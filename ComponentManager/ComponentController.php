@@ -2,6 +2,9 @@
 
 namespace Core\ComponentManager;
 
+use MKrawczyk\Mpts\Environment;
+use MKrawczyk\Mpts\Parser\XMLParser;
+
 abstract class ComponentController extends BaseComponentController
 {
     public static function type()
@@ -10,6 +13,12 @@ abstract class ComponentController extends BaseComponentController
     }
 
     public abstract function loadView();
+    public function loadMPTS(string $fileName){
+        $template = XMLParser::Parse(file_get_contents($fileName));
+        $env = new Environment();
+        $env->variables = $this->parameters;
+        echo $template->executeToString($env);
+    }
 
     public function getInitInfo()
     {
