@@ -17,6 +17,9 @@ abstract class ComponentController extends BaseComponentController
         $template = XMLParser::Parse(file_get_contents($fileName));
         $env = new Environment();
         $env->variables = (array)$this;
+        $env->variables['dump'] = function ($x) {
+            return print_r($x, true);
+        };
         echo $template->executeToString($env);
     }
 

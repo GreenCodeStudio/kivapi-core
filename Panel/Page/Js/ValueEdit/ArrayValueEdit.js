@@ -22,10 +22,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
         this.addButton = this.addChild('div').addChild('button', {type: 'button', text: TCommon('Add')});
         this.addButton.onclick = () => {
             let label = document.create('.label');
-            label.addChild('span', {text: this.paramData.length + 1 + '.'});
-            let result = generateParam(this.param.item, null);
-            label.append(result.node);
-            this.insertBefore(label, this.addButton.parentNode);
+            let result = this.drawItem(this.paramData.length, [])
             this.paramData.push(result)
         }
     }
@@ -76,6 +73,12 @@ export default class ArrayValueEdit extends AbstractValueEdit {
         item.node.parentNode.remove();
         let index = this.paramData.indexOf(item);
         this.paramData.splice(index, 1);
+        this.updateNumbers();
+    }
+    updateNumbers(){
+        for (let i = 0; i < this.paramData.length; i++) {
+            this.children[i].children[0].textContent = i + 1 + '.';
+        }
     }
 }
 customElements.define('array-value-edit', ArrayValueEdit);
