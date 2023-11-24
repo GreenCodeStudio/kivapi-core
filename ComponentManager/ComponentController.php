@@ -16,7 +16,7 @@ abstract class ComponentController extends BaseComponentController
     public function loadMPTS(string $fileName){
         $template = XMLParser::Parse(file_get_contents($fileName));
         $env = new Environment();
-        $env->variables = (array)$this->params??[];
+        $env->variables = (array)$this;
         echo $template->executeToString($env);
     }
 
@@ -34,5 +34,12 @@ abstract class ComponentController extends BaseComponentController
             foreach ($this->subRouteComponent->getInitInfo() as $item)
                 yield $item;
         }
+    }
+    public function getViewHtml(){
+        ob_start();
+        $this->loadView();
+        $html = ob_get_contents();
+        ob_end_clean();
+        return $html;
     }
 }
