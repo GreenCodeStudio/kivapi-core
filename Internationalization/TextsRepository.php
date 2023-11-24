@@ -38,6 +38,9 @@ class TextsRepository
             }
         }
         $packagesGroupsPath = __DIR__.'/../../Packages';
+        if (!is_dir($packagesGroupsPath)) {
+            return;
+        }
         $packagesGroups = scandir($packagesGroupsPath);
         foreach ($packagesGroups as $group) {
             if ($group == '.' || $group == '..') {
