@@ -16,7 +16,7 @@ abstract class ComponentController extends BaseComponentController
     public function loadMPTS(string $fileName){
         $template = XMLParser::Parse(file_get_contents($fileName));
         $env = new Environment();
-        $env->variables = $this->parameters;
+        $env->variables = (array)$this->params??[];
         echo $template->executeToString($env);
     }
 

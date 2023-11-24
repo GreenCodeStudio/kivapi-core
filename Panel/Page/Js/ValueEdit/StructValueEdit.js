@@ -1,6 +1,10 @@
 import AbstractValueEdit from "./AbstractValueEdit";
 import {generateParam} from "./ValueEditFactory";
 
+import {t as TCommon} from "../../../Common/i18n.xml";
+
+import {t} from "../../i18n.xml";
+
 export default class StructValueEdit extends AbstractValueEdit {
     constructor(paramConfig, param) {
         super(paramConfig, param);

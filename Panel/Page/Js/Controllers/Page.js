@@ -97,6 +97,10 @@ export class edit {
         this.valueEdit = new StructValueEdit({value: config}, {items: data.Page.definedParameters});
         this.valueEdit.draw();
         parameters.append(this.valueEdit);
+
+        if(Object.values(data.Page.definedParameters).length==0){
+            parameters.append(document.create('p', {text: t('NoAdditionalParams')}));
+        }
         this.form.submit = async newData => {
             newData.parameters = JSON.stringify(this.valueEdit.collectParameters().value);
             await AjaxPanel.Page.update(newData);
