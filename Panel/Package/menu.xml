@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
     <element>
-        <title>Package</title>
+        <title>Packages</title>
         <link>Package</link>
+        <titleKey>Core.Panel.Package.Packages</titleKey>
     </element>
 </menu>

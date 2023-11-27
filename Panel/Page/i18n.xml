@@ -4,6 +4,10 @@
         <value lang="en">Page</value>
         <value lang="pl">Strona</value>
     </node>
+    <node name="Pages">
+        <value lang="en">Pages</value>
+        <value lang="pl">Strony</value>
+    </node>
     <node name="List">
         <node name="Header">
             <value lang="en">Pages</value>

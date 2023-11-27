@@ -9,10 +9,14 @@ function generateMenu($tree)
 //                continue;
 //        }
         echo '<li>';
+        $title=$element->title;
+        if(isset($element->titleKey)){
+            $title=t($element->titleKey);
+        }
         if (isset($element->link))
-            echo '<a href="'.htmlspecialchars($element->link).'">'.htmlspecialchars($element->title).'</a>';
+            echo '<a href="'.htmlspecialchars($element->link).'">'.htmlspecialchars($title).'</a>';
         else
-            echo '<span>'.htmlspecialchars($element->title).'</span>';
+            echo '<span>'.htmlspecialchars($title).'</span>';
         if (isset($element->menu))
             generateMenu($element->menu);
         echo '</li>';
