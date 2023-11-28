@@ -20,7 +20,7 @@ abstract class ComponentController extends BaseComponentController
         $env->variables['dump'] = function ($x) {
             return print_r($x, true);
         };
-        echo $template->executeToString($env);
+        echo $template->executeToStringXml($env);
     }
 
     public function getInitInfo()

@@ -74,11 +74,11 @@ class FileManager
             $image = imagecreatefrompng($filepath);
         }
         if (!empty($_GET['width']) && !empty($_GET['height'])) {
-            $image = imagescale($image, $_GET['width'], $_GET['height']);
+            $image = imagescale($image, $_GET['width'], $_GET['height'], IMG_BICUBIC);
         } else if (!empty($_GET['width'])) {
-            $image = imagescale($image, $_GET['width'], $_GET['width'] * imagesy($image) / imagesx($image));
+            $image = imagescale($image, $_GET['width'], round($_GET['width'] * imagesy($image) / imagesx($image)), IMG_BICUBIC);
         } else if (!empty($_GET['height'])) {
-            $image = imagescale($image, $_GET['height'] * imagesx($image) / imagesy($image), $_GET['height']);
+            $image = imagescale($image, round($_GET['height'] * imagesx($image) / imagesy($image)), $_GET['height'], IMG_BICUBIC);
         }
 
         if ($mimeOutput == 'image/jpeg') {
