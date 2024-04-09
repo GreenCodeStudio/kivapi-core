@@ -23,7 +23,7 @@ export default class StructValueEdit extends AbstractValueEdit {
             label.addChild('span', {text: child.title ?? childName, draggable: true});
             let childConfig = (this.paramConfig?.value ?? {})[childName];
             let result = generateParam(child, childConfig);
-            label.ondragstart = result.node.dragstartHandler?.bind(result);
+            label.ondragstart = result.node.dragstartHandler?.bind(result.node);
             label.append(result.node);
             this.append(label);
             this.paramData.push({name: childName, param: child, ...result});
