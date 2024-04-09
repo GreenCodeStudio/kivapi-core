@@ -24,6 +24,7 @@ class PackageStandardController extends PanelStandardController
     {
         $item = ((new Package())->getPackageDetails($vendor, $name));
         $this->addView('Package', 'details', ['item' => $item]);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
     }
 
     function install()
@@ -31,5 +32,6 @@ class PackageStandardController extends PanelStandardController
         if (getenv('allowPackageInstall') ?? '' != 'true')
             throw new UnauthorizedException();
         $this->addView('Package', 'install');
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
     }
 }

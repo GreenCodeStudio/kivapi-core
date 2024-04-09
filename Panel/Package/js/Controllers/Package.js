@@ -14,6 +14,7 @@ export class index {
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
             {name: t('Name'), content: row => row.fullName, sortName: 'fullName'},
+            {name: t('Version'), content: row => row.version, sortName: 'version'},
         ]
         objectsList.generateActions = (rows, mode) => {
             let ret = [];

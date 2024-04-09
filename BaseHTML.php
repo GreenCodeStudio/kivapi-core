@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?= isset($meta->lang) ? 'lang="'.htmlspecialchars($meta->lang).'"' : '' ?>>
+<html <?= isset($meta->lang) ? 'lang="'.htmlspecialchars('a').'"' : '' ?>>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/Dist/style.css" rel="stylesheet">
@@ -81,6 +81,7 @@ if (!empty($panelData)) {
         <div class="adminMenu-content">
             <a href="<?= $panelData->panelURL ?>">Panel</a>
             <a href="<?= $panelData->editURL ?>">Edit</a>
+            <a href="<?= $panelData->insiteEditURL ?>">InSite Edit</a>
         </div>
     </div>
     <?php

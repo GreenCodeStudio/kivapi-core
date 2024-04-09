@@ -30,9 +30,10 @@ class ParameterParser
     {
         $ret = new \stdClass();
         foreach ($definedParameters as $name => $def) {
+            $def = (object)$def;
             $param = $params->{$name} ?? null;
             if ($param || $def->type == 'struct')
-                $ret->{$name} = $this->parseParam($def, $param, $name);
+                $ret->{$name} = $this->parseParam((object)$def, $param, $name);
             else
                 $ret->{$name} = $def->default ?? $this->defaultByType($def->type);
         }
@@ -61,7 +62,7 @@ class ParameterParser
         return FunQuery::create($param->value ?? [])->map(fn($x) => $this->parseParamValue($x->value ?? null, $x->type, $def->item))->toArray();
     }
 
-    private function parseParamValue($value, $type, $def=null)
+    private function parseParamValue($value, $type, $def = null)
     {
         switch ($type) {
             case "struct":
@@ -87,11 +88,11 @@ class ParameterParser
 
     private function parseParamTree($def, $param)
     {
-        if($param==null)
+        if ($param == null)
             return null;
         return FunQuery::create($param->value ?? [])->map(function ($x) {
             $obj = $this->parseParamValue($x->value ?? null, $x->type);
-            $obj->children = $this->parseParamTree($x->children??null);
+            $obj->children = $this->parseParamTree($x->children ?? null);
             return $obj;
         })->toArray();
     }
@@ -124,6 +125,8 @@ class ParameterParser
             case "url":
                 return '';
             case "component":
+                return null;
+            case "tree":
                 return null;
             default:
                 throw new \Exception("not implemented type");

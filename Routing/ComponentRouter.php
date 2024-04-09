@@ -89,7 +89,8 @@ class ComponentRouter extends Router
             if (Authorization::isLogged()) {
                 $panelData = (object)[
                     'panelURL' => '/panel/',
-                    'editURL' => '/panel/Page/edit/'.end($this->routeNodes)->node->id
+                    'editURL' => '/panel/Page/edit/'.end($this->routeNodes)->node->id,
+                    'inSiteEditURL' => $this->urlWithoutQuery.'?inSiteEdit=1',
                 ];
             }
             include __DIR__.'/../BaseHTML.php';

@@ -30,7 +30,7 @@ class Package
 
     public function getPackageDetails(string $vendor, string $name)
     {
-        $dir = __DIR__.'/../../Packages/'.$name;
+        $dir = __DIR__.'/../../Packages/'.$vendor.'/'.$name;
         if (file_exists($dir.'/package.xml')) {
             $ret = $this->readXML($dir.'/package.xml');
         } else {
