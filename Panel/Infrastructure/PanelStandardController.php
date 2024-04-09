@@ -23,7 +23,7 @@ class PanelStandardController extends PanelController
         $menu = new Menu();
         $menuData = $menu->readMenu();
         $this->addView('Common', 'aside', ['menu' => $menuData], 'aside');
-        require __DIR__ . '/../Common/Views/template.php';
+        require __DIR__.'/../Common/Views/template.php';
     }
 
     public function getViews()
@@ -56,9 +56,9 @@ class PanelStandardController extends PanelController
         $a = __DIR__;
         ob_start();
         if (\strpos($module, '/') > 0) {
-            require __DIR__ . '/../../../Packages/' . $module . '/Panel/Views/' . $name . '.php';
+            require __DIR__.'/../../../Packages/'.$module.'/Panel/Views/'.$name.'.php';
         } else {
-            require __DIR__ . '/../' . $module . '/Views/' . $name . '.php';
+            require __DIR__.'/../'.$module.'/Views/'.$name.'.php';
         }
         $this->views[$group][] = ob_get_contents();
         ob_end_clean();
@@ -88,9 +88,9 @@ class PanelStandardController extends PanelController
         echo '<ul>';
         foreach ($this->breadcrumb as $crumb) {
             if (!empty($crumb['url']))
-                echo '<li><a href="' . htmlspecialchars($crumb['url']) . '">' . htmlspecialchars($crumb['title']) . '</a></li>';
+                echo '<li><a href="'.htmlspecialchars($crumb['url']).'">'.htmlspecialchars($crumb['title']).'</a></li>';
             else
-                echo '<li><span>' . htmlspecialchars($crumb['title']) . '</span></li>';
+                echo '<li><span>'.htmlspecialchars($crumb['title']).'</span></li>';
         }
         echo '</ul>';
     }

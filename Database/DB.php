@@ -167,7 +167,7 @@ class DB
         $dataSql = [];
         $example = [];
         foreach ($data as $row) {
-            $row=(array)$row;
+            $row = (array)$row;
             $example += $row;
         }
 
@@ -177,7 +177,7 @@ class DB
         }
         $valuesJoinedArray = [];
         foreach ($data as $i => $row) {
-            $row=(array)$row;
+            $row = (array)$row;
             $values = [];
             foreach ($example as $name => $value) {
                 $nameCleared = static::clearName($name).'_'.$i;

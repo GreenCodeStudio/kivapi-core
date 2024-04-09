@@ -83,10 +83,10 @@ class AjaxRouter extends Router
 
     public function findControllerClass()
     {
-        $filename = __DIR__ . '/../../Ajax/' . $this->controllerName . 'AjaxController.php';
+        $filename = __DIR__.'/../../Ajax/'.$this->controllerName.'AjaxController.php';
         if (is_file($filename)) {
             include_once $filename;
-            $className = MAIN_NAMESPACE . "\\Ajax\\{$this->controllerName}AjaxController";
+            $className = MAIN_NAMESPACE."\\Ajax\\{$this->controllerName}AjaxController";
             return $className;
         }
 

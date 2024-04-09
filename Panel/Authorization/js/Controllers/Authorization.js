@@ -45,6 +45,6 @@ export default class {
             else
                 e.target.classList.add('notEmpty');
         }));
-        page.querySelectorAll('.loginByFacebook').forEach(x=>x.onclick=()=>facebook.startLogin());
+        page.querySelectorAll('.loginByFacebook').forEach(x => x.onclick = () => facebook.startLogin());
     }
 }

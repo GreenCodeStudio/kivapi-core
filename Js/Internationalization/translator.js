@@ -1,7 +1,6 @@
-
 export class Translator {
-    constructor(languageHierarchy,node) {
-        this.languageHierarchy=languageHierarchy;
+    constructor(languageHierarchy, node) {
+        this.languageHierarchy = languageHierarchy;
         this.rootNode = node;
     }
 

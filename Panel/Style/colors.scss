@@ -2,14 +2,15 @@ html {
     --main: #d7ee1b;
     --mainLight: #e0ff8f;
     --second: #0e0844;
-    --background:#fff;
-    --backgroundMain:#ddd;
-    --textColor:#000;
-    --textSecondColor:#fff;
-    --menuColor:#eee;
+    --background: #fff;
+    --backgroundMain: #ddd;
+    --textColor: #000;
+    --textSecondColor: #fff;
+    --menuColor: #eee;
 }
+
 @media screen and (prefers-color-scheme: dark) {
-    html{
+    html {
         --main: #646f0d;
         --mainLight: #788610;
         --second: #00dcff;
@@ -17,6 +18,6 @@ html {
         --backgroundMain: #313131;
         --textColor: #fff;
         --menuColor: #3a3a3a;
-        --textSecondColor:#000;
+        --textSecondColor: #000;
     }
 }

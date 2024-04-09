@@ -1,6 +1,7 @@
 <form class="dataForm">
     <div class="topBarButtons">
-        <button class="button" type="button"><span class="icon-cancel"></span><?= t("Core.Panel.Common.Cancel") ?></button>
+        <button class="button" type="button"><span class="icon-cancel"></span><?= t("Core.Panel.Common.Cancel") ?>
+        </button>
         <button class="button"><span class="icon-save"></span><?= t("Core.Panel.Common.Save") ?></button>
     </div>
     <input name="id" type="hidden">

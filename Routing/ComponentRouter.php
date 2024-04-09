@@ -78,19 +78,19 @@ class ComponentRouter extends Router
             $path = $this->lastValue('path');
             $urlPrefix = $_ENV['urlPrefix'] ?? null;
             if (!empty($path) && !empty($urlPrefix)) {
-                $meta->canonical = $urlPrefix . $path;
+                $meta->canonical = $urlPrefix.$path;
             }
             $trackingCodes = (new TrackingCode())->getActiveCodes();
             $initInfo = iterator_to_array($component->getInitInfo());
             $this->invokeRecurse($component, fn($c) => $c->fillMetadata($meta));
 
-            if (Authorization::isLogged()){
-                $panelData=(object)[
-                    'panelURL'=>'/panel/',
-                    'editURL'=>'/panel/Page/edit/'.end($this->routeNodes)->node->id
+            if (Authorization::isLogged()) {
+                $panelData = (object)[
+                    'panelURL' => '/panel/',
+                    'editURL' => '/panel/Page/edit/'.end($this->routeNodes)->node->id
                 ];
             }
-            include __DIR__ . '/../BaseHTML.php';
+            include __DIR__.'/../BaseHTML.php';
         }
     }
 

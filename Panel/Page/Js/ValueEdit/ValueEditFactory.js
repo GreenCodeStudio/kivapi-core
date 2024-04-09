@@ -29,11 +29,11 @@ export function generateParam(param, paramConfig) {
         let node = new FileValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
-    }else if (param.type == 'image') {
+    } else if (param.type == 'image') {
         let node = new ImageValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
-    }else if (param.type == 'content') {
+    } else if (param.type == 'content') {
         let node = new ContentValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};

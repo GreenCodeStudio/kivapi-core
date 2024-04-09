@@ -1,3 +1,3 @@
-export class I18nNodeNotFoundException extends Error{
+export class I18nNodeNotFoundException extends Error {
 
 }

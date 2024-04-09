@@ -17,7 +17,7 @@
             <label>
                 <span><?= t("Core.Panel.Page.Fields.parent") ?></span>
                 <select name="parent_id">
-                    <option value=""><?=t('Core.Panel.Common.None')?></option>
+                    <option value=""><?= t('Core.Panel.Common.None') ?></option>
                     <?php foreach ($data['layouts'] as $layout) {
                         ?>
                         <option value="<?= $layout->id ?>"><?= htmlspecialchars($layout->title) ?></option>
@@ -43,7 +43,7 @@
                 <?php foreach ($data['availableComponents'] as $component) {
                     ?>
                     <label>
-                        <span><?= (empty($component[0]) ? '' : ($component[0] . '\\')) . $component[1] ?></span>
+                        <span><?= (empty($component[0]) ? '' : ($component[0].'\\')).$component[1] ?></span>
                         <input type="radio" name="component"
                                value="<?= htmlspecialchars(json_encode($component)) ?>">
                     </label>

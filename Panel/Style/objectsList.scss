@@ -115,17 +115,20 @@ data-view {
         border-top: 1px solid var(--second);
         display: flex;
         justify-content: space-between;
-        .search{
-            display: none;//tmp
+
+        .search {
+            display: none; //tmp
         }
     }
+
     &.infiniteScrollEnabled {
         table-view {
             .body {
                 height: var(--height);
             }
         }
-        pagination-buttons{
+
+        pagination-buttons {
             display: none;
         }
     }

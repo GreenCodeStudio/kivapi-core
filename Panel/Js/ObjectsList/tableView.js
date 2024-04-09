@@ -7,7 +7,7 @@ export class TableView extends HTMLElement {
         super();
         this.objectsList = objectsList;
         this.init();
-        setTimeout(()=>this.setColumnsWidths(),0)
+        setTimeout(() => this.setColumnsWidths(), 0)
     }
 
     init() {
@@ -351,12 +351,13 @@ export class TableView extends HTMLElement {
         document.execCommand("copy");
         setTimeout(() => this.copyForced = null, 100);
     }
-    onScroll(e){
-        if(this.onPaginationChanged){
-            let start=Math.round(this.scrollTop/41);
-            let passedStart=Math.floor(start/20)*20 -20;
-            if(passedStart<0)
-                passedStart=0;
+
+    onScroll(e) {
+        if (this.onPaginationChanged) {
+            let start = Math.round(this.scrollTop / 41);
+            let passedStart = Math.floor(start / 20) * 20 - 20;
+            if (passedStart < 0)
+                passedStart = 0;
             this.onPaginationChanged(passedStart);
         }
     }

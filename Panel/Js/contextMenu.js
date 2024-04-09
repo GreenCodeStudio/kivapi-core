@@ -1,4 +1,4 @@
-import  {create} from "fast-creator";
+import {create} from "fast-creator";
 
 export class ContextMenu {
     constructor(elements, parent = null) {
@@ -16,7 +16,7 @@ export class ContextMenu {
     }
 
     generateElementHtml(element) {
-        const elementHtml = document.create('li.element', {tabIndex:0});
+        const elementHtml = document.create('li.element', {tabIndex: 0});
         if (element.submenu) {
             elementHtml.classList.add('hasSubmenu');
         }

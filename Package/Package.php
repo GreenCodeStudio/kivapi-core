@@ -17,10 +17,10 @@ class Package
 
     public function listAllPackages()
     {
-        $dir = __DIR__ . '/../../Packages';
+        $dir = __DIR__.'/../../Packages';
         foreach (scandir($dir) as $vendor) {
             if ($vendor == '.' || $vendor == '..') continue;
-            $vendorDir = $dir . '/' . $vendor;
+            $vendorDir = $dir.'/'.$vendor;
             foreach (scandir($vendorDir) as $package) {
                 if ($package == '.' || $package == '..') continue;
                 yield $this->getPackageDetails($vendor, $package);
@@ -30,15 +30,15 @@ class Package
 
     public function getPackageDetails(string $vendor, string $name)
     {
-        $dir = __DIR__ . '/../../Packages/' . $name;
-        if (file_exists($dir . '/package.xml')) {
-            $ret = $this->readXML($dir . '/package.xml');
+        $dir = __DIR__.'/../../Packages/'.$name;
+        if (file_exists($dir.'/package.xml')) {
+            $ret = $this->readXML($dir.'/package.xml');
         } else {
             $ret = new StdClass();
         }
         $ret->name = $name;
         $ret->vendor = $vendor;
-        $ret->fullName = $vendor . '/' . $name;
+        $ret->fullName = $vendor.'/'.$name;
         return $ret;
     }
 
@@ -67,25 +67,25 @@ class Package
     public function prepareInstallation(string $url)
     {
         $tmpID = uniqid();
-        $tmpDir = sys_get_temp_dir() . '/' . $tmpID;
+        $tmpDir = sys_get_temp_dir().'/'.$tmpID;
         mkdir($tmpDir);
         system("git clone $url $tmpDir");
-        if (!file_exists($tmpDir . '/package.xml'))
+        if (!file_exists($tmpDir.'/package.xml'))
             throw new \Exception("No package.xml");
-        $xml = $this->readXML($tmpDir . '/package.xml');
+        $xml = $this->readXML($tmpDir.'/package.xml');
         return ['details' => $xml, 'url' => $url, 'tmpId' => $tmpID];
     }
 
     public function install(string $tmpID, string $url)
     {
-        $tmpDir = sys_get_temp_dir() . '/' . $tmpID;
-        $xml = $this->readXML($tmpDir . '/package.xml');
-        chdir(__DIR__ . '/../../');
+        $tmpDir = sys_get_temp_dir().'/'.$tmpID;
+        $xml = $this->readXML($tmpDir.'/package.xml');
+        chdir(__DIR__.'/../../');
         $dir = "Packages/$xml->vendor/$xml->name";
         if (!is_dir("Packages/$xml->vendor")) {
             mkdir("Packages/$xml->vendor");
         }
-        if (is_dir(__DIR__ . '/../../.git'))
+        if (is_dir(__DIR__.'/../../.git'))
             system("git submodule add $url $dir");
         else
             copy($tmpDir, $dir);

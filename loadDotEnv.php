@@ -1,10 +1,10 @@
 <?php
 
-include_once __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__.'/../vendor/autoload.php';
 
 
-if (is_file(__DIR__ . '/../.env')) {
-    $content = file_get_contents(__DIR__ . '/../.env');
+if (is_file(__DIR__.'/../.env')) {
+    $content = file_get_contents(__DIR__.'/../.env');
     foreach (explode("\n", $content) as $line) {
         $equalIndex = strpos($line, '=');
         if ($equalIndex > 0) {

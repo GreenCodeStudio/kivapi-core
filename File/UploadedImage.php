@@ -19,7 +19,7 @@ class UploadedImage extends UploadedFile
         $ret = [];
         for ($scale = 0.5; ; $scale *= 2) {
             if ($scale > $maxScale) $scale = $maxScale;
-            $ret[] = $this->getSizedUrl($width * $scale, $height * $scale, $type) . ' ' . $scale . 'x';
+            $ret[] = $this->getSizedUrl($width * $scale, $height * $scale, $type).' '.$scale.'x';
             if ($scale == $maxScale) break;
         }
         return implode(', ', $ret);
@@ -46,7 +46,7 @@ class UploadedImage extends UploadedFile
 
             $imgHeight = $imgWidth / $this->imageWidth * $this->imageHeight;
 
-            $ret[] = $this->getSizedUrl((int)$imgWidth, (int)$imgHeight, $type) . ' ' . (int)$width . 'w';
+            $ret[] = $this->getSizedUrl((int)$imgWidth, (int)$imgHeight, $type).' '.(int)$width.'w';
 
             if ($imgWidth >= $this->imageWidth)
                 break;
@@ -57,8 +57,8 @@ class UploadedImage extends UploadedFile
     public function getSizedUrl(int $width, int $height, ?string $type = null)
     {
         if ($type == null)
-            return $this->getUrl() . "?width=$width&height=$height";
+            return $this->getUrl()."?width=$width&height=$height";
         else
-            return $this->getUrl() . "?width=$width&height=$height&type=$type";
+            return $this->getUrl()."?width=$width&height=$height&type=$type";
     }
 }

@@ -1,6 +1,7 @@
 @media print {
     body {
         background: transparent;
+
         > header {
             position: static;
             background: transparent;
@@ -20,6 +21,7 @@
 
         > .mainContent {
             clear: both;
+
             > .topBar {
                 display: none;
             }
@@ -32,13 +34,15 @@
                 position: static;
             }
         }
-        table thead th{
+
+        table thead th {
             background: transparent;
-            color:inherit;
+            color: inherit;
             border-bottom: 2px solid #ddd;
             top: 0;
         }
-        .topBarButtons{
+
+        .topBarButtons {
             display: none;
         }
     }

@@ -12,6 +12,7 @@ export class index {
         table.datatable.refresh();
     }
 }
+
 export class edit {
     constructor(page, data) {
         this.page = page;

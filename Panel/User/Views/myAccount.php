@@ -1,6 +1,6 @@
 <section class="card" data-width="6">
     <header>
-        <h1><?=htmlspecialchars($data['user']->name)?> <?=htmlspecialchars($data['user']->surname)?></h1>
+        <h1><?= htmlspecialchars($data['user']->name) ?> <?= htmlspecialchars($data['user']->surname) ?></h1>
     </header>
     <div>
         <span><?= t("Core.Panel.User.Fields.name") ?>:</span>

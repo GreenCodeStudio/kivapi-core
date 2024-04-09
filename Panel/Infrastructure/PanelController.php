@@ -1,4 +1,5 @@
 <?php
+
 namespace Core\Panel\Infrastructure;
 
 use Core\Panel\Authorization\Exceptions\NoPermissionException;

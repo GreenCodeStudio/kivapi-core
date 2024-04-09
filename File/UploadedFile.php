@@ -24,6 +24,6 @@ class UploadedFile
 
     public function getUrl()
     {
-        return '/file/' . $this->id;
+        return '/file/'.$this->id;
     }
 }

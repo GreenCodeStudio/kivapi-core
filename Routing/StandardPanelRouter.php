@@ -82,10 +82,10 @@ class StandardPanelRouter extends Router
 
     protected function prepareErrorController($ex, $responseCode)
     {
-        if($ex instanceof UnauthorizedException){
+        if ($ex instanceof UnauthorizedException) {
             $this->controllerName = 'Authorization';
             $this->methodName = 'index';
-        }else {
+        } else {
             $this->controllerName = 'Error';
             $this->methodName = 'index';
         }

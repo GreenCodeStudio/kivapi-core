@@ -43,7 +43,7 @@ class ParameterParser
         } else if ($param->type == 'struct') {
             return $this->parseParamStruct($param->value);
         } else {
-            $const=$this->parseParamValue($param->value, $param->type);
+            $const = $this->parseParamValue($param->value, $param->type);
             if ($param->source == 'query')
                 return $this->parseParamValue($this->query[$name] ?? $const, $param->type);
             else if ($param->source == 'const')
@@ -91,7 +91,7 @@ class ParameterParser
 
     private function parseParamUrl($value)
     {
-        if(!empty($value))
+        if (!empty($value))
             return $value;
         else
             throw new \Exception('Not implemented type of url');

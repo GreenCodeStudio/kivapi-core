@@ -38,7 +38,7 @@ class TrackingCodeRepository extends Repository
             $mapping = ['name' => 'name', 'is_active' => 'is_active'];
             if (empty($mapping[$options->sort->col]))
                 throw new \Exception();
-            return ' ORDER BY ' . DB::safeKey($mapping[$options->sort->col]) . ' ' . ($options->sort->desc ? 'DESC' : 'ASC') . ' ';
+            return ' ORDER BY '.DB::safeKey($mapping[$options->sort->col]).' '.($options->sort->desc ? 'DESC' : 'ASC').' ';
         }
     }
 

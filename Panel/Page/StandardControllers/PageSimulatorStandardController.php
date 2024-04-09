@@ -42,6 +42,6 @@ class PageSimulatorStandardController extends PanelStandardController
             $controller->subRouteComponent = $controllers[$i + 1] ?? new PlaceholderComponent();
         }
         $trackingCodes = [];
-        include __DIR__ . '/../../../../Core/BaseHTML.php';
+        include __DIR__.'/../../../../Core/BaseHTML.php';
     }
 }
