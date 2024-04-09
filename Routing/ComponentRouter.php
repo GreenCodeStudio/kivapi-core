@@ -20,8 +20,10 @@ class ComponentRouter extends Router
     {
         $this->parseUrl();
         $nodes = $this->findRoute();
-        $this->routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node, (new ParameterParser($this->query))->findParameters($node)))->toArray();
-        $controllers = FunQuery::create($this->routeNodes)->map(fn($routeNode) => ComponentManager::findController($routeNode->node->module, $routeNode->node->component, $routeNode->parameters))->toArray();
+        $this->routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node,$this->query))->toArray();
+        $controllers = FunQuery::create($this->routeNodes)
+            ->map(fn($routeNode) => ComponentManager::findController($routeNode->node->module, $routeNode->node->component,  $routeNode->query, $routeNode->node))
+            ->toArray();
         $this->controller = $controllers[0];
         foreach ($controllers as $i => $controller) {
             $controller->subRouteComponent = $controllers[$i + 1] ?? new EmptyComponent();

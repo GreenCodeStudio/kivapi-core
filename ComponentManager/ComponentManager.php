@@ -2,11 +2,14 @@
 
 namespace Core\ComponentManager;
 
+use Core\Routing\ParameterParser;
+
 class ComponentManager
 {
-    public static function findController(?string $package, string $name, object $params)
+    public static function findController(?string $package, string $name, array $query, object $node)
     {
         $className = static::findControllerClass($package, $name);
+        $params = (new ParameterParser($query))->findParameters($className::DefinedParameters(), $node);
         $controller = new $className($params);
         return $controller;
     }
@@ -46,9 +49,11 @@ class ComponentManager
                 foreach (scandir($dir.$packageGroup) as $package) {
                     if ($package != '.' && $package != '..' && is_dir($dir.$packageGroup.'/'.$package)) {
                         $subdir = $dir.$packageGroup.'/'.$package.'/Components/';
-                        foreach (scandir($subdir) as $name) {
-                            if ($name != '.' && $name != '..' && is_dir($subdir.$name)) {
-                                $ret[] = [$packageGroup.'\\'.$package, $name];
+                        if (is_dir($subdir)) {
+                            foreach (scandir($subdir) as $name) {
+                                if ($name != '.' && $name != '..' && is_dir($subdir.$name)) {
+                                    $ret[] = [$packageGroup.'\\'.$package, $name];
+                                }
                             }
                         }
                     }

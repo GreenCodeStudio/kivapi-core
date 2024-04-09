@@ -16,51 +16,56 @@ class ParameterParser
         $this->query = $query;
     }
 
-    public function findParameters($node)
+    public function findParameters($definedParameters, $node)
     {
         if (empty($node->parameters))
-            return new \stdClass();
-        $paramsInfo = is_string($node->parameters) ? json_decode($node->parameters, false) : $node->parameters;
+            $paramsInfo = (object)[];
+        else
+            $paramsInfo = is_string($node->parameters) ? json_decode($node->parameters, false) : $node->parameters;
 
-        return $this->parseParamStruct($paramsInfo);
+        return $this->parseParamStruct($definedParameters, $paramsInfo);
     }
 
-    public function parseParamStruct($paramsInfo)
+    public function parseParamStruct($definedParameters, $params)
     {
         $ret = new \stdClass();
-        foreach ($paramsInfo as $name => $param) {
-            $ret->{$name} = $this->parseParam($param, $name);
+        foreach ($definedParameters as $name => $def) {
+            $param = $params->{$name} ?? null;
+            if ($param || $def->type == 'struct')
+                $ret->{$name} = $this->parseParam($def, $param, $name);
+            else
+                $ret->{$name} = $def->default ?? $this->defaultByType($def->type);
         }
         return $ret;
     }
 
-    private function parseParam($param, $name)
+    private function parseParam($def, $param, $name)
     {
-        if ($param->type == 'array') {
-            return $this->parseParamArray($param);
-        } else if ($param->type == 'tree') {
-            return $this->parseParamTree($param);
-        } else if ($param->type == 'struct') {
-            return $this->parseParamStruct($param->value);
+        if ($def->type == 'array') {
+            return $this->parseParamArray($def, $param);
+        } else if ($def->type == 'tree') {
+            return $this->parseParamTree($def, $param);
+        } else if ($def->type == 'struct') {
+            return $this->parseParamStruct($def->items, $param?->value ?? (new \stdClass()));
         } else {
-            $const = $this->parseParamValue($param->value, $param->type);
+            $const = $this->parseParamValue($param->value, $def->type);
             if ($param->source == 'query')
-                return $this->parseParamValue($this->query[$name] ?? $const, $param->type);
+                return $this->parseParamValue($this->query[$name] ?? $const, $def->type);
             else if ($param->source == 'const')
                 return $const;
         }
     }
 
-    private function parseParamArray($param)
+    private function parseParamArray($def, $param)
     {
-        return FunQuery::create($param->value ?? [])->map(fn($x) => $this->parseParamValue($x->value ?? null, $x->type))->toArray();
+        return FunQuery::create($param->value ?? [])->map(fn($x) => $this->parseParamValue($x->value ?? null, $x->type, $def->item))->toArray();
     }
 
-    private function parseParamValue($value, $type)
+    private function parseParamValue($value, $type, $def=null)
     {
         switch ($type) {
             case "struct":
-                return empty($value) ? null : $this->parseParamStruct($value);
+                return empty($value) ? null : $this->parseParamStruct(((object)$def)->items, $value);
             case "int":
                 return empty($value) ? null : (int)$value;
             case "string":
@@ -80,7 +85,7 @@ class ParameterParser
         }
     }
 
-    private function parseParamTree($param)
+    private function parseParamTree($def, $param)
     {
         return FunQuery::create($param->value ?? [])->map(function ($x) {
             $obj = $this->parseParamValue($x->value ?? null, $x->type);
@@ -95,5 +100,31 @@ class ParameterParser
             return $value;
         else
             throw new \Exception('Not implemented type of url');
+    }
+
+    private function defaultByType($type)
+    {
+        switch ($type) {
+            case "struct":
+                return new \stdClass();
+            case "int":
+                return 0;
+            case "string":
+                return '';
+            case "array":
+                return [];
+            case "image":
+                return null;
+            case "file":
+                return null;
+            case "content":
+                return null;
+            case "url":
+                return '';
+            case "component":
+                return null;
+            default:
+                throw new \Exception("not implemented type");
+        }
     }
 }
