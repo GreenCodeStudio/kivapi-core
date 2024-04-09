@@ -39,11 +39,12 @@
             <section class="card" data-width="4">
                 <div class="parameters"></div>
             </section><?php } else { ?>
-            <section class="card" data-width="4">
+            <section class="card componentsList" data-width="4">
                 <?php foreach ($data['availableComponents'] as $component) {
                     ?>
                     <label>
-                        <span><?= (empty($component[0]) ? '' : ($component[0].'\\')).$component[1] ?></span>
+                        <span class="package"><?=(empty($component[0]) ? '' : ($component[0]))?></span>
+                        <span><?=$component[1] ?></span>
                         <input type="radio" name="component"
                                value="<?= htmlspecialchars(json_encode($component)) ?>">
                     </label>

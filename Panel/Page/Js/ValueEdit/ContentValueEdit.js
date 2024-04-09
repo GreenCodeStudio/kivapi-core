@@ -33,6 +33,8 @@ export default class ContentValueEdit extends AbstractValueEdit {
                             contenteditable: "true",
                             html: tmpConverter.innerHTML
                         });
+
+                        this.insertBefore(new HtmlWysiwygPanel(this.htmlContenteditable),this.htmlContenteditable)
                         this.mime = next;
                     }
                 } else if (old == 'text/html') {
@@ -43,6 +45,7 @@ export default class ContentValueEdit extends AbstractValueEdit {
                         }, {text: 'ok', value: true}])) {
 
                             this.htmlContenteditable.remove();
+                            this.querySelector('html-wysiwyg-panel')?.remove();
                             this.textTextarea = this.addChild('textarea', {text: this.htmlContenteditable.textContent});
                             this.mime = next;
                         }

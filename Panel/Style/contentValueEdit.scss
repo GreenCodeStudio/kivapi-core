@@ -5,6 +5,8 @@ content-value-edit {
         display: block;
         height: 5em;
         overflow: auto;
+        resize: auto;
+        overflow: auto;
         form .label &{
             display: block;
         }
