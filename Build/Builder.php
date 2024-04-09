@@ -44,6 +44,12 @@ class Builder
         copy(__DIR__.'/build.js', $prebuildPath.'/build.js');
         chdir($prebuildPath);
         exec("yarn");
+        if (!file_exists(__dir__.'/../../node_modules')) {
+            symlink($path.'/node_modules', __dir__.'/../../node_modules');
+        }
+        if (!file_exists(__dir__.'/../../Public/Dist')) {
+            symlink(__dir__.'/../../BuildResults/Dist', __dir__.'/../../Public/Dist');
+        }
         exec('node build.js');
         chdir($path);
         exec("yarn");

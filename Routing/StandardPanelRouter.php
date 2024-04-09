@@ -26,21 +26,23 @@ class StandardPanelRouter extends Router
             }
         }
         $packagesGroupsPath = __DIR__.'/../../Packages';
-        $packagesGroups = scandir($packagesGroupsPath);
-        foreach ($packagesGroups as $group) {
-            if ($group == '.' || $group == '..') {
-                continue;
-            }
-            $packages = scandir($packagesGroupsPath.'/'.$group);
-            foreach ($packages as $package) {
-                if ($package == '.' || $package == '..') {
+        if(is_dir($packagesGroupsPath)) {
+            $packagesGroups = scandir($packagesGroupsPath);
+            foreach ($packagesGroups as $group) {
+                if ($group == '.' || $group == '..') {
                     continue;
                 }
-                $filename = $packagesGroupsPath.'/'.$group.'/'.$package.'/Panel/StandardControllers/'.$this->controllerName.'StandardController.php';
-                if (is_file($filename)) {
-                    include_once $filename;
-                    $className = "\\$group\\$package\\Panel\\StandardControllers\\{$this->controllerName}StandardController";
-                    return $className;
+                $packages = scandir($packagesGroupsPath.'/'.$group);
+                foreach ($packages as $package) {
+                    if ($package == '.' || $package == '..') {
+                        continue;
+                    }
+                    $filename = $packagesGroupsPath.'/'.$group.'/'.$package.'/Panel/StandardControllers/'.$this->controllerName.'StandardController.php';
+                    if (is_file($filename)) {
+                        include_once $filename;
+                        $className = "\\$group\\$package\\Panel\\StandardControllers\\{$this->controllerName}StandardController";
+                        return $className;
+                    }
                 }
             }
         }

@@ -19,7 +19,7 @@ class UploadedImage extends UploadedFile
         $ret = [];
         for ($scale = 0.5; ; $scale *= 2) {
             if ($scale > $maxScale) $scale = $maxScale;
-            $ret[] = $this->getSizedUrl($width * $scale, $height * $scale, $type).' '.$scale.'x';
+            $ret[] = $this->getSizedUrl((int)($width * $scale), (int)($height * $scale), $type).' '.$scale.'x';
             if ($scale == $maxScale) break;
         }
         return implode(', ', $ret);

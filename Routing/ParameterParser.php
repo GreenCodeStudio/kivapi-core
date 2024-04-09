@@ -87,9 +87,11 @@ class ParameterParser
 
     private function parseParamTree($def, $param)
     {
+        if($param==null)
+            return null;
         return FunQuery::create($param->value ?? [])->map(function ($x) {
             $obj = $this->parseParamValue($x->value ?? null, $x->type);
-            $obj->children = $this->parseParamTree($x->children);
+            $obj->children = $this->parseParamTree($x->children??null);
             return $obj;
         })->toArray();
     }

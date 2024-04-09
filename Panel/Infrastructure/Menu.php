@@ -34,6 +34,9 @@ class Menu
             }
             yield __DIR__.'/../'.$module.'/menu.xml';
         }
+        if(!is_dir(__DIR__.'/../../../Packages/')){
+            return;
+        }
         $groups = scandir(__DIR__.'/../../../Packages/');
         foreach ($groups as $group) {
             if ($group == '.' || $group == '..') {

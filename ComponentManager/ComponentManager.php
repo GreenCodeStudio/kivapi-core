@@ -44,12 +44,13 @@ class ComponentManager
         }
 
         $dir = __DIR__.'/../../Packages/';
-        foreach (scandir($dir) as $packageGroup) {
-            if ($packageGroup != '.' && $packageGroup != '..' && is_dir($dir.$packageGroup)) {
-                foreach (scandir($dir.$packageGroup) as $package) {
-                    if ($package != '.' && $package != '..' && is_dir($dir.$packageGroup.'/'.$package)) {
-                        $subdir = $dir.$packageGroup.'/'.$package.'/Components/';
-                        if (is_dir($subdir)) {
+        if (is_dir($dir)) {
+            foreach (scandir($dir) as $packageGroup) {
+                if ($packageGroup != '.' && $packageGroup != '..' && is_dir($dir.$packageGroup)) {
+                    foreach (scandir($dir.$packageGroup) as $package) {
+                        if ($package != '.' && $package != '..' && is_dir($dir.$packageGroup.'/'.$package)) {
+                            $subdir = $dir.$packageGroup.'/'.$package.'/Components/';
+                            if (is_dir($subdir)) {
                             foreach (scandir($subdir) as $name) {
                                 if ($name != '.' && $name != '..' && is_dir($subdir.$name)) {
                                     $ret[] = [$packageGroup.'\\'.$package, $name];

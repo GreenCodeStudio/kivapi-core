@@ -69,3 +69,4 @@ export default class ContentValueEdit extends AbstractValueEdit {
     }
 }
 customElements.define('content-value-edit', ContentValueEdit);
+

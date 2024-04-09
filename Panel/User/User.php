@@ -48,6 +48,7 @@ class User
         $ret['name'] = $data->name;
         $ret['surname'] = $data->surname;
         $ret['mail'] = $data->mail;
+        $ret['archived'] = $data->archived??0;
         return $ret;
     }
 

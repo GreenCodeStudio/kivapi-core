@@ -3,5 +3,6 @@
     <element>
         <link>Page</link>
         <title>Pages</title>
+        <titleKey>Core.Panel.Page.Pages</titleKey>
     </element>
 </menu>

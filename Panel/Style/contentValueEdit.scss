@@ -1,5 +1,12 @@
 content-value-edit {
     [contenteditable] {
         @extend input;
+
+        display: block;
+        height: 5em;
+        overflow: auto;
+        form .label &{
+            display: block;
+        }
     }
 }

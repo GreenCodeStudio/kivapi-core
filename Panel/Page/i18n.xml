@@ -4,6 +4,10 @@
         <value lang="en">Page</value>
         <value lang="pl">Strona</value>
     </node>
+    <node name="Pages">
+        <value lang="en">Pages</value>
+        <value lang="pl">Strony</value>
+    </node>
     <node name="List">
         <node name="Header">
             <value lang="en">Pages</value>
@@ -51,5 +55,9 @@
     <node name="Edit">
         <value lang="en">Edit</value>
         <value lang="pl">Edycja</value>
+    </node>
+    <node name="NoAdditionalParams">
+        <value lang="en">No additional parameters</value>
+        <value lang="pl">Brak dodatkowych parametrów</value>
     </node>
 </root>
