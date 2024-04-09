@@ -62,5 +62,5 @@ class ComponentManager
             }
         }
         return $ret;
-    }
+    }}
 }
