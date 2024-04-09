@@ -1,6 +1,6 @@
 import AbstractValueEdit from "./AbstractValueEdit";
 
-export default class SampleValueEdit extends AbstractValueEdit {
+export default class SimpleValueEdit extends AbstractValueEdit {
     constructor(paramConfig, param) {
         super(paramConfig, param);
     }
@@ -14,6 +14,16 @@ export default class SampleValueEdit extends AbstractValueEdit {
             value = this.param.default ?? '';
         }
         this.valueInput = this.addChild('input', {value});
+
+        if (this.param.type == 'int') {
+            this.valueInput.type = 'number';
+            this.valueInput.step=1;
+        }else if(this.param.type=='url'){
+            this.valueInput.type = 'url';
+        }else if (this.param.type=='boolean'){
+            this.valueInput.type = 'checkbox';
+            this.valueInput.checked = value===true || value == 'true';
+        }
         if (this.param.canFromQuery) {
             this.queryCheckbox = this.addChild('input', {
                 type: 'checkbox',
@@ -27,4 +37,4 @@ export default class SampleValueEdit extends AbstractValueEdit {
         return {source: this.queryCheckbox?.checked ? 'query' : 'const', value: this.valueInput.value};
     }
 }
-customElements.define('sample-value-edit', SampleValueEdit);
+customElements.define('simple-value-edit', SimpleValueEdit);

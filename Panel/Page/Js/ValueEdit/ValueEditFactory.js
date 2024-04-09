@@ -1,5 +1,5 @@
 import ComponentValueEdit from "./ComponentValueEdit";
-import SampleValueEdit from "./SampleValueEdit";
+import SimpleValueEdit from "./SimpleValueEdit";
 import StructValueEdit from "./StructValueEdit";
 import ArrayValueEdit from "./ArrayValueEdit";
 import FileValueEdit from "./FileValueEdit";
@@ -37,9 +37,13 @@ export function generateParam(param, paramConfig) {
         let node = new ContentValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
-    } else {
-        let node = new SampleValueEdit(paramConfig, param);
+    } else if(param.type=='string' || param.type=='int' || param.type=='url' || param.type=='boolean') {
+        let node = new SimpleValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
+    }else{
+        console.error('Unknown type', param.type);
+        let node=document.create('div', {text: 'Unknown type: '+param.type});
+        return {node, collectParameters: ()=>{return {value: null}}};
     }
 }
