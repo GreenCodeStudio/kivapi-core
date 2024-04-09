@@ -53,7 +53,7 @@ export default class ContentValueEdit extends AbstractValueEdit {
             this.textTextarea = this.addChild('textarea', {text: this.paramConfig?.value?.text ?? this.param.default ?? ''});
         else if (this.mime == 'text/html')
             this.htmlContenteditable = this.addChild('div', {
-                contenteditable: true,
+                contenteditable: "true",//need to be string, not boolean
                 html: this.paramConfig?.value?.html ?? this.param.default ?? ''
             });
 
