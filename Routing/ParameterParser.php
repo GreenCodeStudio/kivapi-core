@@ -7,13 +7,15 @@ namespace Core\Routing;
 use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\ParamTypes\Content;
 use Core\File\UploadedFile;
+use Core\InSiteEdit\InSiteMapping;
 use MKrawczyk\FunQuery\FunQuery;
 
 class ParameterParser
 {
-    public function __construct($query = [])
+    public function __construct($query = [], $inSiteEdit = false)
     {
         $this->query = $query;
+        $this->inSiteEdit = $inSiteEdit;
     }
 
     public function findParameters($definedParameters, $node)
@@ -23,24 +25,24 @@ class ParameterParser
         else
             $paramsInfo = is_string($node->parameters) ? json_decode($node->parameters, false) : $node->parameters;
 
-        return $this->parseParamStruct($definedParameters, $paramsInfo);
+        return $this->parseParamStruct($definedParameters, $paramsInfo, []);
     }
 
-    public function parseParamStruct($definedParameters, $params)
+    public function parseParamStruct($definedParameters, $params, $path = [])
     {
         $ret = new \stdClass();
         foreach ($definedParameters as $name => $def) {
             $def = (object)$def;
             $param = $params->{$name} ?? null;
             if ($param || $def->type == 'struct')
-                $ret->{$name} = $this->parseParam((object)$def, $param, $name);
+                $ret->{$name} = $this->parseParam((object)$def, $param, $name, [...$path, $name]);
             else
                 $ret->{$name} = $def->default ?? $this->defaultByType($def->type);
         }
         return $ret;
     }
 
-    private function parseParam($def, $param, $name)
+    private function parseParam($def, $param, $name, $path = [])
     {
         if ($def->type == 'array') {
             return $this->parseParamArray($def, $param);
@@ -49,9 +51,9 @@ class ParameterParser
         } else if ($def->type == 'struct') {
             return $this->parseParamStruct($def->items, $param?->value ?? (new \stdClass()));
         } else {
-            $const = $this->parseParamValue($param->value, $def->type);
+            $const = $this->parseParamValue($param->value, $def->type, null, $path);
             if ($param->source == 'query')
-                return $this->parseParamValue($this->query[$name] ?? $const, $def->type);
+                return $this->parseParamValue($this->query[$name] ?? $const, $def->type, $path);
             else if ($param->source == 'const')
                 return $const;
         }
@@ -62,7 +64,7 @@ class ParameterParser
         return FunQuery::create($param->value ?? [])->map(fn($x) => $this->parseParamValue($x->value ?? null, $x->type, $def->item))->toArray();
     }
 
-    private function parseParamValue($value, $type, $def = null)
+    private function parseParamValue($value, $type, $def = null, $path = [])
     {
         switch ($type) {
             case "struct":
@@ -70,9 +72,11 @@ class ParameterParser
             case "int":
                 return empty($value) ? null : (int)$value;
             case "string":
+                if ($this->inSiteEdit)
+                    return InSiteMapping::addMapping($path, (string)$value);
                 return (string)$value;
             case "component":
-                return ComponentManager::findController($value->module, $value->component, $this->parseParamStruct($value->params), []);
+                return ComponentManager::loadControllerWithParams($value->module, $value->component, $this->parseParamStruct($value->params), []);
             case "file":
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
             case "image":

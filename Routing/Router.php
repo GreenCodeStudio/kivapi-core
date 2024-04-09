@@ -63,7 +63,8 @@ class Router
             } else if (isset($_SERVER['HTTP_X_JSON'])) {
                 return new ComponentJsonRouter();
             } else {
-                return new ComponentRouter();
+                $inSiteEdit=isset($_GET['inSiteEdit']);
+                return new ComponentRouter($inSiteEdit);
             }
         }
     }

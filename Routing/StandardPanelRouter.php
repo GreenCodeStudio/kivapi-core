@@ -78,7 +78,12 @@ class StandardPanelRouter extends Router
         $this->logExceptionIfNeeded($ex);
         dump($ex);
 
-        $this->prepareErrorController($ex, $responseCode);
+        try {
+            $this->prepareErrorController($ex, $responseCode);
+        }catch (\Throwable $ex2) {
+            dump($ex);
+            $this->htmlResult='Error';
+        }
         echo $this->htmlResult;
     }
 

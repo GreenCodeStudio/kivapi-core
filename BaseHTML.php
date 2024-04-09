@@ -81,7 +81,7 @@ if (!empty($panelData)) {
         <div class="adminMenu-content">
             <a href="<?= $panelData->panelURL ?>">Panel</a>
             <a href="<?= $panelData->editURL ?>">Edit</a>
-            <a href="<?= $panelData->insiteEditURL ?>">InSite Edit</a>
+            <a href="<?= $panelData->inSiteEditURL ?>">InSite Edit</a>
         </div>
     </div>
     <?php

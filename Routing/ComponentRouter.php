@@ -15,6 +15,12 @@ class ComponentRouter extends Router
 {
     public $url;
     private array $query = [];
+    private bool $inSiteEdit;
+
+    public function __construct(bool $inSiteEdit = false)
+    {
+        $this->inSiteEdit = $inSiteEdit;
+    }
 
     public function findController()
     {
@@ -22,7 +28,7 @@ class ComponentRouter extends Router
         $nodes = $this->findRoute();
         $this->routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node,$this->query))->toArray();
         $controllers = FunQuery::create($this->routeNodes)
-            ->map(fn($routeNode) => ComponentManager::findController($routeNode->node->module, $routeNode->node->component,  $routeNode->query, $routeNode->node))
+            ->map(fn($routeNode) => ComponentManager::loadControllerWithParams($routeNode->node->module, $routeNode->node->component,  $routeNode->query, $routeNode->node, $this->inSiteEdit))
             ->toArray();
         $this->controller = $controllers[0];
         foreach ($controllers as $i => $controller) {

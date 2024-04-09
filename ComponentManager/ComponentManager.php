@@ -6,10 +6,16 @@ use Core\Routing\ParameterParser;
 
 class ComponentManager
 {
-    public static function findController(?string $package, string $name, array $query, object $node)
+    public static function loadControllerWithParams(?string $package, string $name, array $query, object $node, bool $inSiteEdit = false)
     {
         $className = static::findControllerClass($package, $name);
-        $params = (new ParameterParser($query))->findParameters($className::DefinedParameters(), $node);
+        $params = (new ParameterParser($query, $inSiteEdit))->findParameters($className::DefinedParameters(), $node);
+        $controller = new $className($params);
+        return $controller;
+    }
+    public static function loadController(?string $package, string $name, $params)
+    {
+        $className = static::findControllerClass($package, $name);
         $controller = new $className($params);
         return $controller;
     }
