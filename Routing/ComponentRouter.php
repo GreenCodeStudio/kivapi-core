@@ -7,6 +7,7 @@ use Core\ComponentManager\PageRepository;
 use Core\ComponentManager\RedirectionController;
 use Core\ComponentManager\SpecialComponents\EmptyComponent;
 use Core\Exceptions\NotFoundException;
+use Core\InSiteEdit\InSiteMapping;
 use Core\Panel\Authorization\Authorization;
 use Core\TrackingCode\TrackingCode;
 use MKrawczyk\FunQuery\FunQuery;
@@ -97,6 +98,7 @@ class ComponentRouter extends Router
                     'panelURL' => '/panel/',
                     'editURL' => '/panel/Page/edit/'.end($this->routeNodes)->node->id,
                     'inSiteEditURL' => $this->urlWithoutQuery.'?inSiteEdit=1',
+                    'inSiteEditData'=>InSiteMapping::$mapping
                 ];
             }
             include __DIR__.'/../BaseHTML.php';

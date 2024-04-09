@@ -13,7 +13,8 @@ export class index {
         let datasource = new DatasourceAjax('Package', 'getTable', ['Package', 'Package']);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
-            {name: t('Name'), content: row => row.fullName, sortName: 'fullName'},
+            {name: t('Vendor'), content: row => row.vendor, sortName: 'vendor'},
+            {name: t('Name'), content: row => row.name, sortName: 'name'},
             {name: t('Version'), content: row => row.version, sortName: 'version'},
         ]
         objectsList.generateActions = (rows, mode) => {
@@ -23,6 +24,39 @@ export class index {
                     name: TCommon("details"),
                     icon: 'icon-show',
                     href: "Package/details/" + rows[0].fullName,
+                    main: true
+                });
+            }
+            if (mode != 'row') {
+                ret.push({
+                    name: TCommon("detailsInNewTab"), icon: 'icon-show', showInTable: false, command() {
+                        rows.forEach(x => window.open("Package/details/" + rows[0].fullName))
+                    }
+                });
+            }
+            return ret;
+        }
+        container.append(objectsList);
+        objectsList.refresh();
+    }
+}
+export class available {
+    constructor(page, data) {
+        const container = page.querySelector('.PackagesList');
+        let datasource = new DatasourceAjax('Package', 'getAvailableTable', ['Package', 'Package']);
+        let objectsList = new ObjectsList(datasource);
+        objectsList.columns = [
+            {name: t('Vendor'), content: row => row.vendor, sortName: 'vendor'},
+            {name: t('Name'), content: row => row.name, sortName: 'name'},
+            {name: t('Version'), content: row => row.version, sortName: 'version'},
+        ]
+        objectsList.generateActions = (rows, mode) => {
+            let ret = [];
+            if (rows.length == 1) {
+                ret.push({
+                    name: TCommon("details"),
+                    icon: 'icon-show',
+                    href: "Package/availableDetails/" + rows[0].vendor+"/"+rows[0].name,
                     main: true
                 });
             }

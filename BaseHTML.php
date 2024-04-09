@@ -84,6 +84,12 @@ if (!empty($panelData)) {
             <a href="<?= $panelData->inSiteEditURL ?>">InSite Edit</a>
         </div>
     </div>
+    <script>
+        //<![CDATA[
+        window.inSiteEditData = <?=json_encode($panelData->inSiteEditData)?>;
+        //]]>
+    </script>
+    <script src="/Dist/inSiteEditJs.js"></script>
     <?php
 }
 ?>

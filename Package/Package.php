@@ -9,13 +9,30 @@ class Package
 {
     public function getDataTable($options)
     {
-        $all = FunQuery::create($this->listAllPackages());
+        $all = FunQuery::create($this->listInstalledPackages());
         $total = $all->count();
         $rows = $all->slice($options->start, $options->limit);
         return ['rows' => $rows, 'total' => $total];
     }
 
-    public function listAllPackages()
+    public function getAvailableDataTable($options)
+    {
+        $all = FunQuery::create($this->listAvailablePackages());
+        $total = $all->count();
+        $rows = $all->slice($options->start, $options->limit);
+        return ['rows' => $rows, 'total' => $total];
+    }
+
+    public function listAvailablePackages()
+    {
+        $xml = file_get_contents('https://raw.githubusercontent.com/GreenCodeStudio/kivapi/main/packages.xml');
+        $obj= simplexml_load_string($xml);
+        foreach ($obj->package as $package) {
+            yield $package;
+        }
+    }
+
+    public function listInstalledPackages()
     {
         $dir = __DIR__.'/../../Packages';
         foreach (scandir($dir) as $vendor) {
@@ -40,6 +57,11 @@ class Package
         $ret->vendor = $vendor;
         $ret->fullName = $vendor.'/'.$name;
         return $ret;
+    }
+    public function getAvailablePackageDetails(string $vendor, string $name)
+    {
+        $all= FunQuery::create($this->listAvailablePackages());
+        return $all->first(fn($x) => $x->vendor == $vendor && $x->name == $name);
     }
 
     private function readXML($path)
