@@ -48,7 +48,7 @@ class DB
         foreach ($params as $name => $value) {
             $params2[':'.$name] = $value;
         }
-        $sth->execute(array_map('self::toSqlValue', $params));
+        $sth->execute(array_map(fn($x)=>self::toSqlValue($x), $params));
         $ret = $sth->fetchAll(\PDO::FETCH_ASSOC);
         return $ret;
     }
@@ -126,7 +126,7 @@ class DB
         foreach ($params as $name => $value) {
             $params2[':'.$name] = $value;
         }
-        $sth->execute(array_map('self::toSqlValue', $params));
+        $sth->execute(array_map(fn($x)=>self::toSqlValue($x), $params));
     }
 
     static function insert(string $table, $data)
