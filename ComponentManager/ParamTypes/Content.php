@@ -3,6 +3,11 @@
 namespace Core\ComponentManager\ParamTypes;
 class Content
 {
+    /**
+     * @var mixed
+     */
+    public $data;
+
     public function __construct($data)
     {
         $this->data = $data;

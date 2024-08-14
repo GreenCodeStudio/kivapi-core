@@ -1,3 +1,7 @@
+
+<div class="topBarButtons">
+    <button class="installBtn">Install</button>
+</div>
 <section class="card">
     <h1>
         <span><?= htmlspecialchars($data['item']->vendor) ?></span>

@@ -10,6 +10,7 @@ class PanelStandardController extends PanelController
 
     private $views = [];
     private $breadcrumb = [];
+    private $methodReturnData=null;
 
     public function __construct()
     {
@@ -98,5 +99,9 @@ class PanelStandardController extends PanelController
     protected function pushBreadcrumb($crumb)
     {
         $this->breadcrumb[] = $crumb;
+    }
+    protected function setData($data)
+    {
+        $this->initInfo->data = $data;
     }
 }

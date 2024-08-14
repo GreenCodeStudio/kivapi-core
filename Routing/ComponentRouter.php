@@ -14,7 +14,6 @@ use MKrawczyk\FunQuery\FunQuery;
 
 class ComponentRouter extends Router
 {
-    public $url;
     private array $query = [];
     private bool $inSiteEdit;
     /**

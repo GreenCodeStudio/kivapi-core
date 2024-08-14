@@ -37,7 +37,7 @@ class PageStandardController extends PanelStandardController
         if ($data == null)
             throw new NotFoundException();
 
-        $availableComponents = ComponentManager::listComponents();
+        $availableComponents = ComponentManager::listComponentsWithDefs();
         return ['Page' => $data, 'availableComponents' => $availableComponents];
     }
 

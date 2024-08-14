@@ -44,9 +44,11 @@ class ComponentManager
     {
         $ret = [];
         $dir = __DIR__.'/../../Components/';
-        foreach (scandir($dir) as $name) {
-            if ($name != '.' && $name != '..' && is_dir($dir.$name)) {
-                $ret[] = [null, $name];
+        if(is_dir($dir)) {
+            foreach (scandir($dir) as $name) {
+                if ($name != '.' && $name != '..' && is_dir($dir.$name)) {
+                    $ret[] = [null, $name];
+                }
             }
         }
 
@@ -68,6 +70,21 @@ class ComponentManager
                     }
                 }
             }
+        }
+        return $ret;
+    }
+    public static function listComponentsWithDefs(){
+        $ret = [];
+        foreach (static::listComponents() as $component) {
+            $package = $component[0];
+            $name = $component[1];
+            $className=static::findControllerClass($package, $name);
+            $definedParameters=$className::DefinedParameters();
+            $ret[] = (object)[
+                'package' => $component[0],
+                'name' => $component[1],
+                'definedParameters' => $definedParameters
+            ];
         }
         return $ret;
     }

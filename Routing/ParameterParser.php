@@ -12,6 +12,9 @@ use MKrawczyk\FunQuery\FunQuery;
 
 class ParameterParser
 {
+    public $query;
+    public $inSiteEdit;
+
     public function __construct($query = [], $inSiteEdit = false)
     {
         $this->query = $query;
@@ -78,7 +81,10 @@ class ParameterParser
                     return InSiteMapping::addMapping($path, (string)$value);
                 return (string)$value;
             case "component":
-                return ComponentManager::loadControllerWithParams($value->module, $value->component, $this->parseParamStruct($value->params), []);
+                $className = ComponentManager::findControllerClass($value->module, $value->component);
+                $params = $this->parseParamStruct($className::DefinedParameters(), $value->params->value);
+                $controller = new $className($params);
+                return $controller;
             case "file":
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
             case "image":

@@ -9,6 +9,10 @@ use Core\Panel\Authorization\Exceptions\UnauthorizedException;
 class StandardPanelRouter extends Router
 {
     var $controllerType = 'Controllers';
+    /**
+     * @var false|string
+     */
+    private $htmlResult;
 
     public function findControllerClass()
     {

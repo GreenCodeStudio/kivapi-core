@@ -41,6 +41,7 @@ class PackageStandardController extends PanelStandardController
             throw new NotFoundException();
         $this->addView('Package', 'details', ['item' => $item]);
         $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
+        $this->setData($item);
     }
 
     function install()
