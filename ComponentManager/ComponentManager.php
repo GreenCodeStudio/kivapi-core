@@ -13,6 +13,7 @@ class ComponentManager
         $controller = new $className($params);
         return $controller;
     }
+
     public static function loadController(?string $package, string $name, $params)
     {
         $className = static::findControllerClass($package, $name);
@@ -57,9 +58,10 @@ class ComponentManager
                         if ($package != '.' && $package != '..' && is_dir($dir.$packageGroup.'/'.$package)) {
                             $subdir = $dir.$packageGroup.'/'.$package.'/Components/';
                             if (is_dir($subdir)) {
-                            foreach (scandir($subdir) as $name) {
-                                if ($name != '.' && $name != '..' && is_dir($subdir.$name)) {
-                                    $ret[] = [$packageGroup.'\\'.$package, $name];
+                                foreach (scandir($subdir) as $name) {
+                                    if ($name != '.' && $name != '..' && is_dir($subdir.$name)) {
+                                        $ret[] = [$packageGroup.'\\'.$package, $name];
+                                    }
                                 }
                             }
                         }
@@ -68,5 +70,5 @@ class ComponentManager
             }
         }
         return $ret;
-    }}
+    }
 }

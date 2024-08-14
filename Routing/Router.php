@@ -29,7 +29,7 @@ class Router
     /**
      * @var mixed
      */
-    private $returned;
+    public $returned;
 
     public static function routeHttp($url)
     {
