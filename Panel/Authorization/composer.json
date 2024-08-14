@@ -2,6 +2,7 @@
     "require": {
         "ext-openssl": "*",
         "ext-simplexml": "*",
-        "mkrawczyk/funquery": "^v1.2.0"
+        "mkrawczyk/funquery": "^v1.2.0",
+        "mkrawczyk/mpts": "^v1.4.1"
     }
 }

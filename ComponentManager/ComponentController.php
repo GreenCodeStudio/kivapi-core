@@ -45,4 +45,8 @@ abstract class ComponentController extends BaseComponentController
         ob_end_clean();
         return $html;
     }
+    public static function DefinedParameters()
+    {
+        return [];
+    }
 }

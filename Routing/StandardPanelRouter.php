@@ -89,6 +89,7 @@ class StandardPanelRouter extends Router
             $this->htmlResult='Error';
         }
         echo $this->htmlResult;
+        dump_render_html();
     }
 
     protected function prepareErrorController($ex, $responseCode)
