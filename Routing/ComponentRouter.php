@@ -17,6 +17,10 @@ class ComponentRouter extends Router
     public $url;
     private array $query = [];
     private bool $inSiteEdit;
+    /**
+     * @var false|string
+     */
+    private $urlWithoutQuery;
 
     public function __construct(bool $inSiteEdit = false)
     {
