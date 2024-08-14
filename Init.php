@@ -20,9 +20,10 @@ if (strpos($_SERVER['REQUEST_URI'], '/Dist/') === 0) {
     $path = substr($_SERVER['REQUEST_URI'], 6);
     copy(__DIR__.'/../BuildResults/Dist/'.$path, 'php://stdout');
 } else {
-    include_once __DIR__.'/autoloader.php';
-    include_once __DIR__.'/loadDotEnv.php';
-    include_once __DIR__.'/globalFunctions.php';
-    \Core\Database\DB::init();
-    \Core\Routing\Router::routeHttp($_SERVER['REQUEST_URI']);
+        include_once __DIR__.'/autoloader.php';
+        include_once __DIR__.'/loadDotEnv.php';
+        include_once __DIR__.'/globalFunctions.php';
+        \Core\Database\DB::init();
+        \Core\Routing\Router::routeHttp($_SERVER['REQUEST_URI']);
+
 }

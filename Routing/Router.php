@@ -95,6 +95,10 @@ class Router
         http_response_code($this->getHttpCode($ex));
         $this->logExceptionIfNeeded($ex);
         dump($ex);
+        if($_ENV['debug']=='true') {
+            ob_end_clean();
+            dump_render_html();
+        }
     }
 
     protected function getHttpCode(\Throwable $ex)
