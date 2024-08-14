@@ -20,6 +20,17 @@ use ReflectionMethod;
 
 class Router
 {
+    public string $url;
+    public string $controllerName;
+    public string $methodName;
+    public array $args;
+    public string $controllerClassName;
+    public object $controller;
+    /**
+     * @var mixed
+     */
+    private $returned;
+
     public static function routeHttp($url)
     {
         if (strtolower(substr($url, 0, 8)) == '/assets/') {

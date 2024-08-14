@@ -6,6 +6,7 @@ import {AjaxPanel} from "../../../Js/ajaxPanel";
 import {create} from "fast-creator";
 import {t} from "../../i18n.xml";
 import {t as TCommon} from "../../../Common/i18n.xml";
+import {modal} from "../../../Js/modal";
 
 export default class {
     constructor(page, data) {
