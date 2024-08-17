@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <node name="Components">
+        <value lang="en">Components</value>
+        <value lang="pl">Komponenty</value>
+    </node>
+    <node name="List">
+        <node name="Header">
+            <value lang="en">Available components</value>
+            <value lang="pl">Dostępne komponenty</value>
+        </node>
+    </node>
+</root>

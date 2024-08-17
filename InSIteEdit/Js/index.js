@@ -11,7 +11,6 @@ function traverseDom(node) {
         return
     }
     if (node.nodeType == document.TEXT_NODE) {
-        console.log(node.nodeValue)
         for(let field of window.inSiteEditData){
             if(node.nodeValue.includes(field.random)){
                 console.log('found field', field)

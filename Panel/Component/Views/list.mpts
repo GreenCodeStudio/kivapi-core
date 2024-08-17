@@ -1,0 +1,9 @@
+<div class="topBarButtons">
+</div>
+<section class="card page-Component-list" data-width="6">
+    <header>
+        <h1>{{ t("Core.Panel.Component.List.Header") }}</h1>
+    </header>
+    <div class="ComponentsList">
+    </div>
+</section>

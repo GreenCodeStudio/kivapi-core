@@ -14,6 +14,7 @@ class ParameterParser
 {
     public $query;
     public $inSiteEdit;
+    public $subComponents=[];
 
     public function __construct($query = [], $inSiteEdit = false)
     {
@@ -84,6 +85,7 @@ class ParameterParser
                 $className = ComponentManager::findControllerClass($value->module, $value->component);
                 $params = $this->parseParamStruct($className::DefinedParameters(), $value->params->value);
                 $controller = new $className($params);
+                $this->subComponents[] = $controller;
                 return $controller;
             case "file":
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();

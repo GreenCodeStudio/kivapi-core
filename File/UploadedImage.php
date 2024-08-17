@@ -6,6 +6,15 @@ namespace Core\File;
 
 class UploadedImage extends UploadedFile
 {
+    /**
+     * @var mixed
+     */
+    private $imageWidth;
+    /**
+     * @var mixed
+     */
+    private $imageHeight;
+
     public function __construct($data)
     {
         parent::__construct($data);

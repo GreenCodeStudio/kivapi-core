@@ -3,14 +3,17 @@
 namespace Core\ComponentManager;
 
 use Core\Routing\ParameterParser;
+use MKrawczyk\FunQuery\FunQuery;
 
 class ComponentManager
 {
     public static function loadControllerWithParams(?string $package, string $name, array $query, object $node, bool $inSiteEdit = false)
     {
         $className = static::findControllerClass($package, $name);
-        $params = (new ParameterParser($query, $inSiteEdit))->findParameters($className::DefinedParameters(), $node);
+        $parser=(new ParameterParser($query, $inSiteEdit));
+        $params = $parser->findParameters($className::DefinedParameters(), $node);
         $controller = new $className($params);
+        $controller->subParamComponents = $parser->subComponents;
         return $controller;
     }
 
@@ -87,5 +90,21 @@ class ComponentManager
             ];
         }
         return $ret;
+    }
+    public static function getDeveloperDetails(?string $package, string $name)
+    {
+        $className = static::findControllerClass($package, $name);
+        $definedParameters = $className::DefinedParameters();
+        return (object)[
+            'package' => $package,
+            'name' => $name,
+            'definedParameters' => $definedParameters
+        ];
+    }
+
+    public static function getDataTable($options)
+    {
+        $rows = self::listComponents();
+        return ['rows' => FunQuery::create($rows)->map(fn($x)=>['package'=>$x[0], 'name'=>$x[1]]), 'total' => count($rows)];
     }
 }

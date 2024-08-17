@@ -80,6 +80,12 @@ class Builder
         foreach ($this->findAll('Style/index.scss') as $file) {
             $content[] = "@import \"../../$file\";";
         }
+        $availableComponents = ComponentManager::listComponents();
+        foreach ($availableComponents as $component) {
+            $file = "Components/$component[1]/Style.scss";
+            if (is_file(__DIR__."/../../$file"))
+                $content[] = "@import \"../../$file\";";
+        }
         file_put_contents($path, implode("\r\n", $content));
     }
 

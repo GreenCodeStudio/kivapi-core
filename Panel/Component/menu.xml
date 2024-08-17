@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <element>
+        <title>Components</title>
+        <link>Component</link>
+        <titleKey>Core.Panel.Component.Components</titleKey>
+    </element>
+</menu>

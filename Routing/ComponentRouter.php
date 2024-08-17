@@ -20,6 +20,7 @@ class ComponentRouter extends Router
      * @var false|string
      */
     private $urlWithoutQuery;
+    private array $routeNodes;
 
     public function __construct(bool $inSiteEdit = false)
     {
