@@ -190,7 +190,7 @@ class Builder
             }
         }
         if ($changed) {
-            file_put_contents(__dir__.'/../../composer.json', json_encode($packageComposer, JSON_PRETTY_PRINT));
+            file_put_contents(__dir__.'/../../composer.json', str_replace('\/','/',json_encode($packageComposer, JSON_PRETTY_PRINT)));
         }
 
         exec("composer upgrade");
