@@ -21,7 +21,7 @@ class Content
     public function getHtml()
     {
         if ($this->data->mime == 'text/plain')
-            return htmlspecialchars($this->data->text);
+            return str_replace("\n","<br />\n", htmlspecialchars($this->data->text));
         else if ($this->data->mime == 'text/html')
             return $this->data->html;
         else
