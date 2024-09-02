@@ -2,20 +2,28 @@ import {AjaxPanel} from "./ajaxPanel";
 import ActiveElementList from "../../Js/ActiveElementList";
 
 export default class FileUploader extends HTMLElement {
-    constructor() {
+    constructor(drawExtraInfo=null) {
         super();
         this.maxFiles = null;
         this.files = [];
+        this.drawExtraInfo = drawExtraInfo;
         this.activeElementList = new ActiveElementList(this.addChild('div'), this.files);
         this.activeElementList.item = (x, old) => {
             console.log(x);
             if (old) return old;
-            else if (x.status === 'pending')
+            else if (x.status === 'pending') {
                 return document.create('div.pendingFile', {text: 'pending'})
-            else
+            }
+            else {
+                const extraInfo = this.drawExtraInfo ? this.drawExtraInfo(x) : [];
                 return document.create('div.uploadedFile', {
                     draggable: "true",
-                    children: [{text: x.name || 'Bez nazwy'}, {text: 'Typ: ' + x.mime}, {text: 'Rozmiar: ' + this.bytesToHumanReadable(x.size)}, {
+                    children: [
+                        {text: x.name || 'Bez nazwy'},
+                        {text: 'Typ: ' + x.mime},
+                        {text: 'Rozmiar: ' + this.bytesToHumanReadable(x.size)},
+                        ...extraInfo,
+                        {
                         tagName: 'div',
                         className: 'button',
                         text: 'usuń',
@@ -32,6 +40,7 @@ export default class FileUploader extends HTMLElement {
                         e.dataTransfer.setData('text/cms-file', JSON.stringify(x));
                     }
                 })
+            }
         };
         this.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -93,6 +102,7 @@ export default class FileUploader extends HTMLElement {
         this.files = value;
         this.activeElementList.list = value;
         this.activeElementList.draw();
+        this.refreshAddButtonVisibility();
     }
 
     refreshAddButtonVisibility() {
@@ -111,7 +121,7 @@ export default class FileUploader extends HTMLElement {
     }
 
     numberHumanRund(num) {
-        if (num > 100) return num.toString();
+        if (num > 100) return Math.round(num).toString();
         else if (num > 10) return num.toFixed(1);
         else return num.toFixed(2);
     }
