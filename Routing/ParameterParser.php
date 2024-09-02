@@ -14,7 +14,7 @@ class ParameterParser
 {
     public $query;
     public $inSiteEdit;
-    public $subComponents=[];
+    public $subComponents = [];
 
     public function __construct($query = [], $inSiteEdit = false)
     {
@@ -106,9 +106,9 @@ class ParameterParser
     {
         if ($param == null)
             return null;
-        return FunQuery::create($param->value ?? [])->map(function ($x) {
+        return FunQuery::create($param->value ?? [])->map(function ($x) use ($def) {
             $obj = $this->parseParamValue($x->value ?? null, $x->type);
-            $obj->children = $this->parseParamTree($x->children ?? null);
+            $obj->children = $this->parseParamTree($def, $x->children ?? null);
             return $obj;
         })->toArray();
     }
