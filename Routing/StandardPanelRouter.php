@@ -74,6 +74,10 @@ class StandardPanelRouter extends Router
     protected function sendBackException(\Throwable $ex)
     {
         $responseCode = $this->getHttpCode($ex);
+        if($responseCode==404){
+            header('Location: /');
+            $responseCode = 302;
+        }
         http_response_code($responseCode);
         $this->logExceptionIfNeeded($ex);
         dump($ex);

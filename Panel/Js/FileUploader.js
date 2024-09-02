@@ -14,6 +14,7 @@ export default class FileUploader extends HTMLElement {
                 return document.create('div.pendingFile', {text: 'pending'})
             else
                 return document.create('div.uploadedFile', {
+                    draggable: "true",
                     children: [{text: x.name || 'Bez nazwy'}, {text: 'Typ: ' + x.mime}, {text: 'Rozmiar: ' + this.bytesToHumanReadable(x.size)}, {
                         tagName: 'div',
                         className: 'button',
@@ -24,16 +25,49 @@ export default class FileUploader extends HTMLElement {
                                 this.files.splice(index, 1);
                             this.activeElementList.draw();
                             this.dispatchEvent(new Event('change', {"bubbles": true, "cancelable": false}));
+                            this.refreshAddButtonVisibility();
                         }
-                    }]
+                    }],
+                    ondragstart: (e) => {
+                        e.dataTransfer.setData('text/cms-file', JSON.stringify(x));
+                    }
                 })
         };
+        this.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        this.addEventListener('drop', (e) => {
+            e.preventDefault();
+            let data = e.dataTransfer.getData('text/cms-file');
+            if(data){
+                let file = JSON.parse(data);
+                let index= this.files.indexOf(this.files.find(x=>x.id === file.id));
+                if(index >= 0 && !e.ctrlKey){
+                    this.files.splice(index, 1);
+                }
+                if(this.files.length+1 <= this.maxFiles || this.maxFiles === null) {
+                    let tmp=[...this.activeElementList.wrapper.children].map(x=>x.getBoundingClientRect().top);
+                    let topDiff=[...this.activeElementList.wrapper.children].map(x=>x.getBoundingClientRect().top-e.layerY).map(Math.abs);
+                    let index = topDiff.indexOf(Math.min(...topDiff));
+                    if(index >= 0)
+                        this.files.splice(index, 0, file);
+                    else
+                    this.files.push(file);
+                }
+                this.activeElementList.draw();
+                this.dispatchEvent(new Event('change', {"bubbles": true, "cancelable": false}));
+            }
+        });
         this.addButton = this.addChild('.button', {text: 'Dodaj'});
         this.addButton.onclick = () => this.openFileDialog();
+        this.refreshAddButtonVisibility();
     }
 
     openFileDialog() {
         const input = document.create('input', {type: 'file'});
+        if(this.maxFiles != 1){
+            input.setAttribute('multiple', 'multiple');
+        }
         input.onchange = (e) => {
             Array.from(input.files).map(f => this.uploadFile(f));
         }
@@ -62,7 +96,7 @@ export default class FileUploader extends HTMLElement {
     }
 
     refreshAddButtonVisibility() {
-        this.addButton.style.display = (this.maxFiles === null || this.files.length < this.maxFiles) ? 'block' : 'none;'
+        this.addButton.classList.toggle('isHidden', (this.maxFiles !== null && this.files.length >= this.maxFiles))
     }
 
     bytesToHumanReadable(bytes) {

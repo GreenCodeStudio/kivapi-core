@@ -71,6 +71,8 @@ class ParameterParser
                 return FunQuery::create($value ?? [])->map(fn($x) => new UploadedFile($x))->toArray();
             case "image":
                 return empty($value) ? null : UploadedFile::Create($value);
+            case "imagesArray":
+                return FunQuery::create($value ?? [])->map(fn($x) => UploadedFile::Create($x))->toArray();
             case "content":
                 return empty($value) ? null : Content::Create($value);
             case "url":

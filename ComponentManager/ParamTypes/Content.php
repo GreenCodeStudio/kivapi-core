@@ -1,6 +1,8 @@
 <?php
 
 namespace Core\ComponentManager\ParamTypes;
+use DOMDocument;
+
 class Content
 {
     public function __construct($data)
@@ -21,5 +23,12 @@ class Content
             return $this->data->html;
         else
             throw new \Exception("Unknown mime");
+    }
+    public function getXHtml()
+    {
+        $html= $this->getHtml();
+        $dom=new DOMDocument();
+        $dom->loadHTML('<!Doctype html><html><head><meta charset="utf8"></head><body>'.$html.'</body></html>');
+        return substr($dom->saveXML($dom->documentElement->lastChild), 6, -7);
     }
 }

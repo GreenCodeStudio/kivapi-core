@@ -5,6 +5,7 @@ import ArrayValueEdit from "./ArrayValueEdit";
 import FileValueEdit from "./FileValueEdit";
 import ImageValueEdit from "./ImageValueEdit";
 import ContentValueEdit from "./ContentValueEdit";
+import ImagesArrayValueEdit from "./ImagesArrayValueEdit";
 
 export const editParams = {availableComponents: []};
 
@@ -31,6 +32,10 @@ export function generateParam(param, paramConfig) {
         return {node, collectParameters: node.collectParameters.bind(node)};
     }else if (param.type == 'image') {
         let node = new ImageValueEdit(paramConfig, param);
+        node.draw();
+        return {node, collectParameters: node.collectParameters.bind(node)};
+    }else if (param.type == 'imagesArray') {
+        let node = new ImagesArrayValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
     }else if (param.type == 'content') {
