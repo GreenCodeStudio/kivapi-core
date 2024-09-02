@@ -1,5 +1,7 @@
 <?php
+
 use Core\Panel\Authorization\Authorization;
+
 function generateMenu($tree)
 {
     echo '<ul>';
@@ -23,6 +25,7 @@ function generateMenu($tree)
     }
     echo '</ul>';
 }
+
 ?>
 <nav>
     <?= generateMenu($data['menu']); ?>

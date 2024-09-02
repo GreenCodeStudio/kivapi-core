@@ -19,11 +19,15 @@ class User extends AbstractController
         $data->permission = [];
         $user->insert($data);
     }
-    function get(){
+
+    function get()
+    {
         $user = new \User\User();
         return $user->getAll();
     }
-    function addPermssion(int $idUser, string $group, string $name){
+
+    function addPermssion(int $idUser, string $group, string $name)
+    {
 
         $user = new \User\User();
         $user->addPermission($idUser, $group, $name);

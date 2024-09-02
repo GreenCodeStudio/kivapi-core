@@ -74,8 +74,9 @@ body {
 
                 }
             }
-            &:focus-within{
-                .list{
+
+            &:focus-within {
+                .list {
                     display: block;
                 }
             }

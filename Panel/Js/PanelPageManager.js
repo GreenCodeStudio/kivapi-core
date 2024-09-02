@@ -154,7 +154,7 @@ export const PanelPageManager = {
             main.prepend(debugOutput);
         }
         if (status == 403 || status == 404 || status == 500) {
-            throw(data.error);
+            throw (data.error);
         }
     },
     async refresh(url, page, options = {}) {

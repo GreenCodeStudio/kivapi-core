@@ -4,12 +4,15 @@ namespace Core\Panel\Infrastructure;
 
 use Core\Panel\Authorization\Authorization;
 use Core\Panel\Infrastructure\Menu;
+use MKrawczyk\Mpts\Environment;
+use MKrawczyk\Mpts\Parser\XMLParser;
 
 class PanelStandardController extends PanelController
 {
 
     private $views = [];
     private $breadcrumb = [];
+    private $methodReturnData = null;
 
     public function __construct()
     {
@@ -23,7 +26,7 @@ class PanelStandardController extends PanelController
         $menu = new Menu();
         $menuData = $menu->readMenu();
         $this->addView('Common', 'aside', ['menu' => $menuData], 'aside');
-        require __DIR__ . '/../Common/Views/template.php';
+        require __DIR__.'/../Common/Views/template.php';
     }
 
     public function getViews()
@@ -54,15 +57,33 @@ class PanelStandardController extends PanelController
     protected function addView(string $module, string $name, $data = null, string $group = 'main')
     {
         $a = __DIR__;
-        ob_start();
         if (\strpos($module, '/') > 0) {
-            require __DIR__ . '/../../../Packages/' . $module . '/Panel/Views/' . $name . '.php';
+            $filename = __DIR__.'/../../../Packages/'.$module.'/Panel/Views/'.$name.'.';
         } else {
-            require __DIR__ . '/../' . $module . '/Views/' . $name . '.php';
+            $filename = __DIR__.'/../'.$module.'/Views/'.$name.'.';
         }
-        $this->views[$group][] = ob_get_contents();
-        ob_end_clean();
+        if (file_exists($filename.'mpts')) {
+            $template = XMLParser::Parse(file_get_contents($filename.'mpts'));
+            $env = new Environment();
+            $env->variables = (array)$this;
+            $env->variables['dump'] = function ($x) {
+                return print_r($x, true);
+            };
+            $env->variables['t'] = function ($x) {
+                return t($x);
+            };
+
+            $this->views[$group][]= $template->executeToStringXml($env);
+        } else if (file_exists($filename.'php')) {
+            ob_start();
+            include $filename.'php';
+            $this->views[$group][] = ob_get_contents();
+            ob_end_clean();
+        } else {
+            throw new \Exception("View $name in module $module not found");
+        }
     }
+
 
     protected function showViews(string $group)
     {
@@ -88,9 +109,9 @@ class PanelStandardController extends PanelController
         echo '<ul>';
         foreach ($this->breadcrumb as $crumb) {
             if (!empty($crumb['url']))
-                echo '<li><a href="' . htmlspecialchars($crumb['url']) . '">' . htmlspecialchars($crumb['title']) . '</a></li>';
+                echo '<li><a href="'.htmlspecialchars($crumb['url']).'">'.htmlspecialchars($crumb['title']).'</a></li>';
             else
-                echo '<li><span>' . htmlspecialchars($crumb['title']) . '</span></li>';
+                echo '<li><span>'.htmlspecialchars($crumb['title']).'</span></li>';
         }
         echo '</ul>';
     }
@@ -98,5 +119,10 @@ class PanelStandardController extends PanelController
     protected function pushBreadcrumb($crumb)
     {
         $this->breadcrumb[] = $crumb;
+    }
+
+    protected function setData($data)
+    {
+        $this->initInfo->data = $data;
     }
 }

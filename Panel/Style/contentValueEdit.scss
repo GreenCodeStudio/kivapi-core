@@ -1,9 +1,11 @@
-content-value-edit{
-    [contenteditable]{
+content-value-edit {
+    [contenteditable] {
         @extend input;
 
         display: block;
         height: 5em;
+        overflow: auto;
+        resize: auto;
         overflow: auto;
         form .label &{
             display: block;

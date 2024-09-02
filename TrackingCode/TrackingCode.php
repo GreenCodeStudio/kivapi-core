@@ -8,6 +8,8 @@ use Core\TrackingCode\TrackingCodeRepository;
 
 class TrackingCode
 {
+    private \Core\TrackingCode\TrackingCodeRepository $defaultDB;
+
     public function __construct()
     {
         $this->defaultDB = new TrackingCodeRepository();

@@ -1,3 +1,3 @@
-export class I18nValue{
+export class I18nValue {
 
 }

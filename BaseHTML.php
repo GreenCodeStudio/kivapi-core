@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?= isset($meta->lang) ? 'lang="' . htmlspecialchars($meta->lang) . '"' : '' ?>>
+<html <?= isset($meta->lang) ? 'lang="'.htmlspecialchars('a').'"' : '' ?>>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/Dist/style.css" rel="stylesheet">
@@ -68,7 +68,7 @@ if (!empty($panelData)) {
             display: block;
         }
 
-        .adminMenu:hover .adminMenu-content a{
+        .adminMenu:hover .adminMenu-content a {
             display: block;
             color: white;
             border: 1px solid #888;
@@ -81,8 +81,15 @@ if (!empty($panelData)) {
         <div class="adminMenu-content">
             <a href="<?= $panelData->panelURL ?>">Panel</a>
             <a href="<?= $panelData->editURL ?>">Edit</a>
+            <a href="<?= $panelData->inSiteEditURL ?>">InSite Edit</a>
         </div>
     </div>
+    <script>
+        //<![CDATA[
+        window.inSiteEditData = <?=json_encode($panelData->inSiteEditData)?>;
+        //]]>
+    </script>
+    <script src="/Dist/inSiteEditJs.js"></script>
     <?php
 }
 ?>

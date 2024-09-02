@@ -7,21 +7,34 @@ use Core\ComponentManager\PageRepository;
 use Core\ComponentManager\RedirectionController;
 use Core\ComponentManager\SpecialComponents\EmptyComponent;
 use Core\Exceptions\NotFoundException;
+use Core\InSiteEdit\InSiteMapping;
 use Core\Panel\Authorization\Authorization;
 use Core\TrackingCode\TrackingCode;
 use MKrawczyk\FunQuery\FunQuery;
 
 class ComponentRouter extends Router
 {
-    public $url;
     private array $query = [];
+    private bool $inSiteEdit;
+    /**
+     * @var false|string
+     */
+    private $urlWithoutQuery;
+    private array $routeNodes;
+
+    public function __construct(bool $inSiteEdit = false)
+    {
+        $this->inSiteEdit = $inSiteEdit;
+    }
 
     public function findController()
     {
         $this->parseUrl();
         $nodes = $this->findRoute();
-        $this->routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node, (new ParameterParser($this->query))->findParameters($node)))->toArray();
-        $controllers = FunQuery::create($this->routeNodes)->map(fn($routeNode) => ComponentManager::findController($routeNode->node->module, $routeNode->node->component, $routeNode->parameters))->toArray();
+        $this->routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node,$this->query))->toArray();
+        $controllers = FunQuery::create($this->routeNodes)
+            ->map(fn($routeNode) => ComponentManager::loadControllerWithParams($routeNode->node->module, $routeNode->node->component,  $routeNode->query, $routeNode->node, $this->inSiteEdit))
+            ->toArray();
         $this->controller = $controllers[0];
         foreach ($controllers as $i => $controller) {
             $controller->subRouteComponent = $controllers[$i + 1] ?? new EmptyComponent();
@@ -78,19 +91,21 @@ class ComponentRouter extends Router
             $path = $this->lastValue('path');
             $urlPrefix = $_ENV['urlPrefix'] ?? null;
             if (!empty($path) && !empty($urlPrefix)) {
-                $meta->canonical = $urlPrefix . $path;
+                $meta->canonical = $urlPrefix.$path;
             }
             $trackingCodes = (new TrackingCode())->getActiveCodes();
             $initInfo = iterator_to_array($component->getInitInfo());
             $this->invokeRecurse($component, fn($c) => $c->fillMetadata($meta));
 
-            if (Authorization::isLogged()){
-                $panelData=(object)[
-                    'panelURL'=>'/panel/',
-                    'editURL'=>'/panel/Page/edit/'.end($this->routeNodes)->node->id
+            if (Authorization::isLogged()) {
+                $panelData = (object)[
+                    'panelURL' => '/panel/',
+                    'editURL' => '/panel/Page/edit/'.end($this->routeNodes)->node->id,
+                    'inSiteEditURL' => $this->urlWithoutQuery.'?inSiteEdit=1',
+                    'inSiteEditData'=>InSiteMapping::$mapping
                 ];
             }
-            include __DIR__ . '/../BaseHTML.php';
+            include __DIR__.'/../BaseHTML.php';
         }
     }
 

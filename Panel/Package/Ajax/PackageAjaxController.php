@@ -20,6 +20,12 @@ class PackageAjaxController extends PanelAjaxController
         $package = new Package();
         return $package->getDataTable($options);
     }
+    public function getAvailableTable($options)
+    {
+        $this->will('package', 'show');
+        $package = new Package();
+        return $package->getAvailableDataTable($options);
+    }
 
     public function prepareInstallation(string $url)
     {

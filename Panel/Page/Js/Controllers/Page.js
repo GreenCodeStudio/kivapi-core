@@ -108,7 +108,7 @@ export class edit {
         }
         this.pageSimulator = new PageSimulator(page.querySelector('.pageSimulator'));
         this.refreshPreview();
-        page.addEventListener('input',()=>{
+        page.addEventListener('input', () => {
             this.refreshPreview();
         })
         const resizeObserver = new ResizeObserver(entries => {

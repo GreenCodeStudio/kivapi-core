@@ -46,13 +46,13 @@ class UserStandardController extends PanelStandardController
         $permissionsStructure = Permissions::readStructure();
         $this->addView('User', 'edit', ['type' => 'add', 'permissionsStructure' => $permissionsStructure]);
         $this->pushBreadcrumb(['title' => t("Core.Panel.User.Users"), 'url' => 'User']);
-        $this->pushBreadcrumb(['title' =>  t("Core.Panel.User.Add"), 'url' => 'User/add']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.User.Add"), 'url' => 'User/add']);
     }
 
     function myAccount()
     {
         $this->pushBreadcrumb(['title' => t("Core.Panel.User.MyAccount"), 'url' => 'User/myAccount']);
-        $user = ( new User())->getById(Authorization::getUserId());
+        $user = (new User())->getById(Authorization::getUserId());
         $this->addView('User', 'myAccount', ['user' => $user]);
     }
 }

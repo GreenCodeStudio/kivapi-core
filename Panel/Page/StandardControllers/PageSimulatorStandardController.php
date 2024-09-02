@@ -35,13 +35,15 @@ class PageSimulatorStandardController extends PanelStandardController
         }
         $nodes = array_reverse($nodes);
 
-        $routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node, (new ParameterParser())->findParameters($node)))->toArray();
-        $controllers = FunQuery::create($routeNodes)->map(fn($routeNode) => ComponentManager::findController($routeNode->node->module, $routeNode->node->component, $routeNode->parameters))->toArray();
+        $routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node,[]))->toArray();
+        $controllers = FunQuery::create($routeNodes)
+            ->map(fn($routeNode) => ComponentManager::loadControllerWithParams($routeNode->node->module, $routeNode->node->component,  [], $routeNode->node))
+            ->toArray();
         $component = $controllers[0];
         foreach ($controllers as $i => $controller) {
             $controller->subRouteComponent = $controllers[$i + 1] ?? new PlaceholderComponent();
         }
         $trackingCodes = [];
-        include __DIR__ . '/../../../../Core/BaseHTML.php';
+        include __DIR__.'/../../../../Core/BaseHTML.php';
     }
 }

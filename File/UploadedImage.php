@@ -6,6 +6,15 @@ namespace Core\File;
 
 class UploadedImage extends UploadedFile
 {
+    /**
+     * @var mixed
+     */
+    private $imageWidth;
+    /**
+     * @var mixed
+     */
+    private $imageHeight;
+
     public function __construct($data)
     {
         parent::__construct($data);
@@ -19,7 +28,7 @@ class UploadedImage extends UploadedFile
         $ret = [];
         for ($scale = 0.5; ; $scale *= 2) {
             if ($scale > $maxScale) $scale = $maxScale;
-            $ret[] = $this->getSizedUrl((int)($width * $scale), (int)($height * $scale), $type) . ' ' . $scale . 'x';
+            $ret[] = $this->getSizedUrl((int)($width * $scale), (int)($height * $scale), $type).' '.$scale.'x';
             if ($scale == $maxScale) break;
         }
         return implode(', ', $ret);
@@ -46,7 +55,7 @@ class UploadedImage extends UploadedFile
 
             $imgHeight = $imgWidth / $this->imageWidth * $this->imageHeight;
 
-            $ret[] = $this->getSizedUrl((int)$imgWidth, (int)$imgHeight, $type) . ' ' . (int)$width . 'w';
+            $ret[] = $this->getSizedUrl((int)$imgWidth, (int)$imgHeight, $type).' '.(int)$width.'w';
 
             if ($imgWidth >= $this->imageWidth)
                 break;
@@ -57,8 +66,8 @@ class UploadedImage extends UploadedFile
     public function getSizedUrl(int $width, int $height, ?string $type = null)
     {
         if ($type == null)
-            return $this->getUrl() . "?width=$width&height=$height";
+            return $this->getUrl()."?width=$width&height=$height";
         else
-            return $this->getUrl() . "?width=$width&height=$height&type=$type";
+            return $this->getUrl()."?width=$width&height=$height&type=$type";
     }
 }

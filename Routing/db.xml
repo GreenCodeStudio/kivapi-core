@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <table>
-    <name>page</name>
+        <name>page</name>
         <column>
             <name>id</name>
             <type>int</type>

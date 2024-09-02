@@ -1,5 +1,6 @@
 import AbstractValueEdit from "./AbstractValueEdit";
 import {modal} from "../../../Js/modal";
+import HtmlWysiwygPanel from "./HtmlWysiwygPanel";
 
 export default class ContentValueEdit extends AbstractValueEdit {
     constructor(paramConfig, param) {
@@ -32,6 +33,8 @@ export default class ContentValueEdit extends AbstractValueEdit {
                             contenteditable: "true",
                             html: tmpConverter.innerHTML
                         });
+
+                        this.insertBefore(new HtmlWysiwygPanel(this.htmlContenteditable),this.htmlContenteditable)
                         this.mime = next;
                     }
                 } else if (old == 'text/html') {
@@ -42,6 +45,7 @@ export default class ContentValueEdit extends AbstractValueEdit {
                         }, {text: 'ok', value: true}])) {
 
                             this.htmlContenteditable.remove();
+                            this.querySelector('html-wysiwyg-panel')?.remove();
                             this.textTextarea = this.addChild('textarea', {text: this.htmlContenteditable.textContent});
                             this.mime = next;
                         }
@@ -51,11 +55,14 @@ export default class ContentValueEdit extends AbstractValueEdit {
         })
         if (this.mime == 'text/plain')
             this.textTextarea = this.addChild('textarea', {text: this.paramConfig?.value?.text ?? this.param.default ?? ''});
-        else if (this.mime == 'text/html')
+        else if (this.mime == 'text/html') {
             this.htmlContenteditable = this.addChild('div', {
-                contenteditable: "true",
+                contenteditable: "true",//need to be string, not boolean
                 html: this.paramConfig?.value?.html ?? this.param.default ?? ''
             });
+
+            this.insertBefore(new HtmlWysiwygPanel(this.htmlContenteditable),this.htmlContenteditable)
+        }
 
     }
 
@@ -69,3 +76,4 @@ export default class ContentValueEdit extends AbstractValueEdit {
     }
 }
 customElements.define('content-value-edit', ContentValueEdit);
+

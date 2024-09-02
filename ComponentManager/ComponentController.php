@@ -13,6 +13,14 @@ abstract class ComponentController extends BaseComponentController
     }
 
     public abstract function loadView();
+    public function getView()
+    {
+        ob_start();
+        $this->loadView();
+        $html = ob_get_contents();
+        ob_end_clean();
+        return $html;
+    }
     public function loadMPTS(string $fileName){
         $template = XMLParser::Parse(file_get_contents($fileName));
         $env = new Environment();
@@ -31,10 +39,14 @@ abstract class ComponentController extends BaseComponentController
         if ($exploded[0] == MAIN_NAMESPACE)
             yield (object)['module' => null, 'component' => $exploded[count($exploded) - 2]];
         else
-            yield (object)['module' => $exploded[0] . '\\' . $exploded[1], 'component' => $exploded[3]];
+            yield (object)['module' => $exploded[0].'\\'.$exploded[1], 'component' => $exploded[3]];
 
         if (!empty($this->subRouteComponent)) {
             foreach ($this->subRouteComponent->getInitInfo() as $item)
+                yield $item;
+        }
+        foreach ($this->subParamComponents as $component) {
+            foreach ($component->getInitInfo() as $item)
                 yield $item;
         }
     }
@@ -44,5 +56,9 @@ abstract class ComponentController extends BaseComponentController
         $html = ob_get_contents();
         ob_end_clean();
         return $html;
+    }
+    public static function DefinedParameters()
+    {
+        return [];
     }
 }

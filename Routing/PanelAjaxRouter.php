@@ -22,31 +22,31 @@ class PanelAjaxRouter extends AjaxRouter
 
     public function findControllerClass()
     {
-        $modulesPath = __DIR__ . '/../Panel';
+        $modulesPath = __DIR__.'/../Panel';
         $modules = scandir($modulesPath);
         foreach ($modules as $module) {
             if ($module == '.' || $module == '..') {
                 continue;
             }
-            $filename = $modulesPath . '/' . $module . '/Ajax/' . $this->controllerName . 'AjaxController.php';
+            $filename = $modulesPath.'/'.$module.'/Ajax/'.$this->controllerName.'AjaxController.php';
             if (is_file($filename)) {
                 include_once $filename;
                 $className = "\\Core\\Panel\\$module\\Ajax\\{$this->controllerName}AjaxController";
                 return $className;
             }
         }
-        $packagesGroupsPath = __DIR__ . '/../../Packages';
+        $packagesGroupsPath = __DIR__.'/../../Packages';
         $packagesGroups = scandir($packagesGroupsPath);
         foreach ($packagesGroups as $group) {
             if ($group == '.' || $group == '..') {
                 continue;
             }
-            $packages = scandir($packagesGroupsPath . '/' . $group);
+            $packages = scandir($packagesGroupsPath.'/'.$group);
             foreach ($packages as $package) {
                 if ($package == '.' || $package == '..') {
                     continue;
                 }
-                $filename = $packagesGroupsPath . '/' . $group . '/' . $package . '/Panel/Ajax/' . $this->controllerName . 'AjaxController.php';
+                $filename = $packagesGroupsPath.'/'.$group.'/'.$package.'/Panel/Ajax/'.$this->controllerName.'AjaxController.php';
                 if (is_file($filename)) {
                     include_once $filename;
                     $className = "\\$group\\$package\\Panel\\Ajax\\{$this->controllerName}AjaxController";

@@ -2,9 +2,22 @@
 
 namespace Core\ComponentManager;
 
+use Core\Routing\ParameterParser;
+use MKrawczyk\FunQuery\FunQuery;
+
 class ComponentManager
 {
-    public static function findController(?string $package, string $name, object $params)
+    public static function loadControllerWithParams(?string $package, string $name, array $query, object $node, bool $inSiteEdit = false)
+    {
+        $className = static::findControllerClass($package, $name);
+        $parser=(new ParameterParser($query, $inSiteEdit));
+        $params = $parser->findParameters($className::DefinedParameters(), $node);
+        $controller = new $className($params);
+        $controller->subParamComponents = $parser->subComponents;
+        return $controller;
+    }
+
+    public static function loadController(?string $package, string $name, $params)
     {
         $className = static::findControllerClass($package, $name);
         $controller = new $className($params);
@@ -34,9 +47,11 @@ class ComponentManager
     {
         $ret = [];
         $dir = __DIR__.'/../../Components/';
-        foreach (scandir($dir) as $name) {
-            if ($name != '.' && $name != '..' && is_dir($dir.$name)) {
-                $ret[] = [null, $name];
+        if(is_dir($dir)) {
+            foreach (scandir($dir) as $name) {
+                if ($name != '.' && $name != '..' && is_dir($dir.$name)) {
+                    $ret[] = [null, $name];
+                }
             }
         }
 
@@ -47,9 +62,11 @@ class ComponentManager
                     foreach (scandir($dir.$packageGroup) as $package) {
                         if ($package != '.' && $package != '..' && is_dir($dir.$packageGroup.'/'.$package)) {
                             $subdir = $dir.$packageGroup.'/'.$package.'/Components/';
-                            foreach (scandir($subdir) as $name) {
-                                if ($name != '.' && $name != '..' && is_dir($subdir.$name)) {
-                                    $ret[] = [$packageGroup.'\\'.$package, $name];
+                            if (is_dir($subdir)) {
+                                foreach (scandir($subdir) as $name) {
+                                    if ($name != '.' && $name != '..' && is_dir($subdir.$name)) {
+                                        $ret[] = [$packageGroup.'\\'.$package, $name];
+                                    }
                                 }
                             }
                         }
@@ -58,5 +75,36 @@ class ComponentManager
             }
         }
         return $ret;
+    }
+    public static function listComponentsWithDefs(){
+        $ret = [];
+        foreach (static::listComponents() as $component) {
+            $package = $component[0];
+            $name = $component[1];
+            $className=static::findControllerClass($package, $name);
+            $definedParameters=$className::DefinedParameters();
+            $ret[] = (object)[
+                'package' => $component[0],
+                'name' => $component[1],
+                'definedParameters' => $definedParameters
+            ];
+        }
+        return $ret;
+    }
+    public static function getDeveloperDetails(?string $package, string $name)
+    {
+        $className = static::findControllerClass($package, $name);
+        $definedParameters = $className::DefinedParameters();
+        return (object)[
+            'package' => $package,
+            'name' => $name,
+            'definedParameters' => $definedParameters
+        ];
+    }
+
+    public static function getDataTable($options)
+    {
+        $rows = self::listComponents();
+        return ['rows' => FunQuery::create($rows)->map(fn($x)=>['package'=>$x[0], 'name'=>$x[1]]), 'total' => count($rows)];
     }
 }

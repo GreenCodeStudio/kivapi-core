@@ -13,7 +13,7 @@ class FileManager
             $this->reformatImage($filepath, $mime);
         } else {
             //header('Content-Disposition: attachment; filename="'.$filename.'"');
-            header('content-type: ' . $mime);
+            header('content-type: '.$mime);
             $file = fopen($filepath, 'r');
             while ($data = fread($file, 1024)) {
                 echo $data;
@@ -29,7 +29,7 @@ class FileManager
 
     protected function reformatImage($filepath, $mime)
     {
-        $mimeOutput=$mime;
+        $mimeOutput = $mime;
         if (!empty($_GET['type'])) {
             if ($_GET['type'] == 'png') {
                 $mimeOutput = 'image/png';
@@ -40,13 +40,13 @@ class FileManager
             }
         }
         $extension = $this->mimeToExtension($mimeOutput);
-        $tmpPath = __DIR__ . '/../../tmp/img_' . md5(($_GET['width'] ?? '') . '_' . ($_GET['height'] ?? '') . '_' . ($mimeOutput) . '_' . $filepath) . '.' . $extension;
+        $tmpPath = __DIR__.'/../../tmp/img_'.md5(($_GET['width'] ?? '').'_'.($_GET['height'] ?? '').'_'.($mimeOutput).'_'.$filepath).'.'.$extension;
         if (!is_file($tmpPath)) {
-            if(!is_dir(__DIR__ . '/../../tmp/'))
-                mkdir(__DIR__ . '/../../tmp/', 0777);
-            $this->reformatImageDirect($filepath, $mime,$mimeOutput, $tmpPath);
+            if (!is_dir(__DIR__.'/../../tmp/'))
+                mkdir(__DIR__.'/../../tmp/', 0777);
+            $this->reformatImageDirect($filepath, $mime, $mimeOutput, $tmpPath);
         }
-        header('content-type: ' . $mimeOutput);
+        header('content-type: '.$mimeOutput);
         $file = fopen($tmpPath, 'r');
         while ($data = fread($file, 1024)) {
             echo $data;
@@ -59,7 +59,7 @@ class FileManager
             return 'jpeg';
         } else if ($mime == 'image/png') {
             return 'png';
-        }else if ($mime == 'image/webp') {
+        } else if ($mime == 'image/webp') {
             return 'webp';
         } else {
             return 'bin';

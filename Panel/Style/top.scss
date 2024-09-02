@@ -45,13 +45,14 @@
         }
     }
 }
-.loginInfo {
-     @extend .top-expandable;
 
-     > .loginInfo-expandable {
-         @extend .list;
-     }
- }
+.loginInfo {
+    @extend .top-expandable;
+
+    > .loginInfo-expandable {
+        @extend .list;
+    }
+}
 
 .top-expandable {
     display: inline-block;

@@ -80,6 +80,12 @@ class Builder
         foreach ($this->findAll('Style/index.scss') as $file) {
             $content[] = "@import \"../../$file\";";
         }
+        $availableComponents = ComponentManager::listComponents();
+        foreach ($availableComponents as $component) {
+            $file = "Components/$component[1]/Style.scss";
+            if (is_file(__DIR__."/../../$file"))
+                $content[] = "@import \"../../$file\";";
+        }
         file_put_contents($path, implode("\r\n", $content));
     }
 
@@ -163,6 +169,30 @@ class Builder
     {
         $path = __dir__.'/../../';
         chdir($path);
+        $coreComposer = json_decode(file_get_contents(__dir__.'/../composer.json'), false);
+        $changed = false;
+        if(!is_file(__dir__.'/../../composer.json'))
+        {
+            $changed = true;
+            $packageComposer=new \stdClass();
+        }else {
+            $packageComposer = json_decode(file_get_contents(__dir__.'/../../composer.json'), false);
+        }
+        if(!isset($packageComposer->require))
+        {
+            $packageComposer->require = new \stdClass();
+            $changed = true;
+        }
+        foreach ($coreComposer->require as $key => $value) {
+            if (!isset($packageComposer->require->$key)) {
+                $packageComposer->require->$key = $value;
+                $changed = true;
+            }
+        }
+        if ($changed) {
+            file_put_contents(__dir__.'/../../composer.json', str_replace('\/','/',json_encode($packageComposer, JSON_PRETTY_PRINT)));
+        }
+
         exec("composer upgrade");
     }
 }

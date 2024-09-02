@@ -21,7 +21,7 @@ class DB
         foreach ($params as $name => $value) {
             $params2[':'.$name] = $value;
         }
-        $sth->execute(array_map('self::toSqlValue', $params));
+        $sth->execute(array_map(fn($x)=>self::toSqlValue($x), $params));
         $ret = $sth->fetchAll(\PDO::FETCH_CLASS, 'stdClass');
         return $ret;
     }
@@ -48,7 +48,7 @@ class DB
         foreach ($params as $name => $value) {
             $params2[':'.$name] = $value;
         }
-        $sth->execute(array_map('self::toSqlValue', $params));
+        $sth->execute(array_map(fn($x)=>self::toSqlValue($x), $params));
         $ret = $sth->fetchAll(\PDO::FETCH_ASSOC);
         return $ret;
     }
@@ -126,7 +126,7 @@ class DB
         foreach ($params as $name => $value) {
             $params2[':'.$name] = $value;
         }
-        $sth->execute(array_map('self::toSqlValue', $params));
+        $sth->execute(array_map(fn($x)=>self::toSqlValue($x), $params));
     }
 
     static function insert(string $table, $data)
@@ -167,7 +167,7 @@ class DB
         $dataSql = [];
         $example = [];
         foreach ($data as $row) {
-            $row=(array)$row;
+            $row = (array)$row;
             $example += $row;
         }
 
@@ -177,7 +177,7 @@ class DB
         }
         $valuesJoinedArray = [];
         foreach ($data as $i => $row) {
-            $row=(array)$row;
+            $row = (array)$row;
             $values = [];
             foreach ($example as $name => $value) {
                 $nameCleared = static::clearName($name).'_'.$i;

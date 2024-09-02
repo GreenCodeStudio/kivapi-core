@@ -9,6 +9,10 @@ use Core\Panel\Authorization\Exceptions\UnauthorizedException;
 class StandardPanelRouter extends Router
 {
     var $controllerType = 'Controllers';
+    /**
+     * @var false|string
+     */
+    private $htmlResult;
 
     public function findControllerClass()
     {
@@ -82,16 +86,22 @@ class StandardPanelRouter extends Router
         $this->logExceptionIfNeeded($ex);
         dump($ex);
 
-        $this->prepareErrorController($ex, $responseCode);
+        try {
+            $this->prepareErrorController($ex, $responseCode);
+        }catch (\Throwable $ex2) {
+            dump($ex);
+            $this->htmlResult='Error';
+        }
         echo $this->htmlResult;
+        dump_render_html();
     }
 
     protected function prepareErrorController($ex, $responseCode)
     {
-        if($ex instanceof UnauthorizedException){
+        if ($ex instanceof UnauthorizedException) {
             $this->controllerName = 'Authorization';
             $this->methodName = 'index';
-        }else {
+        } else {
             $this->controllerName = 'Error';
             $this->methodName = 'index';
         }

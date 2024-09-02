@@ -35,7 +35,8 @@
         background: var(--mainLight);
         outline: none;
     }
-    &:disabled{
+
+    &:disabled {
         background: #ccc;
         @media screen and (prefers-color-scheme: dark) {
             background: #6d6d6d;
@@ -47,6 +48,7 @@ textarea:not(.browsersDefault) {
     resize: vertical;
     transition: all 200ms, height 0ms;
 }
+
 .checkbox {
     appearance: none;
     -webkit-appearance: none;
@@ -79,6 +81,7 @@ textarea:not(.browsersDefault) {
         }
     }
 }
+
 .radiobutton {
     appearance: none;
     -webkit-appearance: none;
@@ -86,7 +89,7 @@ textarea:not(.browsersDefault) {
     height: 29px;
     padding: 5px;
     position: relative;
-    border-radius:50%;
+    border-radius: 50%;
 
     &::before {
         content: '';
@@ -97,8 +100,8 @@ textarea:not(.browsersDefault) {
         position: absolute;
         left: 50%;
         top: 50%;
-        border:none;
-        background:var(--second);
+        border: none;
+        background: var(--second);
         border-radius: 50%;
         z-index: 1;
         transform: scale(0);

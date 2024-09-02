@@ -5,6 +5,11 @@ use DOMDocument;
 
 class Content
 {
+    /**
+     * @var mixed
+     */
+    public $data;
+
     public function __construct($data)
     {
         $this->data = $data;
@@ -18,7 +23,7 @@ class Content
     public function getHtml()
     {
         if ($this->data->mime == 'text/plain')
-            return htmlspecialchars($this->data->text);
+            return str_replace("\n","<br />\n", htmlspecialchars($this->data->text));
         else if ($this->data->mime == 'text/html')
             return $this->data->html;
         else
@@ -31,4 +36,5 @@ class Content
         $dom->loadHTML('<!Doctype html><html><head><meta charset="utf8"></head><body>'.$html.'</body></html>');
         return substr($dom->saveXML($dom->documentElement->lastChild), 6, -7);
     }
+
 }

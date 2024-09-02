@@ -19,11 +19,29 @@ class PackageStandardController extends PanelStandardController
         $this->addView('Package', 'list');
         $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
     }
+    function available()
+    {
+        $this->will('package', 'install');
+        $this->addView('Package', 'availableList');
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
+    }
 
     function details(string $vendor, string $name)
     {
         $item = ((new Package())->getPackageDetails($vendor, $name));
+        if($item==null)
+            throw new NotFoundException();
         $this->addView('Package', 'details', ['item' => $item]);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
+    }
+    function availableDetails(string $vendor, string $name)
+    {
+        $item = ((new Package())->getAvailablePackageDetails($vendor, $name));
+        if($item==null)
+            throw new NotFoundException();
+        $this->addView('Package', 'details', ['item' => $item]);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
+        $this->setData($item);
     }
 
     function install()
@@ -31,5 +49,6 @@ class PackageStandardController extends PanelStandardController
         if (getenv('allowPackageInstall') ?? '' != 'true')
             throw new UnauthorizedException();
         $this->addView('Package', 'install');
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/Package']);
     }
 }

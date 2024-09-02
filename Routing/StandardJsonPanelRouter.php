@@ -10,7 +10,7 @@ class StandardJsonPanelRouter extends StandardPanelRouter
     {
         ob_start();
         dump_render_html();
-        $this->controller->debugOutput.=ob_get_contents();
+        $this->controller->debugOutput .= ob_get_contents();
         ob_end_clean();
         echo json_encode([
             'views' => $this->controller->getViews(),
@@ -33,7 +33,7 @@ class StandardJsonPanelRouter extends StandardPanelRouter
 
         ob_start();
         dump_render_html();
-        $this->controller->debugOutput.=ob_get_contents();
+        $this->controller->debugOutput .= ob_get_contents();
         ob_end_clean();
 
         echo json_encode([

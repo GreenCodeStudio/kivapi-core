@@ -20,7 +20,7 @@ class AssetManager extends FileManager
     {
         $path = str_replace('\\', '/', $path);
         if (preg_match('/\/\.\.?\//', $path)) throw new \Exception();
-        $filepath = __DIR__ . '/../../Assets/' . $path;
+        $filepath = __DIR__.'/../../Assets/'.$path;
         if (is_file($filepath))
             return $filepath;
         return null;

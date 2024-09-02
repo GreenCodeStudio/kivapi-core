@@ -7,7 +7,7 @@ class DBUpgradeCommand extends \Kivapi\KivapiCli\Commands\AbstractCommand
 
     public function execute()
     {
-        $migration=new \Core\Database\Migration();
+        $migration = new \Core\Database\Migration();
         $migration->upgrade();
         $migration->execute();
     }

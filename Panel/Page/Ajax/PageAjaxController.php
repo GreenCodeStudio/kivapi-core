@@ -1,4 +1,5 @@
 <?php
+
 namespace Core\Panel\Page\Ajax;
 
 use Core\Panel\Infrastructure\PanelAjaxController;

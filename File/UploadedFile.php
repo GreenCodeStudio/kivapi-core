@@ -4,6 +4,12 @@ namespace Core\File;
 
 class UploadedFile
 {
+    public $id;
+    public $mime;
+    public $size;
+    public $extension;
+    public $name;
+
     public function __construct($data)
     {
         $this->id = $data->id;
@@ -24,6 +30,6 @@ class UploadedFile
 
     public function getUrl()
     {
-        return '/file/' . $this->id;
+        return '/file/'.$this->id;
     }
 }

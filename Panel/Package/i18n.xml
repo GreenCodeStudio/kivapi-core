@@ -10,4 +10,29 @@
             <value lang="pl">Wszystkie zainstalowane pakiety</value>
         </node>
     </node>
+    <node name="AvailableList">
+        <value lang="en">Available packages</value>
+        <value lang="pl">Dostępne pakiety</value>
+
+        <node name="Header">
+            <value lang="en">Packages from official repository</value>
+            <value lang="pl">Pakiety z oficjalnego repozytorium</value>
+        </node>
+    </node>
+    <node name="Name">
+        <value lang="en">Name</value>
+        <value lang="pl">Nazwa</value>
+    </node>
+    <node name="Vendor">
+        <value lang="en">Vendor</value>
+        <value lang="pl">Dostawca</value>
+    </node>
+    <node name="Description">
+        <value lang="en">Description</value>
+        <value lang="pl">Opis</value>
+    </node>
+    <node name="Version">
+        <value lang="en">Version</value>
+        <value lang="pl">Wersja</value>
+    </node>
 </root>

@@ -29,13 +29,13 @@ export default class ArrayValueEdit extends AbstractValueEdit {
 
     drawItem(i, childConfig) {
         let result = generateParam(this.param.item, childConfig);
-        let label = document.create('.label', {draggable: true});
+        let label = document.create('.label', {draggable: "true"});
         label.addChild('span', {text: i + 1 + '.'});
         label.append(result.node);
-        label.ondragstart = result.node.dragstartHandler?.bind(result);
+        label.ondragstart = result.node.dragstartHandler?.bind(result.node);
 
         let removeButton = label.addChild('div').addChild('button', {text: 'Usuń'})
-        removeButton.onclick = result.removeFromParent = () => {
+        removeButton.onclick = result.removeFromParent =result.node.removeFromParent = () => {
             this.removeItem(result);
         }
         this.insertBefore(label, this.children[i]);
@@ -59,11 +59,13 @@ export default class ArrayValueEdit extends AbstractValueEdit {
     }
 
     tryAcceptChild(data, path) {
+        console.log('tryAcceptChild')
         if (areIdentical(this.param.item, data.param)) {
             let label = path[path.indexOf(this) - 1];
             let index = Array.from(this.children).indexOf(label);
             let result = this.drawItem(index, data.paramConfig);
-            this.paramData.push(result)
+            this.paramData.splice(index, 0,result)
+            this.updateNumbers();
             return true;
         } else
             return false;
@@ -77,7 +79,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
     }
     updateNumbers(){
         for (let i = 0; i < this.paramData.length; i++) {
-            this.children[i].children[0].textContent = i + 1 + '.';
+            this.paramData[i].node.parentNode.children[0].textContent = i + 1 + '.';
         }
     }
 }

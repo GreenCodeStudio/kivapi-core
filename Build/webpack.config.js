@@ -6,6 +6,7 @@ module.exports = {
         js: './js.js',
         panelStyle: './panelStyle.scss',
         panelJs: './panelJs.js',
+        inSiteEditJs: '../../Core/InSiteEdit/Js/index.js',
     }, output: {
         path: path.resolve(__dirname, '../../BuildResults/Dist'),
         publicPath: "/Dist/",

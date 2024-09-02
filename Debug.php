@@ -2,7 +2,7 @@
 
 function dump()
 {
-    if($_ENV['debug']=='false') return;
+    if ($_ENV['debug'] == 'false') return;
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
     $args = func_get_args();
     global $debugType;
@@ -59,7 +59,7 @@ function dump()
 
 function dumpTime(bool $fromStart = false)
 {
-    if($_ENV['debug']=='false') return;
+    if ($_ENV['debug'] == 'false') return;
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
     global $debugType;
     global $debugArray;
@@ -81,7 +81,7 @@ function dumpTime(bool $fromStart = false)
 
 function dump_render_text()
 {
-    if($_ENV['debug']=='false') return;
+    if ($_ENV['debug'] == 'false') return;
     global $debugArray;
     foreach ($debugArray as $item) {
         $pathExploded = explode('/', str_replace('\\', '/', $item['backtrace'][0]['file']));
@@ -103,9 +103,9 @@ function dump_render_text()
 
 function dump_render_html()
 {
-    if($_ENV['debug']=='false') return;
+    if ($_ENV['debug'] == 'false') return;
     global $debugArray;
-    foreach ($debugArray??[] as $item) {
+    foreach ($debugArray ?? [] as $item) {
         echo '<div style="background:#ffb; color:#113;border:solid 2px #113;">';
         $pathExploded = explode('/', str_replace('\\', '/', $item['backtrace'][0]['file']));
         echo '<span title="'.htmlspecialchars($item['backtrace'][0]['file']).'">';

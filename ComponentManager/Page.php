@@ -7,6 +7,8 @@ use ReflectionMethod;
 
 class Page
 {
+    private PageRepository $defaultDB;
+
     public function __construct()
     {
         $this->defaultDB = new PageRepository();
