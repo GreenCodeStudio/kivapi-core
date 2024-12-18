@@ -81,6 +81,10 @@ class ParameterParser
                 if ($this->inSiteEdit)
                     return InSiteMapping::addMapping($path, (string)$value);
                 return (string)$value;
+            case "enum":
+                if ($this->inSiteEdit)
+                    return InSiteMapping::addMapping($path, (string)$value);
+                return (string)$value;
             case "component":
                 $className = ComponentManager::findControllerClass($value->module, $value->component);
                 $params = $this->parseParamStruct($className::DefinedParameters(), $value->params->value);

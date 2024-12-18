@@ -11,3 +11,4 @@ class InSiteMapping
         return $random;
     }
 }
+
