@@ -87,10 +87,22 @@ class Builder
             $content[] = "@import \"../../$file\";";
         }
         $availableComponents = ComponentManager::listComponents();
+
         foreach ($availableComponents as $component) {
-            $file = "Components/$component[1]/Style.scss";
-            if (is_file(__DIR__."/../../$file"))
-                $content[] = "@import \"../../$file\";";
+            if ($component[0] == null) {
+                $dir = "Components/$component[1]";
+            }
+            else {
+                $packagePath=implode("/",explode("\\",$component[0]));
+                $dir = "Packages/$packagePath/Components/$component[1]";
+            }
+            if (is_file(__DIR__."/../../$dir/Style.scss"))
+                $content[] = "@import \"../../$dir/Style.scss\";";
+            if (is_file(__DIR__."/../../$dir/ScopedStyle.scss")) {
+                $componentString=implode("\\",$component);
+                $componentStringEscaped=str_replace("\\","\\\\",$componentString);
+                $content[] = "[data-component=\"$componentStringEscaped\"]{ @import \"../../$dir/ScopedStyle.scss\";}";
+            }
         }
         file_put_contents($path, implode("\r\n", $content));
     }
