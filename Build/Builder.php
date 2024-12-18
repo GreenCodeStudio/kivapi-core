@@ -100,7 +100,7 @@ class Builder
                 $content[] = "@import \"../../$dir/Style.scss\";";
             if (is_file(__DIR__."/../../$dir/ScopedStyle.scss")) {
                 $componentString=implode("\\",$component);
-                $componentStringEscaped=str_replace("\\","\\\\",$componentString);
+                $componentStringEscaped=str_replace("\\","\\\\\\\\",$componentString);
                 $content[] = "[data-component=\"$componentStringEscaped\"]{ @import \"../../$dir/ScopedStyle.scss\";}";
             }
         }
