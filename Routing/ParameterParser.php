@@ -75,6 +75,8 @@ class ParameterParser
                 return empty($value) ? null : $this->parseParamStruct(((object)$def)->items, $value);
             case "int":
                 return empty($value) ? null : (int)$value;
+            case "float":
+                return empty($value) ? null : (float)$value;
             case "boolean":
                 return empty($value) ? false : (bool)$value;
             case "string":

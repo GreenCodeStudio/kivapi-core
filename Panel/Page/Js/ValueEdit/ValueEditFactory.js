@@ -47,7 +47,7 @@ export function generateParam(param, paramConfig) {
         let node = new EnumValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
-    }  else if (param.type == 'string' || param.type == 'int' || param.type == 'url' || param.type == 'boolean') {
+    }  else if (param.type == 'string' || param.type == 'int'|| param.type == 'float' || param.type == 'url' || param.type == 'boolean') {
         let node = new SimpleValueEdit(paramConfig, param);
         node.draw();
         return {node, collectParameters: node.collectParameters.bind(node)};
