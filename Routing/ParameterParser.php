@@ -142,6 +142,8 @@ class ParameterParser
                 return [];
             case "image":
                 return null;
+            case "imagesArray":
+                return [];
             case "file":
                 return null;
             case "content":
