@@ -33,9 +33,7 @@ module.exports = {
             },
             {
                 test: /\.(woff2?.|ttf)$/,
-                use: [
-                    "file-loader"
-                ]
+                type: 'asset/resource'
             },
             {
                 test: /i18n\.xml$/,
