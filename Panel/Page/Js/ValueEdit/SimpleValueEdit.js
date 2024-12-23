@@ -17,12 +17,12 @@ export default class SimpleValueEdit extends AbstractValueEdit {
 
         if (this.param.type == 'int') {
             this.valueInput.type = 'number';
-            this.valueInput.step=1;
-        }else if(this.param.type=='url'){
-            this.valueInput.type = 'url';
-        }else if (this.param.type=='boolean'){
+            this.valueInput.step = 1;
+        } else if (this.param.type == 'url') {
+            this.valueInput.type = 'text';
+           } else if (this.param.type == 'boolean') {
             this.valueInput.type = 'checkbox';
-            this.valueInput.checked = value===true || value == 'true';
+            this.valueInput.checked = value === true || value == 'true';
         }
         if (this.param.canFromQuery) {
             this.queryCheckbox = this.addChild('input', {
