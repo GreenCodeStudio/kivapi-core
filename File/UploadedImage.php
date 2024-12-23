@@ -65,4 +65,30 @@ class UploadedImage extends UploadedFile
         else
             return $this->getUrl()."?width=$width&height=$height&type=$type";
     }
+    public function getSizedUrlContain(int $width, int $height, ?string $type = null)
+    {
+        $wantedRatio = $width / $height;
+        $imageRatio = $this->imageWidth / $this->imageHeight;
+        if ($wantedRatio > $imageRatio) {
+            $newWidth = $height * $imageRatio;
+            $newHeight = $height;
+        } else {
+            $newWidth = $width;
+            $newHeight = $width / $imageRatio;
+        }
+        return $this->getSizedUrl((int)$newWidth, (int)$newHeight, $type);
+    }
+    public function getSrcSetContain(int $width, int $height, ?string $type = null)
+    {
+        $wantedRatio = $width / $height;
+        $imageRatio = $this->imageWidth / $this->imageHeight;
+        if ($wantedRatio > $imageRatio) {
+            $newWidth = $height * $imageRatio;
+            $newHeight = $height;
+        } else {
+            $newWidth = $width;
+            $newHeight = $width / $imageRatio;
+        }
+        return $this->getSrcSet((int)$newWidth, (int)$newHeight, $type);
+    }
 }

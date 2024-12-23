@@ -7,6 +7,9 @@ class PackageCommand extends \Kivapi\KivapiCli\Commands\AbstractCommandGroup
 {
     function getSubCommands(): array
     {
-        return ['List' => PackageListCommand::class, 'Install' => PackageInstallCommand::class];
+        return [
+            'List' => PackageListCommand::class,
+            'ListAvailable' => PackageListAvailableCommand::class,
+            'Install' => PackageInstallCommand::class];
     }
 }

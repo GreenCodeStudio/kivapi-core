@@ -66,7 +66,13 @@ class Builder
         $content[] = "import {ComponentManager} from \"../../Core/Js/ComponentManager\"";
         $availableComponents = ComponentManager::listComponents();
         foreach ($availableComponents as $component) {
-            $file = "Components/$component[1]/JsController.js";
+            if ($component[0] == null) {
+                $file = "Components/$component[1]/JsController.js";
+            }
+            else {
+                $packagePath=implode("/",explode("\\",$component[0]));
+                $file = "Packages/$packagePath/Components/$component[1]/JsController.js";
+            }
             if (is_file(__DIR__."/../../$file"))
                 $content[] = "ComponentManager.register(".json_encode($component[0]).",".json_encode($component[1]).", async ()=>(await import(\"../../$file\")).default);";
         }
@@ -81,10 +87,22 @@ class Builder
             $content[] = "@import \"../../$file\";";
         }
         $availableComponents = ComponentManager::listComponents();
+
         foreach ($availableComponents as $component) {
-            $file = "Components/$component[1]/Style.scss";
-            if (is_file(__DIR__."/../../$file"))
-                $content[] = "@import \"../../$file\";";
+            if ($component[0] == null) {
+                $dir = "Components/$component[1]";
+            }
+            else {
+                $packagePath=implode("/",explode("\\",$component[0]));
+                $dir = "Packages/$packagePath/Components/$component[1]";
+            }
+            if (is_file(__DIR__."/../../$dir/Style.scss"))
+                $content[] = "@import \"../../$dir/Style.scss\";";
+            if (is_file(__DIR__."/../../$dir/ScopedStyle.scss")) {
+                $componentString=implode("\\",$component);
+                $componentStringEscaped=str_replace("\\","\\\\\\\\",$componentString);
+                $content[] = "[data-component=\"$componentStringEscaped\"]{ @import \"../../$dir/ScopedStyle.scss\";}";
+            }
         }
         file_put_contents($path, implode("\r\n", $content));
     }
@@ -171,15 +189,13 @@ class Builder
         chdir($path);
         $coreComposer = json_decode(file_get_contents(__dir__.'/../composer.json'), false);
         $changed = false;
-        if(!is_file(__dir__.'/../../composer.json'))
-        {
+        if (!is_file(__dir__.'/../../composer.json')) {
             $changed = true;
-            $packageComposer=new \stdClass();
-        }else {
+            $packageComposer = new \stdClass();
+        } else {
             $packageComposer = json_decode(file_get_contents(__dir__.'/../../composer.json'), false);
         }
-        if(!isset($packageComposer->require))
-        {
+        if (!isset($packageComposer->require)) {
             $packageComposer->require = new \stdClass();
             $changed = true;
         }
@@ -190,7 +206,7 @@ class Builder
             }
         }
         if ($changed) {
-            file_put_contents(__dir__.'/../../composer.json', str_replace('\/','/',json_encode($packageComposer, JSON_PRETTY_PRINT)));
+            file_put_contents(__dir__.'/../../composer.json', str_replace('\/', '/', json_encode($packageComposer, JSON_PRETTY_PRINT)));
         }
 
         exec("composer upgrade");

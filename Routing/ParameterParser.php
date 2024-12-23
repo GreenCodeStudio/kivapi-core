@@ -75,9 +75,15 @@ class ParameterParser
                 return empty($value) ? null : $this->parseParamStruct(((object)$def)->items, $value);
             case "int":
                 return empty($value) ? null : (int)$value;
+            case "float":
+                return empty($value) ? null : (float)$value;
             case "boolean":
                 return empty($value) ? false : (bool)$value;
             case "string":
+                if ($this->inSiteEdit)
+                    return InSiteMapping::addMapping($path, (string)$value);
+                return (string)$value;
+            case "enum":
                 if ($this->inSiteEdit)
                     return InSiteMapping::addMapping($path, (string)$value);
                 return (string)$value;
@@ -136,6 +142,8 @@ class ParameterParser
                 return [];
             case "image":
                 return null;
+            case "imagesArray":
+                return [];
             case "file":
                 return null;
             case "content":

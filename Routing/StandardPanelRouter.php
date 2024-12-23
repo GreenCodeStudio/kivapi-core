@@ -30,7 +30,7 @@ class StandardPanelRouter extends Router
             }
         }
         $packagesGroupsPath = __DIR__.'/../../Packages';
-        if(is_dir($packagesGroupsPath)) {
+        if (is_dir($packagesGroupsPath)) {
             $packagesGroups = scandir($packagesGroupsPath);
             foreach ($packagesGroups as $group) {
                 if ($group == '.' || $group == '..') {
@@ -63,9 +63,21 @@ class StandardPanelRouter extends Router
     protected function parseUrl()
     {
         $exploded = explode('/', explode('?', $this->url)[0]);
-        $controllerName = empty($exploded[2]) ? 'Start' : $exploded[2];
-        $methodName = empty($exploded[3]) ? 'index' : $exploded[3];
-        $this->args = array_slice($exploded, 4);
+        if (count($exploded) >= 5 && $exploded[2] == 'Package') {
+            if (count($exploded) >= 6) {
+                $controllerName = $exploded[5];
+                $methodName = empty($exploded[6]) ? 'index' : $exploded[6];
+                $this->args = array_slice($exploded, 7);
+            } else {
+                $controllerName = 'PackageInfo';
+                $methodName = 'details';
+                $this->args = [$exploded[3], $exploded[4]];
+            }
+        } else {
+            $controllerName = empty($exploded[2]) ? 'Start' : $exploded[2];
+            $methodName = empty($exploded[3]) ? 'index' : $exploded[3];
+            $this->args = array_slice($exploded, 4);
+        }
         $this->controllerName = preg_replace('/[^a-zA-Z0-9_]/', '', $controllerName);
         $this->methodName = preg_replace('/[^a-zA-Z0-9_]/', '', $methodName);
     }
@@ -78,7 +90,7 @@ class StandardPanelRouter extends Router
     protected function sendBackException(\Throwable $ex)
     {
         $responseCode = $this->getHttpCode($ex);
-        if($responseCode==404){
+        if ($responseCode == 404) {
             header('Location: /');
             $responseCode = 302;
         }
@@ -88,9 +100,9 @@ class StandardPanelRouter extends Router
 
         try {
             $this->prepareErrorController($ex, $responseCode);
-        }catch (\Throwable $ex2) {
+        } catch (\Throwable $ex2) {
             dump($ex);
-            $this->htmlResult='Error';
+            $this->htmlResult = 'Error';
         }
         echo $this->htmlResult;
         dump_render_html();
