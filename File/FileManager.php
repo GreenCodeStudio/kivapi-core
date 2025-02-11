@@ -40,10 +40,10 @@ class FileManager
             }
         }
         $extension = $this->mimeToExtension($mimeOutput);
-        $tmpPath = __DIR__.'/../../tmp/img_'.md5(($_GET['width'] ?? '').'_'.($_GET['height'] ?? '').'_'.($mimeOutput).'_'.$filepath).'.'.$extension;
+        $tmpPath = __DIR__.'/../../Tmp/img_'.md5(($_GET['width'] ?? '').'_'.($_GET['height'] ?? '').'_'.($mimeOutput).'_'.$filepath).'.'.$extension;
         if (!is_file($tmpPath)) {
-            if (!is_dir(__DIR__.'/../../tmp/'))
-                mkdir(__DIR__.'/../../tmp/', 0777);
+            if (!is_dir(__DIR__.'/../../Tmp/'))
+                mkdir(__DIR__.'/../../Tmp/', 0777);
             $this->reformatImageDirect($filepath, $mime, $mimeOutput, $tmpPath);
         }
         header('content-type: '.$mimeOutput);
@@ -97,6 +97,10 @@ class FileManager
         $src_width = imagesx($image);
         $src_height = imagesy($image);
         $dst_image = imagecreatetruecolor($dst_width, $dst_height);
+        $black = imagecolorallocate($dst_image, 0, 0, 0);
+        imagecolortransparent($dst_image, $black);
+        imagealphablending( $dst_image, false );
+        imagesavealpha( $dst_image, true );
         imagecopyresampled($dst_image, $image, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
         return $dst_image;
     }
