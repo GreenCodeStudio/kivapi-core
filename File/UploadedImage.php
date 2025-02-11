@@ -91,4 +91,17 @@ class UploadedImage extends UploadedFile
         }
         return $this->getSrcSet((int)$newWidth, (int)$newHeight, $type);
     }
+    public function getSrcSetCover(int $width, int $height, ?string $type = null)
+    {
+        $wantedRatio = $width / $height;
+        $imageRatio = $this->imageWidth / $this->imageHeight;
+        if ($wantedRatio > $imageRatio) {
+            $newWidth = $width;
+            $newHeight = $width / $imageRatio;
+        } else {
+            $newWidth = $height * $imageRatio;
+            $newHeight = $height;
+        }
+        return $this->getSrcSet((int)$newWidth, (int)$newHeight, $type);
+    }
 }

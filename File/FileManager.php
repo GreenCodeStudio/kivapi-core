@@ -73,12 +73,14 @@ class FileManager
         } else if ($mimeInput == 'image/png') {
             $image = imagecreatefrompng($filepath);
         }
+
+
         if (!empty($_GET['width']) && !empty($_GET['height'])) {
-            $image = imagescale($image, $_GET['width'], $_GET['height'], IMG_BICUBIC);
+            $image = $this->resizeImage($image, $_GET['width'], $_GET['height']);
         } else if (!empty($_GET['width'])) {
-            $image = imagescale($image, $_GET['width'], round($_GET['width'] * imagesy($image) / imagesx($image)), IMG_BICUBIC);
+            $image = $this->resizeImage($image, $_GET['width'], round($_GET['width'] * imagesy($image) / imagesx($image)));
         } else if (!empty($_GET['height'])) {
-            $image = imagescale($image, round($_GET['height'] * imagesx($image) / imagesy($image)), $_GET['height'], IMG_BICUBIC);
+            $image = $this->resizeImage($image, round($_GET['height'] * imagesx($image) / imagesy($image)), $_GET['height']);
         }
 
         if ($mimeOutput == 'image/jpeg') {
@@ -88,5 +90,14 @@ class FileManager
         } else if ($mimeOutput == 'image/webp') {
             imagewebp($image, $tmpPath);
         }
+    }
+
+    function resizeImage($image, $dst_width, $dst_height)
+    {
+        $src_width = imagesx($image);
+        $src_height = imagesy($image);
+        $dst_image = imagecreatetruecolor($dst_width, $dst_height);
+        imagecopyresampled($dst_image, $image, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
+        return $dst_image;
     }
 }
