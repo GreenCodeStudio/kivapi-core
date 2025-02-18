@@ -18,7 +18,14 @@ function t($q)
 include_once __DIR__.'/Debug.php';
 if (strpos($_SERVER['REQUEST_URI'], '/Dist/') === 0) {
     $path = substr($_SERVER['REQUEST_URI'], 6);
-    copy(__DIR__.'/../BuildResults/Dist/'.$path, 'php://stdout');
+    if(str_contains($path, '..')){
+        exit;
+    }
+    if(str_contains($path, '?')){
+        $path=substr($path, 0, strpos($path,'?'));
+    }
+    $fullPath=__DIR__.'/../BuildResults/Dist/'.$path;
+    copy($fullPath, 'php://stdout');
 } else {
         include_once __DIR__.'/autoloader.php';
         include_once __DIR__.'/loadDotEnv.php';

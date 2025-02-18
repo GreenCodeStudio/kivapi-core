@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html <?= isset($meta->lang) ? 'lang="'.htmlspecialchars('a').'"' : '' ?>>
+<html <?= isset($meta->lang) ? 'lang="'.htmlspecialchars($meta->lang).'"' : '' ?>>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/Dist/style.css" rel="stylesheet">
+    <?php
+    include __DIR__.'/../BuildResults/Dist/style.html';
+    ?>
     <meta name="generator" content="Kivapi"/>
     <link rel="author" href="https://greencodestudio.github.io/kivapi/"/>
     <?php
@@ -42,7 +44,9 @@ $component->loadView();
     window.controllerInitInfo = <?=json_encode($initInfo)?>;
     //]]>
 </script>
-<script src="/Dist/js.js"></script>
+<?php
+include __DIR__.'/../Public/Dist/js.html';
+?>
 <?php
 foreach ($trackingCodes as $trackingCode) {
     echo $trackingCode->body_end;

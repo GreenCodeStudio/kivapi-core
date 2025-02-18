@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var path = require('path');
+var fs = require('fs')
 module.exports = {
     entry: {
         style: './style.scss',
@@ -10,8 +11,19 @@ module.exports = {
     }, output: {
         path: path.resolve(__dirname, '../../BuildResults/Dist'),
         publicPath: "/Dist/",
-        filename: '[name].js',
-        chunkFilename: '[name].[id].js'
+        filename: (x)=>{
+            if(x.runtime=='js'){
+                const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/js.html'), 'w')
+                fs.writeSync(file, '<script src="/Dist/js.'+x.hash+'.js"></script>')
+            }
+            if(x.runtime=='style'){
+                const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/style.html'), 'w')
+                fs.writeSync(file, '<link href="/Dist/style.css?'+x.hash+'" rel="stylesheet">')
+            }
+            console.log(x);
+            return '[name].[fullhash].js'
+        },
+        chunkFilename: '[chunkhash].js'
     },
     module: {
         rules: [
