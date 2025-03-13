@@ -9,7 +9,6 @@ export default class FileUploader extends HTMLElement {
         this.drawExtraInfo = drawExtraInfo;
         this.activeElementList = new ActiveElementList(this.addChild('div'), this.files);
         this.activeElementList.item = (x, old) => {
-            console.log(x);
             if (old) return old;
             else if (x.status === 'pending') {
                 return document.create('div.pendingFile', {text: 'pending'})

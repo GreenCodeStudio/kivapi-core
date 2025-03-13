@@ -9,7 +9,6 @@ export default class AbstractValueEdit extends HTMLElement {
 
     draw() {
         this.addEventListener('drop', e => {
-            console.log('drop')
             let dataJSON = e.dataTransfer.getData('text/cms-value-params');
             if (dataJSON) {
                 let data = JSON.parse(dataJSON)
@@ -36,7 +35,6 @@ export default class AbstractValueEdit extends HTMLElement {
             paramConfig: this.collectParameters(),
             dragId
         }))
-        console.log('dragstart')
         DragAndDropHandler.currentDragged = this;
         e.stopPropagation();
     }

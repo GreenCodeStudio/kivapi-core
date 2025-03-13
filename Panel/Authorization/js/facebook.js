@@ -28,7 +28,6 @@ export default {
     async startLogin() {
         await this.init();
         const result = await this.executeLogin();
-        console.log(result);
         Ajax.Authorization.facebook();
 
     },

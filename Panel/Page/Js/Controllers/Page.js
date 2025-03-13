@@ -13,7 +13,6 @@ import StructValueEdit from "../ValueEdit/StructValueEdit";
 import {editParams} from "../ValueEdit/ValueEditFactory";
 import PageSimulator from "../PageSimulator";
 
-console.log({t})
 
 export class index {
     constructor(page, data) {

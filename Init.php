@@ -18,19 +18,23 @@ function t($q)
 include_once __DIR__.'/Debug.php';
 if (strpos($_SERVER['REQUEST_URI'], '/Dist/') === 0) {
     $path = substr($_SERVER['REQUEST_URI'], 6);
-    if(str_contains($path, '..')){
+    if (str_contains($path, '..')) {
         exit;
     }
-    if(str_contains($path, '?')){
-        $path=substr($path, 0, strpos($path,'?'));
+    if (str_contains($path, '?')) {
+        $path = substr($path, 0, strpos($path, '?'));
     }
-    $fullPath=__DIR__.'/../BuildResults/Dist/'.$path;
-    copy($fullPath, 'php://stdout');
+    $fullPath = __DIR__.'/../BuildResults/Dist/'.$path;
+    if (php_sapi_name() === 'cli-server') {
+        echo file_get_contents($fullPath);
+    } else {
+        copy($fullPath, 'php://stdout');
+    }
 } else {
-        include_once __DIR__.'/autoloader.php';
-        include_once __DIR__.'/loadDotEnv.php';
-        include_once __DIR__.'/globalFunctions.php';
-        \Core\Database\DB::init();
-        \Core\Routing\Router::routeHttp($_SERVER['REQUEST_URI']);
+    include_once __DIR__.'/autoloader.php';
+    include_once __DIR__.'/loadDotEnv.php';
+    include_once __DIR__.'/globalFunctions.php';
+    \Core\Database\DB::init();
+    \Core\Routing\Router::routeHttp($_SERVER['REQUEST_URI']);
 
 }

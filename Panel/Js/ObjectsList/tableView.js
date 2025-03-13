@@ -201,7 +201,6 @@ export class TableView extends HTMLElement {
 
     trOnClick(row, e) {
         const rowsIds = this.objectsList.currentRows.map(x => x.id);
-        console.log('click')
         if (!e.ctrlKey) {
             this.objectsList.selected.clear();
         }
@@ -254,7 +253,6 @@ export class TableView extends HTMLElement {
     }
 
     trOnKeyDown(row, tr, e) {
-        console.log('trOnKeyDown')
         if (e.key === 'Enter') {
             let action = this.objectsList.generateActions(this.objectsList.getSelectedData(), 'enter').find(x => x.main);
             if (action) {
