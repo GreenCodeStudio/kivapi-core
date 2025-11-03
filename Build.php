@@ -1,4 +1,7 @@
 <?php
 include __DIR__.'/Build/Builder.php';
-//(new \Core\Build\Builder())->buildOnce();
-(new \Core\Build\Builder())->buildWatch();
+if($watch??false){
+    (new \Core\Build\Builder())->buildWatch();
+}else{
+    (new \Core\Build\Builder())->buildOnce();
+}
