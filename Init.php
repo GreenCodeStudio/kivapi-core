@@ -24,6 +24,12 @@ if (strpos($_SERVER['REQUEST_URI'], '/Dist/') === 0) {
     if (str_contains($path, '?')) {
         $path = substr($path, 0, strpos($path, '?'));
     }
+    if(str_ends_with($path, '.css')) {
+        header('content-type:text/css');
+    }
+    if(str_ends_with($path, '.js')) {
+        header('content-type:application/javascript');
+    }
     $fullPath = __DIR__.'/../BuildResults/Dist/'.$path;
     if (php_sapi_name() === 'cli-server') {
         echo file_get_contents($fullPath);
