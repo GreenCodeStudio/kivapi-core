@@ -16,6 +16,8 @@ use Core\Panel\User\Repository\UserRepository;
 
 class User
 {
+    private UserRepository $defaultDB;
+
     public function __construct()
     {
         $this->defaultDB = new UserRepository();
