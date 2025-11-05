@@ -16,9 +16,17 @@ module.exports = {
                 const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/js.html'), 'w')
                 fs.writeSync(file, '<script src="/Dist/js.'+x.hash+'.js"></script>')
             }
+            if(x.runtime=='panelJs'){
+                const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/panelJs.html'), 'w')
+                fs.writeSync(file, '<script src="/Dist/panelJs.'+x.hash+'.js"></script>')
+            }
             if(x.runtime=='style'){
                 const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/style.html'), 'w')
                 fs.writeSync(file, '<link href="/Dist/style.css?'+x.hash+'" rel="stylesheet">')
+            }
+            if(x.runtime=='panelStyle'){
+                const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/panelStyle.html'), 'w')
+                fs.writeSync(file, '<link href="/Dist/panelStyle.css?'+x.hash+'" rel="stylesheet">')
             }
             console.log(x);
             return '[name].[fullhash].js'
