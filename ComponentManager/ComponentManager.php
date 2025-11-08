@@ -10,7 +10,7 @@ class ComponentManager
     public static function loadControllerWithParams(?string $package, string $name, array $query, object $node, bool $inSiteEdit = false)
     {
         $className = static::findControllerClass($package, $name);
-        $parser=(new ParameterParser($query, $inSiteEdit));
+        $parser = (new ParameterParser($query, $inSiteEdit));
         $params = $parser->findParameters($className::DefinedParameters(), $node);
         $controller = new $className($params);
         $controller->subParamComponents = $parser->subComponents;
@@ -47,7 +47,7 @@ class ComponentManager
     {
         $ret = [];
         $dir = __DIR__.'/../../Components/';
-        if(is_dir($dir)) {
+        if (is_dir($dir)) {
             foreach (scandir($dir) as $name) {
                 if ($name != '.' && $name != '..' && is_dir($dir.$name)) {
                     $ret[] = [null, $name];
@@ -74,15 +74,24 @@ class ComponentManager
                 }
             }
         }
-        return $ret;
+        return FunQuery::from($ret)->filter(function ($x) {
+            try {
+                $class = static::findControllerClass($x[0], $x[1]);
+                return class_exists($class);
+            } catch (\Exception $e) {
+                return false;
+            }
+        })->toArray();
     }
-    public static function listComponentsWithDefs(){
+
+    public static function listComponentsWithDefs()
+    {
         $ret = [];
         foreach (static::listComponents() as $component) {
             $package = $component[0];
             $name = $component[1];
-            $className=static::findControllerClass($package, $name);
-            $definedParameters=$className::DefinedParameters();
+            $className = static::findControllerClass($package, $name);
+            $definedParameters = $className::DefinedParameters();
             $ret[] = (object)[
                 'package' => $component[0],
                 'name' => $component[1],
@@ -91,6 +100,7 @@ class ComponentManager
         }
         return $ret;
     }
+
     public static function getDeveloperDetails(?string $package, string $name)
     {
         $className = static::findControllerClass($package, $name);
@@ -105,6 +115,6 @@ class ComponentManager
     public static function getDataTable($options)
     {
         $rows = self::listComponents();
-        return ['rows' => FunQuery::create($rows)->map(fn($x)=>['package'=>$x[0], 'name'=>$x[1]]), 'total' => count($rows)];
+        return ['rows' => FunQuery::create($rows)->map(fn($x) => ['package' => $x[0], 'name' => $x[1]]), 'total' => count($rows)];
     }
 }
