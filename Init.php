@@ -31,11 +31,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/Dist/') === 0) {
         header('content-type:application/javascript');
     }
     $fullPath = __DIR__.'/../BuildResults/Dist/'.$path;
-    if (php_sapi_name() === 'cli-server') {
-        echo file_get_contents($fullPath);
-    } else {
-        copy($fullPath, 'php://stdout');
-    }
+    echo file_get_contents($fullPath);
 } else {
     include_once __DIR__.'/autoloader.php';
     include_once __DIR__.'/loadDotEnv.php';
