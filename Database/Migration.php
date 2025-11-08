@@ -15,6 +15,7 @@ class Migration
         ["BIT", "BIT(1)"],
     ];
     public $queries = [];
+    private mixed $tables;
 
     public static function factory()
     {
