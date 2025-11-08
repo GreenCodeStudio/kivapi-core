@@ -21,6 +21,7 @@ class ComponentRouter extends Router
      */
     private $urlWithoutQuery;
     private array $routeNodes;
+    private array $rootNodeParams;
 
     public function __construct(bool $inSiteEdit = false)
     {
@@ -30,10 +31,9 @@ class ComponentRouter extends Router
     public function findController()
     {
         $this->parseUrl();
-        $nodes = $this->findRoute();
-        $this->routeNodes = FunQuery::create($nodes)->map(fn($node) => new RouteNode($node,$this->query))->toArray();
+        $this->routeNodes = $this->findRoute();
         $controllers = FunQuery::create($this->routeNodes)
-            ->map(fn($routeNode) => ComponentManager::loadControllerWithParams($routeNode->node->module, $routeNode->node->component,  $routeNode->query, $routeNode->node, $this->inSiteEdit))
+            ->map(fn($routeNode) => ComponentManager::loadControllerWithParams($routeNode->node->module, $routeNode->node->component, $routeNode->query, $routeNode->node, $this->inSiteEdit))
             ->toArray();
         $this->controller = $controllers[0];
         foreach ($controllers as $i => $controller) {
@@ -58,21 +58,39 @@ class ComponentRouter extends Router
 
     private function findRoute()
     {
-        $node = $this->findRouteMainNode();
+        $routeNode = $this->findRouteMainNode();
         $ret = [];
-        while ($node) {
-            $ret[] = $node;
-            $node = $node->parent ?? null;
+        while ($routeNode) {
+            $ret[] = $routeNode;
+            if(!empty($routeNode->node->parent)){
+                $routeNode=new RouteNode($routeNode->node->parent, []);
+            }else{
+                $routeNode=null;
+            }
         }
         return array_reverse($ret);
     }
 
-    private function findRouteMainNode()
+    private function findRouteMainNode():RouteNode
     {
         $all = (new PageRepository())->getAll();
+        $urlElements = explode('/', trim($this->urlWithoutQuery, '/'));
         foreach ($all as $node) {
-            if (!empty($node->path) && ($node->path == $this->urlWithoutQuery || rtrim($node->path, '/') == rtrim($this->urlWithoutQuery, '/')))
-                return $node;
+            if (empty($node->path)) continue;
+            $pathElements = explode('/', trim($node->path, '/'));
+            if (count($urlElements) !== count($pathElements)) continue;
+            $params=[];
+            for ($i = 0; $i < count($urlElements); $i++) {
+                if (str_starts_with($pathElements[$i], '{') && str_ends_with($pathElements[$i], '}')) {
+                    // parameter
+                    $params[substr($pathElements[$i], 1, -1)] = $urlElements[$i];
+                    continue;
+                }
+                if ($urlElements[$i] !== $pathElements[$i]) {
+                    continue 2;
+                }
+            }
+            return new RouteNode($node, [...$params,...$this->query]);
         }
         throw new NotFoundException("not found path");
     }
@@ -102,7 +120,7 @@ class ComponentRouter extends Router
                     'panelURL' => '/panel/',
                     'editURL' => '/panel/Page/edit/'.end($this->routeNodes)->node->id,
                     'inSiteEditURL' => $this->urlWithoutQuery.'?inSiteEdit=1',
-                    'inSiteEditData'=>InSiteMapping::$mapping
+                    'inSiteEditData' => InSiteMapping::$mapping
                 ];
             }
             include __DIR__.'/../BaseHTML.php';
