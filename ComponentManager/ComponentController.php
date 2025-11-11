@@ -3,6 +3,7 @@
 namespace Core\ComponentManager;
 
 use MKrawczyk\Mpts\Environment;
+use MKrawczyk\Mpts\Parser\HTMLParser;
 use MKrawczyk\Mpts\Parser\XMLParser;
 
 abstract class ComponentController extends BaseComponentController
@@ -32,7 +33,7 @@ abstract class ComponentController extends BaseComponentController
 
     public function loadMPTS(string $fileName)
     {
-        $template = XMLParser::Parse(file_get_contents($fileName));
+        $template = HtmlParser::ParseFile($fileName);
         $env = new Environment();
         $env->variables = (array)$this;
         $env->variables['dump'] = function ($x) {
