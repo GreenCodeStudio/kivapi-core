@@ -23,14 +23,14 @@ export class index {
                 ret.push({
                     name: TCommon("details"),
                     icon: 'icon-show',
-                    href: "Package/details/" + rows[0].fullName,
+                    href: "PackageInfo/details/" + rows[0].fullName,
                     main: true
                 });
             }
             if (mode != 'row') {
                 ret.push({
                     name: TCommon("detailsInNewTab"), icon: 'icon-show', showInTable: false, command() {
-                        rows.forEach(x => window.open("Package/details/" + rows[0].fullName))
+                        rows.forEach(x => window.open("PackageInfo/details/" + rows[0].fullName))
                     }
                 });
             }
@@ -56,14 +56,14 @@ export class available {
                 ret.push({
                     name: TCommon("details"),
                     icon: 'icon-show',
-                    href: "Package/availableDetails/" + rows[0].vendor+"/"+rows[0].name,
+                    href: "PackageInfo/availableDetails/" + rows[0].vendor+"/"+rows[0].name,
                     main: true
                 });
             }
             if (mode != 'row') {
                 ret.push({
                     name: TCommon("detailsInNewTab"), icon: 'icon-show', showInTable: false, command() {
-                        rows.forEach(x => window.open("Package/details/" + rows[0].fullName))
+                        rows.forEach(x => window.open("PackageInfo/details/" + rows[0].fullName))
                     }
                 });
             }
