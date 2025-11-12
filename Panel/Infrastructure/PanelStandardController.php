@@ -5,6 +5,7 @@ namespace Core\Panel\Infrastructure;
 use Core\Panel\Authorization\Authorization;
 use Core\Panel\Infrastructure\Menu;
 use MKrawczyk\Mpts\Environment;
+use MKrawczyk\Mpts\Parser\HTMLParser;
 use MKrawczyk\Mpts\Parser\XMLParser;
 
 class PanelStandardController extends PanelController
@@ -63,7 +64,7 @@ class PanelStandardController extends PanelController
             $filename = __DIR__.'/../'.$module.'/Views/'.$name.'.';
         }
         if (file_exists($filename.'mpts')) {
-            $template = XMLParser::Parse(file_get_contents($filename.'mpts'));
+            $template = HTMLParser::ParseFile($filename.'mpts');
             $env = new Environment();
             $env->variables = (array)$this;
             $env->variables['dump'] = function ($x) {
