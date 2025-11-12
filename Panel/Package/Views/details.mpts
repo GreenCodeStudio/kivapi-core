@@ -1,0 +1,31 @@
+<div class="topBarButtons">
+    <button class="installBtn">Install</button>
+</div>
+<section class="card">
+    <h1>
+        <span>{{item.vendor}}</span>
+        <strong>{{item.name}}</strong>
+    </h1>
+    <:if condition=item.git>
+        <div>
+            <strong>Git</strong>
+            <span>
+                <a href=item.git>{{item.git}}</a>
+            </span>
+        </div>
+    </:if>
+    <:if condition=item.version>
+        <div>
+            <strong>Version</strong>
+            <span>
+                {{item.version}}
+            </span>
+        </div>
+    </:if>
+</section>
+<:if condition=item.description>
+    <section class="card">
+        <h1>Description</h1>
+        {{item.description}}
+    </section>
+</:if>
