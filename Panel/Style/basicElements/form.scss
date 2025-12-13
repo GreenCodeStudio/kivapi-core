@@ -5,6 +5,7 @@ form {
         margin-bottom: 10px;
         align-items: baseline;
 
+
         span {
             display: table-cell;
             width: 250px;
@@ -26,6 +27,9 @@ form {
             display: flex;
         }
 
+        .summaryButtonsWrapper {
+            grid-column: 1/3;
+        }
     }
 
     .label {
@@ -74,6 +78,15 @@ form {
             }
 
         }
+    }
+
+    div.draggable {
+        cursor: move;
+        display: inline-block;
+        width: 0.5em;
+        height: 1em;
+        background: lightgray;
+        vertical-align: middle;
     }
 }
 
