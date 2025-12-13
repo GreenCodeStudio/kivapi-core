@@ -16,7 +16,7 @@ export class DatasourceAjax {
     }
 
     async get(options) {
-        return await AjaxPanel(this.controller, this.method, {
+        return await AjaxPanel[this.controller][this.method]({
             start: options.start,
             limit: options.limit,
             search: options.search,

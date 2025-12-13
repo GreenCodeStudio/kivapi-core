@@ -9,6 +9,8 @@ use Core\Exceptions\NotFoundException;
 class AjaxRouter extends Router
 {
     var $controllerType = 'Ajax';
+    private string|null $vendorName;
+    private string|null $packageName;
 
     protected function findController()
     {
@@ -21,8 +23,19 @@ class AjaxRouter extends Router
     protected function parseUrl()
     {
         $exploded = explode('/', explode('?', $this->url)[0]);
-        $controllerName = empty($exploded[2]) ? 'Start' : $exploded[2];
-        $methodName = empty($exploded[3]) ? 'index' : $exploded[3];
+        if (count($exploded) == 6) {
+            $vendorName = $exploded[2];
+            $packageName = $exploded[3];
+            $this->vendorName = preg_replace('/[^a-zA-Z0-9_]/', '', $vendorName);
+            $this->packageName = preg_replace('/[^a-zA-Z0-9_]/', '', $packageName);
+            $controllerName = $exploded[4];
+            $methodName = $exploded[5];
+        } else if (count($exploded) == 4) {
+            $controllerName = $exploded[2];
+            $methodName = $exploded[3];
+        } else {
+            throw new NotFoundException();
+        }
         $this->controllerName = preg_replace('/[^a-zA-Z0-9_]/', '', $controllerName);
         $this->methodName = preg_replace('/[^a-zA-Z0-9_]/', '', $methodName);
     }
@@ -83,11 +96,20 @@ class AjaxRouter extends Router
 
     public function findControllerClass()
     {
-        $filename = __DIR__.'/../../Ajax/'.$this->controllerName.'AjaxController.php';
-        if (is_file($filename)) {
-            include_once $filename;
-            $className = MAIN_NAMESPACE."\\Ajax\\{$this->controllerName}AjaxController";
-            return $className;
+        if (!empty($this->vendorName)) {
+            $filename = __DIR__.'/../../Packages/'.$this->vendorName.'/'.$this->packageName.'/Ajax/'.$this->controllerName.'AjaxController.php';
+            if (is_file($filename)) {
+                include_once $filename;
+                $className = "{$this->vendorName}\\{$this->packageName}\\Ajax\\{$this->controllerName}AjaxController";
+                return $className;
+            }
+        } else {
+            $filename = __DIR__.'/../../Ajax/'.$this->controllerName.'AjaxController.php';
+            if (is_file($filename)) {
+                include_once $filename;
+                $className = MAIN_NAMESPACE."\\Ajax\\{$this->controllerName}AjaxController";
+                return $className;
+            }
         }
 
         throw new NotFoundException();

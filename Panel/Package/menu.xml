@@ -2,7 +2,7 @@
 <menu>
     <element>
         <title>Packages</title>
-        <link>Package</link>
+        <link>PackageInfo</link>
         <titleKey>Core.Panel.Package.Packages</titleKey>
     </element>
 </menu>

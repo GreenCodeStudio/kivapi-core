@@ -17,13 +17,13 @@ class PackageInfoStandardController extends PanelStandardController
     {
         $this->will('package', 'show');
         $this->addView('Package', 'list');
-        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/PackageInfo']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => 'PackageInfo']);
     }
     function available()
     {
         $this->will('package', 'install');
         $this->addView('Package', 'availableList');
-        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/PackageInfo']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => 'PackageInfo']);
     }
 
     function details(string $vendor, string $name)
@@ -32,7 +32,7 @@ class PackageInfoStandardController extends PanelStandardController
         if($item==null)
             throw new NotFoundException();
         $this->addView('Package', 'details', ['item' => $item]);
-        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/PackageInfo']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => 'PackageInfo']);
     }
     function availableDetails(string $vendor, string $name)
     {
@@ -40,7 +40,7 @@ class PackageInfoStandardController extends PanelStandardController
         if($item==null)
             throw new NotFoundException();
         $this->addView('Package', 'details', ['item' => $item]);
-        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/PackageInfo']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => 'PackageInfo']);
         $this->setData($item);
     }
 
@@ -49,6 +49,6 @@ class PackageInfoStandardController extends PanelStandardController
         if (getenv('allowPackageInstall') ?? '' != 'true')
             throw new UnauthorizedException();
         $this->addView('Package', 'install');
-        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => '/PackageInfo']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Package.Packages"), 'url' => 'PackageInfo']);
     }
 }

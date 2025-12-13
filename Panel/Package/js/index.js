@@ -1,3 +1,3 @@
 import {PanelPageManager} from "../../Js/PanelPageManager";
 
-PanelPageManager.registerController('Package', () => import('./Controllers/Package'));
+PanelPageManager.registerController('PackageInfo', () => import('./Controllers/PackageInfo'));
