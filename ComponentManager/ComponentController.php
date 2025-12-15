@@ -33,7 +33,7 @@ abstract class ComponentController extends BaseComponentController
 
     public function loadMPTS(string $fileName)
     {
-        $template = HtmlParser::ParseFile($fileName);
+        $template = HTMLParser::ParseFile($fileName);
         $env = new Environment();
         $env->variables = (array)$this;
         $env->variables['dump'] = function ($x) {

@@ -29,18 +29,22 @@ export default class ArrayValueEdit extends AbstractValueEdit {
 
     drawItem(i, childConfig) {
         let result = generateParam(this.param.item, childConfig);
-        let label = document.create('.label', {draggable: "true"});
-        label.addChild('span', {text: i + 1 + '.'});
+        let label = document.create('.label');
+        let span = label.addChild('span', {text: i + 1 + '.'});
+        span.insertBefore(document.create('div.draggable', {
+            draggable: "true",
+            ondragstart: result.node.dragstartHandler?.bind(result.node)
+        }), span.firstChild);
         label.append(result.node);
-        label.ondragstart = result.node.dragstartHandler?.bind(result.node);
 
-        let removeButton = label.addChild('div').addChild('button', {text: 'Usuń'})
-        removeButton.onclick = result.removeFromParent =result.node.removeFromParent = () => {
+        let removeButton = label.addChild('div.summaryButtonsWrapper').addChild('button', {text: 'Usuń'})
+        removeButton.onclick = result.removeFromParent = result.node.removeFromParent = () => {
             this.removeItem(result);
         }
         this.insertBefore(label, this.children[i]);
         if (this.param.type == 'tree') {
-            let subLabel = document.create('.label', {draggable: true});
+            let subLabel = document.create('.label',);
+            subLabel.addChild('div.draggable', {draggable: true});
             subLabel.addChild('span', {text: 'child'});
             let subResult = generateParam(this.param, childConfig?.children ?? null);
             subLabel.append(subResult.node);
@@ -64,7 +68,7 @@ export default class ArrayValueEdit extends AbstractValueEdit {
             let label = path[path.indexOf(this) - 1];
             let index = Array.from(this.children).indexOf(label);
             let result = this.drawItem(index, data.paramConfig);
-            this.paramData.splice(index, 0,result)
+            this.paramData.splice(index, 0, result)
             this.updateNumbers();
             return true;
         } else
@@ -77,9 +81,10 @@ export default class ArrayValueEdit extends AbstractValueEdit {
         this.paramData.splice(index, 1);
         this.updateNumbers();
     }
-    updateNumbers(){
+
+    updateNumbers() {
         for (let i = 0; i < this.paramData.length; i++) {
-            this.paramData[i].node.parentNode.children[0].textContent = i + 1 + '.';
+            this.paramData[i].node.parentNode.querySelector('span').lastChild.replaceWith(document.createTextNode(i + 1 + '.'));
         }
     }
 }
