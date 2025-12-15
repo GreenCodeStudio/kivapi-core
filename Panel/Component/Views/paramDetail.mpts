@@ -1,0 +1,13 @@
+<div>
+    {{dump(data)}}
+    <hr/>
+    {{type}}
+    <:if condition=(type == "array") >
+    <div>
+
+        << getView('Component', 'paramDetail', item) >>
+
+    </div>
+</:if>
+
+        </div>

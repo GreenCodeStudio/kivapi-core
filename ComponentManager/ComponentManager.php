@@ -115,6 +115,13 @@ class ComponentManager
     public static function getDataTable($options)
     {
         $rows = self::listComponents();
-        return ['rows' => FunQuery::create($rows)->map(fn($x) => ['package' => $x[0], 'name' => $x[1]]), 'total' => count($rows)];
+        return [
+            'rows' => FunQuery::create($rows)->map(fn($x) => [
+            'package' => $x[0],
+            'name' => $x[1],
+                'id'=> ($x[0] ?? '').'\\'.$x[1]
+            ]
+        ),
+            'total' => count($rows)];
     }
 }

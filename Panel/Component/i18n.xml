@@ -4,6 +4,18 @@
         <value lang="en">Components</value>
         <value lang="pl">Komponenty</value>
     </node>
+    <node name="Package">
+        <value lang="en">Package</value>
+        <value lang="pl">Paczka</value>
+    </node>
+    <node name="Name">
+        <value lang="en">Name</value>
+        <value lang="pl">Nazwa</value>
+    </node>
+    <node name="InProject">
+        <value lang="en">(in project)</value>
+        <value lang="pl">(w projekcie)</value>
+    </node>
     <node name="List">
         <node name="Header">
             <value lang="en">Available components</value>

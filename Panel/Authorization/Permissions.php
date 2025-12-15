@@ -19,19 +19,39 @@ class Permissions
     {
         $data = [];
         $groups = [];
+        $files = [];
         $modules = scandir(__DIR__.'/../');
+        $packageVendors = scandir(__DIR__.'/../../../Packages/');
         foreach ($modules as $module) {
             if ($module == '.' || $module == '..') {
                 continue;
             }
             $filename = __DIR__.'/../'.$module.'/permissions.xml';
             if (is_file($filename)) {
-                $xml = simplexml_load_string(file_get_contents($filename));
-                foreach ($xml->group as $group) {
-                    $groups[$group->name->__toString()] = $group;
-                    foreach ($group->permission as $permission) {
-                        $data[$group->name->__toString()][$permission->name->__toString()] = $permission;
-                    }
+                $files[] = $filename;
+            }
+        }
+        foreach ($packageVendors as $vendor) {
+            if ($vendor == '.' || $vendor == '..') {
+                continue;
+            }
+            $packages = scandir(__DIR__.'/../../../Packages/'.$vendor);
+            foreach ($packages as $package) {
+                if ($package == '.' || $package == '..') {
+                    continue;
+                }
+                $filename = __DIR__.'/../../../Packages/'.$vendor.'/'.$package.'/Panel/permissions.xml';
+                if (is_file($filename)) {
+                    $files[] = $filename;
+                }
+            }
+        }
+        foreach ($files as $filename) {
+            $xml = simplexml_load_string(file_get_contents($filename));
+            foreach ($xml->group as $group) {
+                $groups[$group->name->__toString()] = $group;
+                foreach ($group->permission as $permission) {
+                    $data[$group->name->__toString()][$permission->name->__toString()] = $permission;
                 }
             }
         }

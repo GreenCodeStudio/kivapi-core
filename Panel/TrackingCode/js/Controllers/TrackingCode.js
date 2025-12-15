@@ -11,7 +11,7 @@ import {t} from "../../i18n.xml";
 export class index {
     constructor(page, data) {
         const container = page.querySelector('.TrackingCodeList');
-        let datasource = new DatasourceAjax('TrackingCode', 'getTable', ['TrackingCode', 'TrackingCode']);
+        let datasource = new DatasourceAjax(AjaxPanel.TrackingCode.getTable, ['TrackingCode', 'TrackingCode']);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
             {name: t('Fields.name'), content: row => row.name, sortName: 'name'},

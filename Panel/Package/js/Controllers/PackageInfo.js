@@ -10,7 +10,7 @@ import {t as TCommon} from "../../../Common/i18n.xml";
 export class index {
     constructor(page, data) {
         const container = page.querySelector('.PackagesList');
-        let datasource = new DatasourceAjax('Package', 'getTable', ['Package', 'Package']);
+        let datasource = new DatasourceAjax(AjaxPanel.Package.getTable, ['Package', 'Package']);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
             {name: t('Vendor'), content: row => row.vendor, sortName: 'vendor'},
@@ -43,7 +43,7 @@ export class index {
 export class available {
     constructor(page, data) {
         const container = page.querySelector('.PackagesList');
-        let datasource = new DatasourceAjax('Package', 'getAvailableTable', ['Package', 'Package']);
+        let datasource = new DatasourceAjax(AjaxPanel.Package.getAvailableTable, ['Package', 'Package']);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
             {name: t('Vendor'), content: row => row.vendor, sortName: 'vendor'},

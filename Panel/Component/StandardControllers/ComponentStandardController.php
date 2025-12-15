@@ -18,19 +18,23 @@ class ComponentStandardController extends PanelStandardController
     {
         $this->will('component', 'show');
         $this->addView('Component', 'list');
-        $this->pushBreadcrumb(['title' => t("Core.Panel.Component.Components"), 'url' => '/Component']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Component.Components"), 'url' => '/panel/Component']);
     }
 
-    function details(string $package, string $name)
+    function details(string ...$args)
     {
-        if(empty($package))
+        if (count($args) == 3) {
+            $package = $args[0].'\\'.$args[1];
+            $name = $args[2];
+        } else {
             $package = null;
+            $name = $args[0];
+        }
 
         $item = ((new ComponentManager())->getDeveloperDetails($package, $name));
-        dump($item);
-        if($item==null)
+        if ($item == null)
             throw new NotFoundException();
         $this->addView('Component', 'details', ['item' => $item]);
-        $this->pushBreadcrumb(['title' => t("Core.Panel.Component.Components"), 'url' => '/Component']);
+        $this->pushBreadcrumb(['title' => t("Core.Panel.Component.Components"), 'url' => '/panel/Component']);
     }
 }

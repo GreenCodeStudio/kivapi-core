@@ -21,6 +21,8 @@ use ReflectionMethod;
 class Router
 {
     public string $url;
+    public ?string $vendorName=null;
+    public ?string $packageName=null;
     public string $controllerName;
     public string $methodName;
     public array $args;

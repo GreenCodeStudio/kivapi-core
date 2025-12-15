@@ -7,7 +7,7 @@ import {TableManager} from "../../../Core/js/table";
 export class index {
     constructor(page, data) {
         const table = page.querySelector('.dataTable');
-        let datasource = new DatasourceAjax('Token', 'getTable', ['User', 'Token']);
+        let datasource = new DatasourceAjax(AjaxPanel.Token.getTable, ['User', 'Token']);
         table.datatable = new TableManager(table, datasource);
         table.datatable.refresh();
     }

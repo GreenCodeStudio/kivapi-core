@@ -17,7 +17,7 @@ import PageSimulator from "../PageSimulator";
 export class index {
     constructor(page, data) {
         const container = page.querySelector('.list');
-        let datasource = new DatasourceAjax('Page', 'getTable');
+        let datasource = new DatasourceAjax(AjaxPanel.Page.getTable);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [];
         objectsList.columns.push({

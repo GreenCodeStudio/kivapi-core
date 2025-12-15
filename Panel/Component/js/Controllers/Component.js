@@ -10,10 +10,10 @@ import {t as TCommon} from "../../../Common/i18n.xml";
 export class index {
     constructor(page, data) {
         const container = page.querySelector('.ComponentsList');
-        let datasource = new DatasourceAjax('Component', 'getTable', ['Component', 'Component']);
+        let datasource = new DatasourceAjax(AjaxPanel.Component.getTable, ['Component', 'Component']);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
-            {name: t('Package'), content: row => row.package, sortName: 'package'},
+            {name: t('Package'), content: row => row.package ?? t('InProject'), sortName: 'package'},
             {name: t('Name'), content: row => row.name, sortName: 'name'},
         ]
         objectsList.generateActions = (rows, mode) => {
@@ -22,14 +22,14 @@ export class index {
                 ret.push({
                     name: TCommon("details"),
                     icon: 'icon-show',
-                    href: "Component/details/" + (rows[0].package??'')+"/"+rows[0].name,
+                    href: "Component/details/" + (rows[0].package ? (rows[0].package + '/') : '') + rows[0].name,
                     main: true
                 });
             }
             if (mode != 'row') {
                 ret.push({
                     name: TCommon("detailsInNewTab"), icon: 'icon-show', showInTable: false, command() {
-                        rows.forEach(x => window.open("Component/details/" + x.package+"/"+x.name));
+                        rows.forEach(x => window.open("Component/details/" + x.package + "/" + x.name));
                     }
                 });
             }

@@ -57,24 +57,13 @@ class PanelStandardController extends PanelController
 
     protected function addView(string $module, string $name, $data = null, string $group = 'main')
     {
-        $a = __DIR__;
         if (\strpos($module, '/') > 0) {
             $filename = __DIR__.'/../../../Packages/'.$module.'/Panel/Views/'.$name.'.';
         } else {
             $filename = __DIR__.'/../'.$module.'/Views/'.$name.'.';
         }
         if (file_exists($filename.'mpts')) {
-            $template = HTMLParser::ParseFile($filename.'mpts');
-            $env = new Environment();
-            $env->variables = (array)$this;
-            $env->variables['dump'] = function ($x) {
-                return print_r($x, true);
-            };
-            $env->variables['t'] = function ($x) {
-                return t($x);
-            };
-
-            $this->views[$group][]= $template->executeToStringXml($env);
+            $this->views[$group][] = $this->loadMPTS($filename.'mpts', $data);
         } else if (file_exists($filename.'php')) {
             ob_start();
             include $filename.'php';
@@ -85,6 +74,42 @@ class PanelStandardController extends PanelController
         }
     }
 
+    private function loadMPTS($fileName, $data)
+    {
+        $template = HTMLParser::ParseFile($fileName);
+        $env = new Environment();
+        $env->variables = (array)$data;
+        $env->variables['data'] ??= (array)$data;
+        $env->variables['getView'] ??= fn(...$args) => $this->getView(...$args);
+        $env->variables['dump'] = function ($x) {
+            return print_r($x, true);
+        };
+        $env->variables['t'] = function ($x) {
+            return t($x);
+        };
+
+        return $template->executeToStringXml($env);
+    }
+
+    protected function getView(string $module, string $name, $data = null)
+    {
+        if (\strpos($module, '/') > 0) {
+            $filename = __DIR__.'/../../../Packages/'.$module.'/Panel/Views/'.$name.'.';
+        } else {
+            $filename = __DIR__.'/../'.$module.'/Views/'.$name.'.';
+        }
+        if (file_exists($filename.'mpts')) {
+            return $this->loadMPTS($filename.'mpts', $data);
+        } else if (file_exists($filename.'php')) {
+            ob_start();
+            include $filename.'php';
+            $ret = ob_get_contents();
+            ob_end_clean();
+            return $ret;
+        } else {
+            throw new \Exception("View $name in module $module not found");
+        }
+    }
 
     protected function showViews(string $group)
     {

@@ -1,0 +1,22 @@
+<section class="card page-Component-list" data-width="6">
+    <header>
+        <h1>{{ t("Core.Panel.Component.Details.Header") }}</h1>
+    </header>
+    <div class="pseudoLabel">
+        <span></span>
+        <strong>{{item.package}}</strong>
+    </div>
+    <div class="pseudoLabel">
+        <span></span>
+        <strong>{{item.name}}</strong>
+    </div>
+</section>
+<section class="card">
+<:foreach collection= item.definedParameters item= param key= key>
+<div class="pseudoLabel schemaDefinition">
+    <span>{{key}}:</span>
+    <div>
+        <<getView('Component', 'paramDetail', param)>>
+    </div>
+</div>
+</section>

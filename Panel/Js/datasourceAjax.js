@@ -1,8 +1,7 @@
 import {AjaxPanel} from "./ajaxPanel";
 
 export class DatasourceAjax {
-    constructor(controller, method, webSocketPath = [], params = null) {
-        this.controller = controller;
+    constructor(method, webSocketPath = [], params = null) {
         this.method = method;
         this.params = params;
         // if (webSocketPath.length > 0 && webSocketPath[0].toString().trim() !== "") {
@@ -16,7 +15,7 @@ export class DatasourceAjax {
     }
 
     async get(options) {
-        return await AjaxPanel[this.controller][this.method]({
+        return await this.method({
             start: options.start,
             limit: options.limit,
             search: options.search,

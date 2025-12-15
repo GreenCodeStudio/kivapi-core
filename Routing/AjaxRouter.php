@@ -9,8 +9,6 @@ use Core\Exceptions\NotFoundException;
 class AjaxRouter extends Router
 {
     var $controllerType = 'Ajax';
-    private string|null $vendorName;
-    private string|null $packageName;
 
     protected function findController()
     {

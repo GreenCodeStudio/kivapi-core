@@ -10,7 +10,7 @@ import {t as TCommon} from "../../../Common/i18n.xml";
 export class index {
     constructor(page, data) {
         const container = page.querySelector('.UsersList');
-        let datasource = new DatasourceAjax('User', 'getTable', ['User', 'User']);
+        let datasource = new DatasourceAjax(AjaxPanel.User.getTable, ['User', 'User']);
         let objectsList = new ObjectsList(datasource);
         objectsList.columns = [
             {name: t('Fields.name'), content: row => row.name, sortName: 'name'},
