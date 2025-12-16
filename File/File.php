@@ -29,7 +29,10 @@ class File
 
     public function getDir()
     {
-        $dir = __DIR__.'/../../UploadedFiles';
+        $dir = $_ENV['UploadedFiles'] ?? 'UploadedFiles';
+        if (!str_starts_with($dir, '/')) {
+            $dir = __DIR__ . '/../../' . $dir;
+        }
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
