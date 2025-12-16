@@ -49,7 +49,7 @@
     //]]>
 </script>
 <?php
-include __DIR__.'/../../../../Public/Dist/panelJs.html';
+include __DIR__.'/../../../../BuildResults/Dist/panelJs.html';
 ?>
 </body>
 </html>
