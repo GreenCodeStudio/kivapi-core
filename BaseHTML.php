@@ -45,7 +45,7 @@ $component->loadView();
     //]]>
 </script>
 <?php
-include __DIR__.'/../Public/Dist/js.html';
+include __DIR__.'/../BuildResults/Dist/js.html';
 ?>
 <?php
 foreach ($trackingCodes as $trackingCode) {
