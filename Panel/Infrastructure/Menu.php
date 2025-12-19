@@ -47,7 +47,7 @@ class Menu
                 if ($package == '.' || $package == '..') {
                     continue;
                 }
-                yield __DIR__.'/../../../Packages/'.$group.'/'.$package.'/menu.xml';
+                yield __DIR__.'/../../../Packages/'.$group.'/'.$package.'/Panel/menu.xml';
             }
         }
     }
