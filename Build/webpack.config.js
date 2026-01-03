@@ -16,6 +16,10 @@ module.exports = {
                 const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/js.html'), 'w')
                 fs.writeSync(file, '<script src="/Dist/js.'+x.hash+'.js"></script>')
             }
+            if(x.runtime=='inSiteEditJs'){
+                const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/inSiteEditJs.html'), 'w')
+                fs.writeSync(file, '<script src="/Dist/inSiteEditJs.'+x.hash+'.js"></script>')
+            }
             if(x.runtime=='panelJs'){
                 const file=fs.openSync(path.resolve(__dirname, '../../BuildResults/Dist/panelJs.html'), 'w')
                 fs.writeSync(file, '<script src="/Dist/panelJs.'+x.hash+'.js"></script>')

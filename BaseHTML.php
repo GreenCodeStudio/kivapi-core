@@ -93,8 +93,9 @@ if (!empty($panelData)) {
         window.inSiteEditData = <?=json_encode($panelData->inSiteEditData)?>;
         //]]>
     </script>
-    <script src="/Dist/inSiteEditJs.js"></script>
     <?php
+
+    include __DIR__.'/../BuildResults/Dist/inSiteEditJs.html';
 }
 ?>
 </body>

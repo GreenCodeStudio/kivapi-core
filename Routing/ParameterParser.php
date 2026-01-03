@@ -6,6 +6,7 @@ namespace Core\Routing;
 
 use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\ParamTypes\Content;
+use Core\ComponentManager\ParamTypes\ContentInSIteEdit;
 use Core\File\UploadedFile;
 use Core\InSiteEdit\InSiteMapping;
 use MKrawczyk\FunQuery\FunQuery;
@@ -100,6 +101,11 @@ class ParameterParser
             case "imagesArray":
                 return FunQuery::create($value ?? [])->map(fn($x) => UploadedFile::Create($x))->toArray();
             case "content":
+                if ($this->inSiteEdit)
+                {
+                    InSiteMapping::addMapping($path, $value);
+                    return ContentInSiteEdit::Create($value);
+                }
                 return empty($value) ? null : Content::Create($value);
             case "url":
                 return empty($value) ? null : $this->parseParamUrl($value);
