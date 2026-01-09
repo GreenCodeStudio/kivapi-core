@@ -31,7 +31,7 @@ function traverseDom(node) {
                 node.nodeValue = node.nodeValue.substring(index + field.random.length)
             }
         }
-    } else if (node.dataset.inSiteEditContent) {
+    } else if (node.dataset?.inSiteEditContent) {
         const value = JSON.parse(node.dataset.inSiteEditContent);
         const editor = new ContentValueEdit({"type": "content", "value": value, "source": "const"});
         node.append(editor);

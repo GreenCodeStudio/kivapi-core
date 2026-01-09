@@ -41,6 +41,8 @@ class ParameterParser
             $param = $params->{$name} ?? null;
             if ($param || $def->type == 'struct')
                 $ret->{$name} = $this->parseParam((object)$def, $param, $name, [...$path, $name]);
+            else if ($def->type == 'enum')
+                $ret->{$name} = $def->default ?? $def->values[0]??null;
             else
                 $ret->{$name} = $def->default ?? $this->defaultByType($def->type);
         }
@@ -101,8 +103,7 @@ class ParameterParser
             case "imagesArray":
                 return FunQuery::create($value ?? [])->map(fn($x) => UploadedFile::Create($x))->toArray();
             case "content":
-                if ($this->inSiteEdit)
-                {
+                if ($this->inSiteEdit) {
                     InSiteMapping::addMapping($path, $value);
                     return ContentInSiteEdit::Create($value);
                 }
