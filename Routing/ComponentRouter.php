@@ -6,6 +6,7 @@ use Core\ComponentManager\ComponentManager;
 use Core\ComponentManager\PageRepository;
 use Core\ComponentManager\RedirectionController;
 use Core\ComponentManager\SpecialComponents\EmptyComponent;
+use Core\Events\EventDispatcher;
 use Core\Exceptions\NotFoundException;
 use Core\InSiteEdit\InSiteMapping;
 use Core\Panel\Authorization\Authorization;
@@ -97,6 +98,8 @@ class ComponentRouter extends Router
 
     public function invoke()
     {
+        $fullUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$this->url";
+        EventDispatcher::dispatch("Core.PageOpen", (object)['fullUrl' => $fullUrl]);
         $component = $this->controller;
         if ($component instanceof RedirectionController) {
             $url = $component->execute();
